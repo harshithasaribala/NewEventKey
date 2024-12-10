@@ -1,0 +1,97 @@
+
+<header>
+  <section class="top-area">
+    <div class="header-area">
+      <nav class="navbar navbar-default bootsnav  navbar-sticky navbar-scrollspy" data-minus-value-desktop="70" data-minus-value-mobile="55" data-speed="1000">
+        <div class="container">
+          <div class="navbar-header d-flex align-items-center">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+              <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+              <img src="assets/EventKey/assets/logo/favicon.jpeg" alt="Icon" width="100" height="100" class="me-2">
+            </a>
+          </div>
+          <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+            <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+              <li class="nav-item" style="color:black"><a routerLink="/home" routerLinkActive="active">Home</a></li>
+              <li class="nav-item"><a routerLink="/about" routerLinkActive="active">About Us</a></li>
+              <li class="nav-item"><a routerLink="/home" routerLinkActive="active">Events</a></li>
+              <li class="nav-item"><a routerLink="/login" routerLinkActive="active">LogIn</a></li>
+              <li class="nav-item"><a routerLink="/signup" routerLinkActive="active">SignUp</a></li>
+              <li class="nav-item"><a routerLink="/adminlogin" routerLinkActive="active">Admin LogIn</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="clearfix"></div>
+  </section>
+</header>
+<body>
+  <section class="AdminLogin">
+    <div class="container">
+      <form [formGroup]="adminLoginForm" (ngSubmit)="onsubmit()">
+        <div class="mb-3" style="margin-top: 50px;">
+          <h1 style="font-size: 45px;;
+                font-weight: bold;
+                color: #343a40;">
+            Admin LogIn
+          </h1>
+        </div>
+        <div class="mb-3" style="margin-top: 30px;">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" formControlName="email" required>
+        </div>
+        <div class="mb-3" style="margin-top: 30px;">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password" formControlName="password" required>
+        </div>
+        <div class="d-flex align-items-center mt-3" style="margin-top: 30px;">
+          <button type="reset" class="btn btn-secondary me-3">Reset</button>
+          <input type="submit" class="btn btn-primary me-3" value="LogIn">
+        </div>
+        <p class="mb-0 mt-3" style="font-size: 25px; margin-top: 15px;">If Not Admin then? <a routerLink="/login" routerLinkActive="active" style="font-size: 20px;">Login here</a>.</p>
+      </form>
+    </div>
+  </section>
+</body>
+<footer id="footer" class="footer">
+  <div class="container">
+    <div class="footer-menu">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="home.component.html">EventKey</a>
+          </div>
+        </div>
+        <div class="col-sm-9">
+        </div>
+      </div>
+    </div>
+    <div class="hm-footer-copyright">
+      <div class="row">
+        <div class="col-sm-5">
+          <p style="color:black">
+            &copy;2024 copyright. designed and developed by Initiators
+          </p>
+        </div>
+        <div class="col-sm-7">
+          <div class="footer-social">
+            <span><i class="fa fa-phone"> +91 9876543210</i></span>
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-google-plus"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="scroll-Top">
+    <div class="return-to-top">
+      <i class="fa fa-angle-up " id="scroll-top" data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
+    </div>
+  </div>
+</footer>
+

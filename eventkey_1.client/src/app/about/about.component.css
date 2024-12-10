@@ -1,0 +1,173 @@
+.header-area {
+  position: relative;
+  z-index: 999;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #fff;
+}
+
+.navbar-brand img {
+  max-width: 100%;
+  height: auto;
+}
+
+.navbar-nav > li > a {
+  color: black;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 10px 15px;
+}
+
+  .navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
+    color: #ddd;
+  }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  margin-top: 100px;
+  padding: 0;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+/* Headings */
+h2, h3 {
+  color: #007BFF;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+/* Paragraphs */
+p {
+  color: #555;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* Unordered lists */
+ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+  ul li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+
+/* Links */
+a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+/* Contact information styling */
+strong {
+  color: #000;
+  font-weight: bold;
+}
+/* Footer Section */
+.footer {
+  padding: 20px 0;
+  background-color: white;
+}
+
+  .footer .footer-menu {
+    margin-bottom: 30px;
+  }
+
+.footer-menu .navbar-header .navbar-brand {
+  color: black;
+  font-size: 24px;
+}
+
+.footer-menu-item {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+  .footer-menu-item li {
+    margin-left: 20px;
+  }
+
+    .footer-menu-item li a {
+      color: black;
+      text-decoration: none;
+    }
+
+      .footer-menu-item li a:hover {
+        color: black;
+      }
+
+.hm-footer-copyright {
+  margin-top: 20px;
+  font-size: 14px;
+  color: black;
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+  .footer-social span {
+    font-size: 16px;
+    color: black;
+  }
+
+  .footer-social a {
+    color: black;
+    font-size: 18px;
+    text-decoration: none;
+  }
+
+    .footer-social a:hover {
+      color: black;
+    }
+
+/* Scroll to Top */
+#scroll-Top .return-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  cursor: pointer;
+  display: none;
+}
+
+  #scroll-Top .return-to-top i {
+    font-size: 24px;
+    color: #007bff;
+  }
+
+  #scroll-Top .return-to-top:hover i {
+    color: #0056b3;
+  }
+
+/* Responsive */
+@media only screen and (max-width: 767px) {
+  .welcome-hero-txt {
+    padding: 100px 10px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  .buttons-container .btn {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+}

@@ -1,0 +1,37 @@
+<div class="main-header">
+  <div class="logo">
+    <a class="navbar-brand d-flex align-items-center" href="/">
+      <img src="assets/EventKey/assets/logo/favicon.jpeg" alt="Icon" width="75" height="75" class="me-2">
+    </a>
+    <h1 style="font-weight:bold; font-size:40px">EventKey</h1>
+  </div>
+
+  <nav class="nav-menu">
+    <a href="#">Home</a>
+    <a href="#">About Us</a>
+    <div class="dropdown">
+      <a class="dropdown-toggle" href="#" (click)="toggleDropdown()">Account</a>
+      <div class="dropdown-menu" *ngIf="isDropdownVisible">
+        <a href="#" (click)="loadComponent('emprofile')">Profile</a>
+        <a href="index.html">Logout</a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<div class="dashboard-container">
+  <div class="dashboard-actions">
+    <a href="#" (click)="loadComponent('create_event')">Create Event</a>
+    <a href="#" (click)="loadComponent('manage_event')">Manage Event</a>
+    <a href="#" (click)="loadComponent('ticket_sales')">Ticket Sales</a>
+  </div>
+
+  <div class="dashboard-subactions" *ngIf="showManageEventOptions">
+    <a href="#" (click)="loadComponent('edit_event')" style="margin-right:20px">Edit Event</a>
+    <a href="#" (click)="loadComponent('event_status')" style="margin-left:20px">Status of Event</a>
+  </div>
+  <main class="dashboard-content">
+    <router-outlet></router-outlet>
+    <ng-template #dynamicComponentContainer></ng-template>
+  </main>
+</div>

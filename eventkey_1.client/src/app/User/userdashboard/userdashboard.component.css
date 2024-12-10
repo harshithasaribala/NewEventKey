@@ -1,0 +1,138 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+  .logo img {
+    width: 75px;
+    height: 75px;
+    margin-right: 10px;
+  }
+
+.navbar-brand {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.main-header {
+  display: flex;
+  margin: 20px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+  .logo img {
+    margin-right: 10px;
+  }
+
+.nav-menu a {
+  font-size: 20px;
+  color: #fff;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.nav-menu .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-menu .dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #444;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.nav-menu .dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.nav-menu .dropdown-menu a {
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  display: block;
+}
+
+.dashboard-container {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+  .sidebar h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0px;
+  }
+
+    .sidebar ul li {
+      margin-bottom: 10px;
+    }
+
+      .sidebar ul li a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+        font-size: 25px;
+      }
+
+        .sidebar ul li a:hover {
+          color: #333;
+          background-color: grey;
+          padding: 15px 20px;
+          border-radius: 5px;
+        }
+
+.dashboard-content {
+  flex: 1;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 900px;
+}
+
+  .dashboard-content h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  .dashboard-content p {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 30px;
+  }

@@ -1,0 +1,43 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <p><b>Manage your personal details below.</b></p>
+  </div>
+  <form class="profile-details-container" (ngSubmit)="updateProfile()">
+    <div class="profile-photo">
+      <img src="assets/EventKey/assets/img/ProfileUser.jpg" alt="Profile Photo" class="profile-img">
+    </div>
+    <div class="profile-info">
+      <label for="fullName">Full Name:</label>
+      <input id="fullName" type="text" [(ngModel)]="em.fullName" name="fullName" class="form-control">
+
+      <label for="age">Age:</label>
+      <input id="age" type="number" [(ngModel)]="em.age" name="age" class="form-control">
+
+      <label for="gender">Gender:</label>
+      <select id="gender" [(ngModel)]="em.gender" name="gender" class="form-control">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="email">Email:</label>
+      <input id="email" type="email" [(ngModel)]="em.email" name="email" class="form-control">
+
+      <label for="phone">Phone:</label>
+      <input id="phone" type="text" [(ngModel)]="em.phoneNumber" name="phoneNumber" class="form-control">
+
+      <label for="address">Address:</label>
+      <textarea id="address" [(ngModel)]="em.address" name="address" class="form-control"></textarea>
+
+      <!-- Adding Event Type field -->
+      <label for="eventType">Event Type:</label>
+      <input id="eventType" type="text" [(ngModel)]="em.eventType" name="eventType" class="form-control">
+
+      <!-- Adding Company Name field -->
+      <label for="companyName">Company Name:</label>
+      <input id="companyName" type="text" [(ngModel)]="em.companyName" name="companyName" class="form-control">
+
+      <button type="submit" class="save-button">Save Changes</button>
+    </div>
+  </form>
+</div>

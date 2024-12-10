@@ -1,0 +1,36 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <p><b>Manage your personal details below.</b></p>
+  </div>
+  <form class="profile-details-container" (ngSubmit)="updateProfile()">
+    <div class="profile-photo">
+      <img src="assets/EventKey/assets/img/ProfileUser.jpg" alt="Profile Photo" class="profile-img">
+    </div>
+    <div class="profile-info">
+      <label for="fullName">Full Name:</label>
+      <input id="fullName" type="text" [(ngModel)]="user.fullName" name="fullName" class="form-control">
+
+      <label for="age">Age:</label>
+      <input id="age" type="number" [(ngModel)]="user.age" name="age" class="form-control">
+
+      <label for="gender">Gender:</label>
+      <select id="gender" [(ngModel)]="user.gender" name="gender" class="form-control">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="email">Email:</label>
+      <input id="email" type="email" [(ngModel)]="user.email" name="email" class="form-control">
+
+      <label for="phone">Phone:</label>
+      <input id="phone" type="text" [(ngModel)]="user.phoneNumber" name="phoneNumber" class="form-control">
+
+      <label for="address">Address:</label>
+      <textarea id="address" [(ngModel)]="user.address" name="address" class="form-control"></textarea>
+
+      <button type="submit" class="save-button">Save Changes</button>
+    </div>
+  </form>
+</div>
+

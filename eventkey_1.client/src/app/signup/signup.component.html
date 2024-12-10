@@ -1,0 +1,148 @@
+<header>
+  <section class="top-area">
+    <nav class="navbar navbar-default bootsnav  navbar-sticky navbar-scrollspy" data-minus-value-desktop="70" data-minus-value-mobile="55" data-speed="1000">
+      <div class="container">
+        <div class="navbar-header d-flex align-items-center">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
+            <i class="fa fa-bars"></i>
+          </button>
+          <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="assets/EventKey/assets/logo/favicon.jpeg" alt="Icon" width="100" height="100" class="me-2">
+          </a>
+        </div>
+        <div class="collapse navbar-collapse menu-ui-design" id="navbar-menu">
+          <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
+            <li class="nav-item" style="color:black"><a routerLink="/home">Home</a></li>
+            <li class="nav-item"><a routerLink="/about" >About Us</a></li>
+            <li class="nav-item"><a routerLink="/events" >Events</a></li>
+            <li class="nav-item"><a routerLink="/login">LogIn</a></li>
+            <li class="nav-item"><a routerLink="/signup" >SignUp</a></li>
+            <li class="nav-item"><a routerLink="/admin-login" >Admin LogIn</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </section>
+</header>
+<body>
+  <section class="SignUp">
+    <div class="container">
+      <form [formGroup]="SignUpFormGroup" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label class="form-label"><strong>SignUp As</strong></label>
+          <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   formControlName="userType"
+                   value="User"
+                   (change)="toggleEventType(false)" required />
+            <label class="form-check-label" for="user">User</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   formControlName="userType"
+                   value="EventManager"
+                   (change)="toggleEventType(true)" required />
+            <label class="form-check-label" for="eventManager">Event Manager</label>
+          </div>
+        </div>
+        <div class="mb-3" *ngIf="isEventManager">
+          <label for="eventType" class="form-label">Types of Events Mostly Conducted</label>
+          <select class="form-control" formControlName="eventType" required>
+            <option value="" disabled>Select an option</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Corporate">Corporate</option>
+            <option value="Social">Social</option>
+            <option value="Educational">Educational</option>
+          </select>
+
+          <label for="companyName" class="form-label" style="margin-top:2px">Company Name</label>
+          <input type="text" class="form-control" formControlName="companyName" required />
+        </div>
+        <div class="mb-3">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input type="text" class="form-control" formControlName="fullName" required />
+        </div>
+        <div class="mb-3">
+          <label for="age" class="form-label">Age</label>
+          <input type="number" class="form-control" formControlName="age" required />
+        </div>
+        <div class="mb-3">
+          <label for="gender" class="form-label">Gender</label>
+          <select class="form-control" formControlName="gender" required>
+            <option value="" disabled>Select an option</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" formControlName="email" required />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" formControlName="password" required />
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" formControlName="confirmPassword" required />
+        </div>
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label">Phone Number</label>
+          <input type="tel" class="form-control" formControlName="phoneNumber" required />
+        </div>
+        <div class="mb-3">
+          <label for="address" class="form-label">Address</label>
+          <textarea class="form-control" formControlName="address" rows="3" required></textarea>
+        </div>
+
+        <div class="d-flex align-items-center mt-3">
+          <button type="reset" class="btn btn-secondary me-3">Reset</button>
+          <button type="submit" class="btn btn-primary me-3" [disabled]="!SignUpFormGroup.valid">SignUp</button>
+        </div>
+
+        <p class="mb-0 mt-3" style="font-size: 20px; margin-top:20px">
+          Already have an account? <a routerLink="./login/login-component.html" style="font-size: 20px;">Login here</a>.
+        </p>
+      </form>
+    </div>
+  </section>
+</body>
+<footer id="footer" class="footer">
+  <div class="container">
+    <div class="footer-menu">
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="home.component.html">EventKey</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hm-footer-copyright">
+      <div class="row">
+        <div class="col-sm-5">
+          <p style="color:black">
+            &copy;2024 copyright. designed and developed by Initiators
+          </p>
+        </div>
+        <div class="col-sm-7">
+          <div class="footer-social">
+            <span><i class="fa fa-phone"> +91 9876543210</i></span>
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-google-plus"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="scroll-Top">
+    <div class="return-to-top">
+      <i class="fa fa-angle-up " id="scroll-top" data-toggle="tooltip" data-placement="top" title="" data-original-title="Back to Top" aria-hidden="true"></i>
+    </div>
+  </div>
+</footer>
