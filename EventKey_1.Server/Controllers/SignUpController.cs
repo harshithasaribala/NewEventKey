@@ -182,8 +182,7 @@ namespace EventKey_1.Server.Controllers
                 {
                     return Ok(new
                     {
-                        Message = "Login successful as User",
-                        UserDetails = user 
+                        userId = user.Id
                     });
                 }
                 else
@@ -199,8 +198,7 @@ namespace EventKey_1.Server.Controllers
                 {
                     return Ok(new
                     {
-                        Message = "Login successful as Event Manager",
-                        EventManagerDetails = eventManager // Returning the entire EventManager object
+                       eid = eventManager.EmId
                     });
                 }
                 else

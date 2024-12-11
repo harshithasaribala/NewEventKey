@@ -19,35 +19,38 @@ export class SignupComponent {
   ) {
     this.SignUpFormGroup = this.fb.group({
       userType: ['', Validators.required],
-      fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      confirmPassword: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      address: ['', Validators.required],
-      age: ['', Validators.required],
-      gender: ['', Validators.required],
       eventType: [''],
-      companyName: ['']
-    });
+      companyName: [''],
+      fullName: ['', [Validators.required, Validators.minLength(3)]],
+      age: ['', [Validators.required, Validators.min(18), Validators.max(100)]],
+      gender: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      address: ['', Validators.required],
+    }, { validators: this.passwordMatchValidator });
   }
-  ngOnInit(): void {
-    this.SignUpFormGroup.get('password')?.valueChanges.subscribe(() => {
-      const confirmPassword = this.SignUpFormGroup.get('confirmPassword');
-      if (confirmPassword && confirmPassword.value !== this.SignUpFormGroup.get('password')?.value) {
-        confirmPassword.setErrors({ mismatch: true });
-      }
-    });
-  }
-  toggleEventType(isEventManager: boolean): void {
+
+  toggleEventType(isEventManager: boolean) {
     this.isEventManager = isEventManager;
-    if (!isEventManager) {
-      this.SignUpFormGroup.patchValue({
-        eventType: '',
-        companyName: ''
-      });
+    if (isEventManager) {
+      this.SignUpFormGroup.controls['eventType'].setValidators([Validators.required]);
+      this.SignUpFormGroup.controls['companyName'].setValidators([Validators.required]);
+    } else {
+      this.SignUpFormGroup.controls['eventType'].clearValidators();
+      this.SignUpFormGroup.controls['companyName'].clearValidators();
     }
+    this.SignUpFormGroup.controls['eventType'].updateValueAndValidity();
+    this.SignUpFormGroup.controls['companyName'].updateValueAndValidity();
   }
+
+  passwordMatchValidator(group: FormGroup) {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return password === confirmPassword ? null : { mismatch: true };
+  }
+
   // Form submit method
   onSubmit() {
     if (this.SignUpFormGroup.valid) {
@@ -57,13 +60,25 @@ export class SignupComponent {
       this.authService.signUp(userData).subscribe(
         (response) => {
           console.log('SignUp successful', response);
-          if (response && response.id) {
-            const generatedId = response.id;  // Replace with correct response field
+          if (response) {
+            let generatedId: string;
+
+            // Check if eventType is present in the response
+            if (response.eventType) {
+              generatedId = response.emId;  // Assuming emId is the Event Manager ID
+            } else {
+              generatedId = response.userId;  // Assuming userId is the regular User ID
+            }
+
+            // Show confirmation message with the correct ID
             const confirmationMessage = `Signup successful! Your generated ID is: ${generatedId}. Click OK to go to the login page.`;
+
             if (confirm(confirmationMessage)) {
+              // Navigate to login page after confirmation
               this.router.navigate(['/login']);
             }
-          } else {
+          }
+       else {
             console.log('Error: Response does not contain an ID');
           }
         },

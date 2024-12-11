@@ -37,8 +37,6 @@ namespace EventKey_1.Server.Models
         // Foreign key to EventManager
         public string EMId { get; set; }
 
-        [ForeignKey("EMId")]
-        public EventManager EventManager { get; set; } // Navigation property
 
         // Generate unique ID
         private static string GenerateUniqueId()

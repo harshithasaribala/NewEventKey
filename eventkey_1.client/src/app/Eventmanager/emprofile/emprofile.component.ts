@@ -1,42 +1,59 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-emprofile',
   standalone: false,
-  
   templateUrl: './emprofile.component.html',
-  styleUrl: './emprofile.component.css'
+  styleUrls: ['./emprofile.component.css']
 })
-export class EmprofileComponent {
-  em: any;
-  Id: any;
-  constructor(private authService: AuthService, private router: Router) { }
+export class EmprofileComponent implements OnInit {
+  em: any = {}; // Holds Event Manager profile data
+  eid: string | null = null; // Event Manager ID
+
+  constructor(private authService: AuthService) { }
+
   ngOnInit(): void {
-    // Get user details from sessionStorage
-    const profile = JSON.parse(sessionStorage.getItem('eventManager') || '{}');
-    this.Id = sessionStorage.getItem('Id');
-    this.em = profile;
+    // Retrieve the Event Manager ID from sessionStorage
+    this.eid = sessionStorage.getItem('eid');
+    if (this.eid) {
+      this.fetchProfile();
+    } else {
+      alert('Event Manager ID not found. Please log in again.');
+    }
   }
 
-  updateProfile(): void {
-    // Call the update API with the user ID and user data
-    if (this.Id) {
-      this.authService.updateUserProfile(this.Id, this.em).subscribe(
-        (response) => {
-          console.log('Profile updated successfully!', response);
+  // Fetch profile data
+  fetchProfile(): void {
+    this.authService.getProfileById(this.eid!).subscribe({
+      next: (profile) => {
+        this.em = profile;
+        console.log('Event Manager Profile:', profile);
+      },
+      error: (err) => {
+        console.error('Error fetching profile:', err);
+        alert('Unable to fetch profile details. Please try again.');
+      },
+    });
+  }
 
-          // After successful profile update, store updated data back in sessionStorage
-          sessionStorage.setItem('eventManager', JSON.stringify(this.em));
-          sessionStorage.setItem('Id', this.Id);  // Ensure the ID is also stored if changed
+  // Update profile
+  updateProfile(): void {
+    if (this.eid) {
+      // Set the userType to 'EventManager' by default
+      this.em.userType = 'EventManager';
+
+      // Call the update API with the Event Manager ID and updated profile data
+      this.authService.updateProfileById(this.eid, this.em).subscribe({
+        next: (response) => {
           alert('Profile updated successfully!');
         },
-        (error) => {
-          console.error('Error updating profile:', error);
-          alert('Error updating profile. Please try again later.');
-        }
-      );
+        error: (err) => {
+          console.error('Error updating profile:', err);
+          alert('Unable to update profile. Please try again.');
+        },
+      });
     }
   }
 }

@@ -1,39 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private signUpUrl = 'https://localhost:7172/api/Account'; // Replace with your actual API URL
-  private loginUrl = 'https://localhost:7172/api/Account/login';
-  private profileUrl = 'https://localhost:7172/api/Account';
-  private createEventurl = 'https://localhost:7172/api/Events';
-  private profile: any;
-  constructor(private http: HttpClient, private router: Router) { }
+  private apiUrl = 'https://localhost:7172/api/Account';
+  private eventsUrl = 'https://localhost:7172/api/Events';
+
+  constructor(private http: HttpClient) { }
 
   // Sign up method
   signUp(userData: any): Observable<any> {
-    return this.http.post(this.signUpUrl, userData);
+    return this.http.post(`${this.apiUrl}`, userData);
   }
-  login(credentials: { userType: string; email: string; password: string; }): Observable<any> {
-    return this.http.post(this.loginUrl, credentials);
+
+  // Login method
+  login(credentials: { userType: string; email: string; password: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, credentials);
   }
+
+  // Create Event method
   createEvent(eventData: any): Observable<any> {
-    return this.http.post<any>(this.createEventurl, eventData);
-  }
-  setProfile(profileData: any): void {
-    this.profile = profileData;
+    return this.http.post<any>(this.eventsUrl, eventData);
   }
 
-  getProfile(): any {
-    return this.profile || JSON.parse(localStorage.getItem('profile') || '{}');
+  // Get Profile by ID
+  getProfileById(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
   }
 
-  updateUserProfile(userId: any, user: any): Observable<any> {
-    return this.http.put(`${this.profileUrl}/${userId}`, user);
+  // Update Profile by ID
+  updateProfileById(id: string, profileData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, profileData);
   }
-
 }
-

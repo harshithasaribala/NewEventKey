@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EventKey_1.Server.Models;
-using Microsoft.AspNetCore.Http;
 using EventKey_1.Server.Infrastructure;
 
 namespace EventKey_1.Server.Controllers
@@ -24,14 +23,15 @@ namespace EventKey_1.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Events>>> GetEvents()
         {
-            return await _context.Events.Include(e => e.EventManager).ToListAsync();
+            // Fetch events without including EventManager
+            return await _context.Events.ToListAsync();
         }
 
         // GET: api/Events/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Events>> GetEvent(string id)
         {
-            var eventObj = await _context.Events.Include(e => e.EventManager).FirstOrDefaultAsync(e => e.EventId == id);
+            var eventObj = await _context.Events.FirstOrDefaultAsync(e => e.EventId == id);
 
             if (eventObj == null)
             {
@@ -39,23 +39,6 @@ namespace EventKey_1.Server.Controllers
             }
 
             return eventObj;
-        }
-
-        // GET: api/Events/ByEventManager/{emid}
-        [HttpGet("ByEventManager/{emid}")]
-        public async Task<ActionResult<IEnumerable<Events>>> GetEventsByEMId(string emid)
-        {
-            var events = await _context.Events
-                .Include(e => e.EventManager)
-                .Where(e => e.EMId == emid)
-                .ToListAsync();
-
-            if (events == null || events.Count == 0)
-            {
-                return NotFound(new { message = "No events found for this Event Manager." });
-            }
-
-            return events;
         }
 
         // POST: api/Events
@@ -109,33 +92,6 @@ namespace EventKey_1.Server.Controllers
             }
 
             _context.Events.Remove(eventObj);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        // PUT: api/Events/ByEventManager/{emid}
-        [HttpPut("ByEventManager/{emid}")]
-        public async Task<IActionResult> UpdateEventsByEMId(string emid, Events eventObj)
-        {
-            var events = await _context.Events.Where(e => e.EMId == emid).ToListAsync();
-
-            if (events == null || events.Count == 0)
-            {
-                return NotFound(new { message = "No events found for this Event Manager to update." });
-            }
-
-            foreach (var ev in events)
-            {
-                // Update the event's details here. Example:
-                ev.EventName = eventObj.EventName;
-                ev.Location = eventObj.Location;
-                ev.EventDate = eventObj.EventDate;
-                ev.Description = eventObj.Description;
-                ev.TicketPrice = eventObj.TicketPrice;
-                ev.MaxAttendees = eventObj.MaxAttendees;
-            }
-
             await _context.SaveChangesAsync();
 
             return NoContent();

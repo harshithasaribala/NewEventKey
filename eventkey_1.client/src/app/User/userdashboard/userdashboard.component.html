@@ -1,23 +1,30 @@
+<!-- header.component.html -->
 <header class="main-header">
+  <!-- Logo Section -->
   <div class="logo">
     <a class="navbar-brand d-flex align-items-center" href="/">
-      <img src="assets/EventKey/assets/logo/favicon.jpeg" alt="Icon" width="100" height="100" class="me-2">
+      <img src="assets/EventKey/assets/logo/favicon.jpeg" alt="Icon" width="50" height="50" class="me-2">
     </a>
-    <h1 style="font-weight:bold; font-size:40px; color:white">EventKey</h1>
   </div>
-  <nav class="nav-menu">
-    <a href="#" (click)="loadComponent('home')">Home</a>
-    <a href="#" (click)="loadComponent('about')">About Us</a>
-    <div class="dropdown">
-      <a class="dropdown-toggle" (click)="toggleDropdown()">Account</a>
-      <div class="dropdown-menu" *ngIf="isDropdownVisible">
-        <a href="#" (click)="loadComponent('profile')">Profile</a>
-        <a (click)="logout()">Logout</a>
-      </div>
+  <!-- Dashboard Header with Welcome Text and Dropdown -->
+  <div class="dashboard-header d-flex justify-content-between align-items-center w-100">
+    <h1 class="welcome-text" style="font-size: 30px;">Welcome, {{ userName }}</h1>
+    <div class="user-actions">
+
     </div>
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav class="nav-menu">
+    <button (click)="loadComponent('home')">Home</button>
+    <button (click)="loadComponent('about')">About Us</button>
+    <button (click)="loadComponent('profile')">My Profile</button>
+    <button (click)="logout()">Logout</button>
   </nav>
 </header>
 
+
+<!-- Sidebar -->
 <div class="dashboard-container">
   <aside class="sidebar">
     <ul>
@@ -28,6 +35,7 @@
     </ul>
   </aside>
 
+  <!-- Main Content Area -->
   <main class="dashboard-content">
     <router-outlet></router-outlet>
     <ng-container #dynamicComponentContainer></ng-container>

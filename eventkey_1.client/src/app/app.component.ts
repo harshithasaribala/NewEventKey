@@ -13,5 +13,8 @@ import { RouterModule, RouterOutlet } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
+  ngOnInit(): void {
+    // Your initialization code here
+    console.log('AppComponent initialized');
+  }
 }

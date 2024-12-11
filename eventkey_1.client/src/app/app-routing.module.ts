@@ -16,17 +16,14 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {path:'about',component:AboutComponent},
   { path: 'login', component: LoginComponent },
-  {
-    path: 'userdashboard', component: UserdashboardComponent, children: [
-      { path: 'profile', component: UserProfileComponent } ]},
-  {
-    path: 'eventmanagerdashboard', component: EventmanagerdashboardComponent, children: [
-      { path: 'emprofile', component: EmprofileComponent },
-      { path:'eventcreation',component:EventcreationComponent}]
-},
   { path: 'signup', component: SignupComponent },
   { path: 'adminlogin', component: AdminloginComponent },
-  {path:'userprofile',component:UserProfileComponent},
+  { path: 'userdashboard/:userId', component: UserdashboardComponent },
+  { path: 'eventmanagerdashboard/:eid', component: EventmanagerdashboardComponent },
+  { path: 'userdashboard/userprofile', component: UserProfileComponent },
+  { path: 'eventmanagerdashboard/emprofile', component: EmprofileComponent },
+  { path: 'eventmanagerdashbaord/eventcreation', component: EventcreationComponent },
+  { path: 'eventcreation/:eid', component: EventcreationComponent },
   { path: '**', redirectTo: '/home' },
 ];
 

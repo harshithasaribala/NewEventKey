@@ -5,12 +5,12 @@ body {
 
 .form-label {
   color: black;
-  font-size: 36px;
+  font-size: 16px;
   font-weight: bold;
 }
 
 .form-check {
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .form-control {
@@ -18,12 +18,12 @@ body {
 }
 
 .btn-secondary {
-  font-size: 20px;
+  font-size: 14px;
   border-radius: 8px;
 }
 
 .btn-primary {
-  font-size: 20px;
+  font-size: 14px;
   border-radius: 8px;
   padding: 12px 20px;
 }

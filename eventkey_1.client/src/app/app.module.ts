@@ -16,6 +16,8 @@ import { EventmanagerdashboardComponent } from './Eventmanager/eventmanagerdashb
 import { UserProfileComponent } from './User/userprofile/userprofile.component';
 import { EmprofileComponent } from './Eventmanager/emprofile/emprofile.component';
 import { EventcreationComponent } from './Eventmanager/eventcreation/eventcreation.component';
+import { EditeventComponent } from './Eventmanager/editevent/editevent.component';
+import { AdmindashboardComponent } from './admin/admindashboard/admindashboard.component';
 
 @NgModule({
   declarations: [
@@ -28,11 +30,10 @@ import { EventcreationComponent } from './Eventmanager/eventcreation/eventcreati
     UserdashboardComponent,
     EventmanagerdashboardComponent,
     UserProfileComponent,
-    EmprofileComponent, EventcreationComponent
+    EmprofileComponent, EventcreationComponent, EditeventComponent, AdmindashboardComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule, FormsModule,
-    AppRoutingModule, RouterModule, RouterLink,ReactiveFormsModule
+    BrowserModule, HttpClientModule, FormsModule,AppRoutingModule, RouterModule, RouterLink,ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

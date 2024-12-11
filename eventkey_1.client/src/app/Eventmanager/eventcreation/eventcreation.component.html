@@ -1,16 +1,17 @@
+
 <div class="create-event-container">
   <h2>Create a New Event</h2>
-
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
   <form [formGroup]="createEventForm" (ngSubmit)="createEvent()">
-    <div class="form-group">
+    <div>
       <label for="emId">Event Manager ID</label>
-      <input type="text"
-             id="emId"
-             formControlName="emId"
-             [class.invalid]="createEventForm.get('emId')?.invalid && createEventForm.get('emId')?.touched">
-      <div *ngIf="createEventForm.get('emId')?.invalid && createEventForm.get('emId')?.touched" class="error">
-        Event Manager ID is required.
-      </div>
+      <input id="emId" formControlName="emId" [value]="emId" readonly />
+    </div>
+
+    <div>
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" [value]="email" readonly />
     </div>
 
     <!-- Event Name -->

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
@@ -8,34 +8,49 @@ import { Router } from '@angular/router';
   templateUrl: './userprofile.component.html',
   styleUrl: './userprofile.component.css'
 })
-export class UserProfileComponent {
-  user: any;
-  userId: any;
-  constructor(private authService: AuthService,private router:Router) { }
+export class UserProfileComponent implements OnInit {
+  user: any = {}; // Holds User profile data
+  userId: string | null = null; // User ID
+
+  constructor(private authService: AuthService) { }
+
   ngOnInit(): void {
-    // Get user details from sessionStorage
-    const profile = JSON.parse(sessionStorage.getItem('userDetails') || '{}');
+    // Retrieve the User ID from sessionStorage
     this.userId = sessionStorage.getItem('userId');
-    this.user = profile;
+    if (this.userId) {
+      this.fetchProfile();
+    } else {
+      alert('User ID not found. Please log in again.');
+    }
   }
 
-  updateProfile(): void {
-    // Call the update API with the user ID and user data
-    if (this.userId) {
-      this.authService.updateUserProfile(this.userId, this.user).subscribe(
-        (response) => {
-          console.log('Profile updated successfully!', response);
+  // Fetch profile data
+  fetchProfile(): void {
+    this.authService.getProfileById(this.userId!).subscribe({
+      next: (profile) => {
+        this.user = profile;
+        console.log('User Profile:', profile);
+      },
+      error: (err) => {
+        console.error('Error fetching profile:', err);
+        alert('Unable to fetch profile details. Please try again.');
+      },
+    });
+  }
 
-          // After successful profile update, store updated data back in sessionStorage
-          sessionStorage.setItem('userDetails', JSON.stringify(this.user));
-          sessionStorage.setItem('userId', this.userId);  // Ensure the ID is also stored if changed
+  // Update profile
+  updateProfile(): void {
+    if (this.userId) {
+      this.user.userType = 'User';
+      this.authService.updateProfileById(this.userId, this.user).subscribe({
+        next: (response) => {
           alert('Profile updated successfully!');
         },
-        (error) => {
-          console.error('Error updating profile:', error);
-          alert('Error updating profile. Please try again later.');
-        }
-      );
+        error: (err) => {
+          console.error('Error updating profile:', err);
+          alert('Unable to update profile. Please try again.');
+        },
+      });
     }
   }
 }
