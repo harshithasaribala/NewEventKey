@@ -41,12 +41,10 @@ export class EmprofileComponent implements OnInit {
   // Update profile
   updateProfile(): void {
     if (this.eid) {
-      // Set the userType to 'EventManager' by default
       this.em.userType = 'EventManager';
-
-      // Call the update API with the Event Manager ID and updated profile data
       this.authService.updateProfileById(this.eid, this.em).subscribe({
         next: (response) => {
+          console.error('Sucess:', response);
           alert('Profile updated successfully!');
         },
         error: (err) => {

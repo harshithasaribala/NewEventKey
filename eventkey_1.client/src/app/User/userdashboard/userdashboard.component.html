@@ -17,7 +17,6 @@
   <!-- Navigation Menu -->
   <nav class="nav-menu">
     <button (click)="loadComponent('home')">Home</button>
-    <button (click)="loadComponent('about')">About Us</button>
     <button (click)="loadComponent('profile')">My Profile</button>
     <button (click)="logout()">Logout</button>
   </nav>
@@ -28,10 +27,9 @@
 <div class="dashboard-container">
   <aside class="sidebar">
     <ul>
-      <li><a href="#" (click)="loadComponent('events_available')"> Events Available</a></li>
-      <li><a href="#" (click)="loadComponent('previous_bookings')">Previous Bookings</a></li>
-      <li><a href="#" (click)="loadComponent('saved_events')"> Saved Events</a></li>
-      <li><a href="#" (click)="loadComponent('event_details')"> Event Details</a></li>
+      <li><a href="#" (click)="navigateToEventDetails()"> Events</a></li>
+      <li><a href="#" (click)="navigateToMyBookings()">My Bookings</a></li>
+      <li><a href="#" (click)="navigateToSavedEvents()"> Saved Events</a></li>
     </ul>
   </aside>
 

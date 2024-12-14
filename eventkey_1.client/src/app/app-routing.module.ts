@@ -10,6 +10,14 @@ import { EventmanagerdashboardComponent } from './Eventmanager/eventmanagerdashb
 import { UserProfileComponent } from './User/userprofile/userprofile.component';
 import { EmprofileComponent } from './Eventmanager/emprofile/emprofile.component';
 import { EventcreationComponent } from './Eventmanager/eventcreation/eventcreation.component';
+import { AdmindashboardComponent } from './admin/admindashboard/admindashboard.component';
+import { EventDetailsComponent } from './User/event-details/event-details.component';
+import { TicketBookingComponent } from './User/ticket-booking/ticket-booking.component';
+import { ETicketComponent } from './User/e-ticket/e-ticket.component';
+import { SavedEventsComponent } from './User/saved-events/saved-events.component';
+import { PreviousBookingsComponent } from './User/previous-bookings/previous-bookings.component';
+import { ManageEventsComponent } from './Eventmanager/manage-events/manage-events.component';
+import { EditeventComponent } from './Eventmanager/editevent/editevent.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
@@ -19,12 +27,20 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'adminlogin', component: AdminloginComponent },
   { path: 'userdashboard/:userId', component: UserdashboardComponent },
+  { path: 'admindashboard', component: AdmindashboardComponent },
   { path: 'eventmanagerdashboard/:eid', component: EventmanagerdashboardComponent },
+  { path: 'eventmanagerdashboard/:eid/eventcreation', component: EventcreationComponent },
   { path: 'userdashboard/userprofile', component: UserProfileComponent },
-  { path: 'eventmanagerdashboard/emprofile', component: EmprofileComponent },
-  { path: 'eventmanagerdashbaord/eventcreation', component: EventcreationComponent },
-  { path: 'eventcreation/:eid', component: EventcreationComponent },
-  { path: '**', redirectTo: '/home' },
+  { path: 'userdashboard/:userId/eventdetails', component: EventDetailsComponent },
+  { path: 'userdashboard/:userId/savedEvents', component: SavedEventsComponent },
+  { path: 'userdashboard/:userId/previousBookings', component: PreviousBookingsComponent },
+  { path: 'userdashboard/:userId/eventdetails/:eventid/ticketbooking',component: TicketBookingComponent},
+  {
+    path: 'userdashboard/:userId/eventdetails/:eventid/ticketbooking/eticket',
+    component: ETicketComponent,
+  },
+  { path: 'eventmanagerdashboard/:eid/manageEvents', component: ManageEventsComponent },
+  { path:'eventmanagerdashboard/:eid/manageEvents/:eventid/editEvent',component:EditeventComponent}
 ];
 
 @NgModule({

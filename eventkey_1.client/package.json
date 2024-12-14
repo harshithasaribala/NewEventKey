@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
     "@angular/router": "^19.0.0",
+    "html2canvas": "^1.4.1",
     "jest-editor-support": "*",
     "npm": "^10.9.2",
     "run-script-os": "*",

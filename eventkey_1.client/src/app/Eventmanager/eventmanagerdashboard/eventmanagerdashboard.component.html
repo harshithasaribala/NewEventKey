@@ -3,32 +3,39 @@
     <a class="navbar-brand d-flex align-items-center" href="/">
       <img src="assets/EventKey/assets/logo/favicon.jpeg" alt="Icon" width="75" height="75" class="me-2" />
     </a>
-
   </div>
-  <h1>{{ eventManagerName }} Dashboard</h1>
+  <h1>{{ eventManagerName }}'s Dashboard</h1>
   <nav class="nav-menu">
-
     <button (click)="loadComponent('home')">Home</button>
-    <button (click)="loadComponent('about')">About Us</button>
     <button (click)="loadComponent('emprofile')">My Profile</button>
     <button (click)="logout()">Logout</button>
   </nav>
 </div>
 
 <div class="dashboard-container">
-  <div class="dashboard-actions">
-    <a href="#" (click)="loadComponent('create_event')">Create Event</a>
-    <a href="#" (click)="loadComponent('manage_event')">Manage Event</a>
-    <a href="#" (click)="loadComponent('ticket_sales')">Ticket Sales</a>
+  <div class="sidebar">
+    <nav>
+      <a href="#" (click)="navigateToEventCreation()">Create Event</a>
+      <a href="#" (click)="navigateToManageEvents()">Manage Event</a>
+      <a href="#" (click)="loadComponent('ticket_sales')">Ticket Sales</a>
+    </nav>
   </div>
 
-  <div class="dashboard-subactions" *ngIf="showManageEventOptions">
-    <a href="#" (click)="loadComponent('edit_event')" style="margin-right:20px">Edit Event</a>
-    <a href="#" (click)="loadComponent('event_status')" style="margin-left:20px">Status of Event</a>
-  </div>
-
-  <main class="dashboard-content">
+  <div class="dashboard-content">
+    <div class="events-list">
+      <div *ngFor="let event of events" class="event-item">
+        <h3>{{ event.eventName }}</h3>
+        <p><strong>Event ID:</strong> {{ event.eventId }}</p>
+        <p><strong>Event Date:</strong> {{ event.eventDate | date: 'fullDate'}}</p>
+        <p><strong>Event Time:</strong> {{ event.eventTime }}</p>
+        <p><strong>Max Count:</strong> {{ event.maxAttendees }}</p>
+        <p><strong>Description:</strong> {{ event.description }}</p>
+        <p><strong>Price:</strong> {{ event.ticketPrice | currency:'INR' }}</p>
+        <p><strong>Registered Count:</strong> {{ event.registeredAttendees }}</p>
+      </div>
+    </div>
     <router-outlet></router-outlet>
-    <ng-template #dynamicComponentContainer></ng-template>
-  </main>
+  </div>
+
+  <ng-template #dynamicComponentContainer></ng-template>
 </div>

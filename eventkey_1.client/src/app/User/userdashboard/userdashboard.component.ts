@@ -2,6 +2,8 @@ import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRe
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserProfileComponent } from '../userprofile/userprofile.component';
 import { AuthService } from '../../services/auth.service';
+import { EventDetailsComponent } from '../event-details/event-details.component';
+import { SavedEventsComponent } from '../saved-events/saved-events.component';
 
 @Component({
   selector: 'app-userdashboard',
@@ -11,7 +13,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class UserdashboardComponent implements OnInit {
   @ViewChild('dynamicComponentContainer', { read: ViewContainerRef }) dynamicComponentContainer!: ViewContainerRef;
-  userName: string = 'User'; // Default name until we fetch the profile
+  userName: string = 'User'; 
   userProfile: any; // To store user profile details
   isDropdownVisible: boolean = false;
   userId: string = ''; // To store user ID from route parameter
@@ -41,7 +43,7 @@ export class UserdashboardComponent implements OnInit {
     this.userService.getProfileById(userId).subscribe(
       response => {
         this.userProfile = response;
-        this.userName = this.userProfile.name || 'User'; // Set userName based on profile data
+        this.userName = response.fullName; 
       },
       error => {
         console.error('Error fetching user profile', error);
@@ -65,16 +67,24 @@ export class UserdashboardComponent implements OnInit {
   loadComponent(section: string) {
     // Clear the current dynamic component and load the appropriate one
     this.dynamicComponentContainer.clear();
-    if (section === 'profile') {
+    if (section == 'profile') {
       this.loadUserProfile();
     }
-    // Add any other sections if needed
   }
-
+  navigateToEventDetails() {
+    // Navigate to the event details page with the current user ID
+    this.router.navigate([`/userdashboard/${this.userId}/eventdetails`]);
+  }
   loadUserProfile() {
     // Dynamically load the user profile component
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UserProfileComponent);
     const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
     componentRef.instance.user = this.userProfile; // Pass the profile data
+  }
+  navigateToSavedEvents() {
+    this.router.navigate([`/userdashboard/${this.userId}/savedEvents`]);
+  }
+  navigateToMyBookings() {
+    this.router.navigate([`/userdashboard/${this.userId}/previousBookings`]);
   }
 }

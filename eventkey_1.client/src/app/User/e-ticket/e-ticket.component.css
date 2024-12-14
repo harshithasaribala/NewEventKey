@@ -1,0 +1,80 @@
+.eticket-container {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.ticket {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+  .ticket h3 {
+    text-align: center;
+    color: #007bff;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+
+  .ticket p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+
+    .ticket p strong {
+      color: #333;
+    }
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  button:focus {
+    outline: none;
+  }
+
+.back-btn {
+  background-color: #6c757d;
+}
+
+  .back-btn:hover {
+    background-color: #5a6268;
+  }
+
+.my-bookings-btn {
+  background-color: #28a745;
+}
+
+  .my-bookings-btn:hover {
+    background-color: #218838;
+  }

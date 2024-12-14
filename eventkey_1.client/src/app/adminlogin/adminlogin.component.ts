@@ -26,7 +26,7 @@ export class AdminloginComponent {
     if (email === 'admin@gmail.com' && password === 'admin') {
       console.log('Admin login successful');
       alert('Sucessful');
-      this.router.navigate(['/admin-dashboard']);
+      this.router.navigate(['/admindashboard']);
     } else {
       console.error('Invalid credentials');
       alert('Invalid credentials. Please try again.');

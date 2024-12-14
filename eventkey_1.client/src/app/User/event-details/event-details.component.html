@@ -1,0 +1,52 @@
+<div class="event-details-container">
+  <div *ngFor="let event of events" class="event-card">
+    <div class="event-image">
+      <!-- Display the image based on event type -->
+      <img [src]="getEventImage(event.eventType)" alt="Event Image">
+    </div>
+    <h2>{{ event.eventName }}</h2>
+    <div class="event-grid">
+      <div class="event-item">
+        <strong>Event ID:</strong>
+        <p>{{ event.eventId }}</p>
+      </div>
+      <div class="event-item">
+        <strong>Venue:</strong>
+        <p>{{ event.location }}</p>
+      </div>
+      <div class="event-item">
+        <strong>Date:</strong>
+        <p>{{ event.eventDate | date: 'fullDate' }}</p>
+      </div>
+      <div class="event-item">
+        <strong>Time:</strong>
+        <p>{{ event.eventTime }}</p>
+      </div>
+      <div class="event-item">
+        <strong>Organizer:</strong>
+        <p>{{ event.organizer }}</p>
+      </div>
+      <div class="event-item">
+        <strong>Ticket Price:</strong>
+        <p>{{ event.ticketPrice | currency:'INR' }}</p>
+      </div>
+      <div class="event-item">
+        <strong>Event Type:</strong>
+        <p>{{ event.eventType }}</p>
+      </div>
+      <div class="event-item">
+        <strong>Description:</strong>
+        <p>{{ event.description }}</p>
+      </div>
+      <div class="event-item">
+        <strong>Available Seats:</strong>
+        <p>{{ event.maxAttendees - event.registeredAttendees}}</p>
+      </div>
+    </div>
+    <div class="buttons">
+      <button (click)="bookTicket(event)" class="book-now-btn">Book Now</button>
+      <button (click)="saveEvent(event)" class="save-event-btn">Save Event</button>
+    </div>
+  </div>
+  <button class="back-btn" (click)="onBack()">Back</button>
+</div>

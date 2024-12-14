@@ -16,8 +16,14 @@ import { EventmanagerdashboardComponent } from './Eventmanager/eventmanagerdashb
 import { UserProfileComponent } from './User/userprofile/userprofile.component';
 import { EmprofileComponent } from './Eventmanager/emprofile/emprofile.component';
 import { EventcreationComponent } from './Eventmanager/eventcreation/eventcreation.component';
-import { EditeventComponent } from './Eventmanager/editevent/editevent.component';
+import { EditeventComponent} from './Eventmanager/editevent/editevent.component';
 import { AdmindashboardComponent } from './admin/admindashboard/admindashboard.component';
+import { EventDetailsComponent } from './User/event-details/event-details.component';
+import { TicketBookingComponent } from './User/ticket-booking/ticket-booking.component';
+import { ETicketComponent } from './User/e-ticket/e-ticket.component';
+import { SavedEventsComponent } from './User/saved-events/saved-events.component';
+import { PreviousBookingsComponent } from './User/previous-bookings/previous-bookings.component';
+import { ManageEventsComponent } from './Eventmanager/manage-events/manage-events.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +36,15 @@ import { AdmindashboardComponent } from './admin/admindashboard/admindashboard.c
     UserdashboardComponent,
     EventmanagerdashboardComponent,
     UserProfileComponent,
-    EmprofileComponent, EventcreationComponent, EditeventComponent, AdmindashboardComponent
+    EmprofileComponent,
+    EventcreationComponent,
+    EditeventComponent,
+    AdmindashboardComponent,
+    EventDetailsComponent,
+    TicketBookingComponent,
+    ETicketComponent,
+    SavedEventsComponent,
+    PreviousBookingsComponent, ManageEventsComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule,AppRoutingModule, RouterModule, RouterLink,ReactiveFormsModule

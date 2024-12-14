@@ -1,59 +1,133 @@
+/* Main header style */
 .main-header {
+  background-color: #007bff;
+  color: white;
+  padding: 15px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
-  color: white;
-  padding: 10px 20px;
+  font-family: Arial, sans-serif;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-}
-
-.nav-menu {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-  .nav-menu a {
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: color 0.3s ease;
+  .main-header .logo img {
+    max-width: 100%;
   }
 
-    .nav-menu a:hover {
-      color: #ffcc00;
-    }
-.dashboard-container {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
+.nav-menu button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 16px;
+  margin-left: 20px;
+  cursor: pointer;
 }
 
-.dashboard-actions {
+  .nav-menu button:hover {
+    text-decoration: underline;
+  }
+
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #f4f4f4;
+  padding: 15px;
+}
+
+  .sidebar a {
+    display: block;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #333;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+
+    .sidebar a:hover {
+      background-color: #007bff;
+      color: white;
+    }
+
+.dashboard-content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: white;
+  border-left: 2px solid #f4f4f4;
+}
+
+.dashboard-subactions {
   margin-bottom: 20px;
 }
 
-  .dashboard-actions a {
-    margin-right: 15px;
+  .dashboard-subactions a {
     text-decoration: none;
     color: #007bff;
   }
 
-    .dashboard-actions a:hover {
+    .dashboard-subactions a:hover {
       text-decoration: underline;
     }
-
-.dashboard-subactions {
+/* General container for the events section */
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   margin-top: 20px;
-  margin-bottom: 20px;
 }
 
-.dashboard-content {
-  padding-top: 20px;
+/* Style for individual event items */
+.event-item {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
 }
+
+  /* Add hover effect to event items */
+  .event-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Title styling */
+  .event-item h3 {
+    font-size: 11px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  /* Event details styling */
+  .event-item p {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+  }
+
+    /* Registered count styling */
+    .event-item p:last-child {
+      font-weight: bold;
+      color: #007bff;
+    }
+
+  /* Style for the edit button */
+  .event-item button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+    /* Button hover effect */
+    .event-item button:hover {
+      background-color: #0056b3;
+    }

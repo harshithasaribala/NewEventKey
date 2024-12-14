@@ -1,1 +1,119 @@
-<p>editevent works!</p>
+<form [formGroup]="editEventForm" (ngSubmit)="saveChanges()">
+  <!-- Event Name -->
+  <div class="form-group">
+    <label for="eventName">Event Name</label>
+    <input id="eventName"
+           formControlName="eventName"
+           class="form-control"
+           [class.is-invalid]="editEventForm.get('eventName')?.invalid && editEventForm.get('eventName')?.touched" />
+    <div *ngIf="editEventForm.get('eventName')?.invalid && editEventForm.get('eventName')?.touched" class="error">
+      Event Name is required.
+    </div>
+  </div>
+
+  <!-- Event ID (Read-Only) -->
+  <div class="form-group">
+    <label for="eventId">Event ID</label>
+    <input id="eventId"
+           formControlName="eventId"
+           class="form-control"
+           [class.is-invalid]="editEventForm.get('eventId')?.invalid && editEventForm.get('eventId')?.touched"
+           readonly />
+    <div *ngIf="editEventForm.get('eventId')?.invalid && editEventForm.get('eventId')?.touched" class="error">
+      Event ID is required.
+    </div>
+  </div>
+
+
+  <!-- Event Date -->
+  <div class="form-group">
+    <label for="eventDate">Event Date</label>
+    <input type="date"
+           id="eventDate"
+           formControlName="eventDate"
+           class="form-control"
+           [class.is-invalid]="editEventForm.get('eventDate')?.invalid && editEventForm.get('eventDate')?.touched" />
+    <div *ngIf="editEventForm.get('eventDate')?.errors?.required && editEventForm.get('eventDate')?.touched" class="error">
+      Event Date is required.
+    </div>
+    <div *ngIf="editEventForm.get('eventDate')?.errors?.futureDate && editEventForm.get('eventDate')?.touched" class="error">
+      Event Date must not be in the past.
+    </div>
+  </div>
+
+  <!-- Event Time -->
+  <div class="form-group">
+    <label for="eventTime">Event Time</label>
+    <input id="eventTime"
+           formControlName="eventTime"
+           type="time"
+           class="form-control"
+           [class.is-invalid]="editEventForm.get('eventTime')?.invalid && editEventForm.get('eventTime')?.touched" />
+    <div *ngIf="editEventForm.get('eventTime')?.invalid && editEventForm.get('eventTime')?.touched" class="error">
+      Event Time is required.
+    </div>
+  </div>
+
+  <!-- Location -->
+  <div class="form-group">
+    <label for="location">Location</label>
+    <input id="location"
+           formControlName="location"
+           class="form-control"
+           [class.is-invalid]="editEventForm.get('location')?.invalid && editEventForm.get('location')?.touched" />
+    <div *ngIf="editEventForm.get('location')?.invalid && editEventForm.get('location')?.touched" class="error">
+      Location is required.
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea id="description"
+              formControlName="description"
+              class="form-control"
+              rows="3"></textarea>
+  </div>
+
+  <!-- Ticket Price -->
+  <div class="form-group">
+    <label for="ticketPrice">Ticket Price</label>
+    <input id="ticketPrice"
+           formControlName="ticketPrice"
+           type="number"
+           class="form-control"
+           [class.is-invalid]="editEventForm.get('ticketPrice')?.invalid && editEventForm.get('ticketPrice')?.touched" />
+    <div *ngIf="editEventForm.get('ticketPrice')?.errors?.required && editEventForm.get('ticketPrice')?.touched" class="error">
+      Ticket Price is required.
+    </div>
+    <div *ngIf="editEventForm.get('ticketPrice')?.errors?.min && editEventForm.get('ticketPrice')?.touched" class="error">
+      Ticket Price must be greater than or equal to 0.
+    </div>
+  </div>
+
+  <!-- Max Attendees -->
+  <div class="form-group">
+    <label for="maxAttendees">Max Attendees</label>
+    <input id="maxAttendees"
+           formControlName="maxAttendees"
+           type="number"
+           class="form-control"
+           [class.is-invalid]="editEventForm.get('maxAttendees')?.invalid && editEventForm.get('maxAttendees')?.touched" />
+    <div *ngIf="editEventForm.get('maxAttendees')?.errors?.required && editEventForm.get('maxAttendees')?.touched" class="error">
+      Max Attendees is required.
+    </div>
+    <div *ngIf="editEventForm.get('maxAttendees')?.errors?.min && editEventForm.get('maxAttendees')?.touched" class="error">
+      Max Attendees must be greater than 0.
+    </div>
+  </div>
+
+  <!-- Submit and Cancel Buttons -->
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary" [disabled]="editEventForm.invalid">
+      Save Changes
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="cancelEdit()">
+      Cancel
+    </button>
+  </div>
+</form>

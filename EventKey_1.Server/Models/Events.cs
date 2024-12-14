@@ -14,12 +14,17 @@ namespace EventKey_1.Server.Models
 
         [Required]
         public string EventName { get; set; }
+        [Required]
+        public string EventType { get; set; }
 
         [Required]
         public string Organizer { get; set; }
 
         [Required]
         public DateTime EventDate { get; set; }
+
+        [Required]
+        public TimeSpan EventTime { get; set; }
 
         [Required]
         public string Location { get; set; }

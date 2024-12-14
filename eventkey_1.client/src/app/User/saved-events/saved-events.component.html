@@ -1,0 +1,25 @@
+<div class="saved-events-container">
+  <h2>Your Saved Events</h2>
+
+  <!-- Check if there are saved events -->
+  <div *ngIf="savedEvents.length > 0; else noEvents">
+    <!-- Loop through saved events -->
+    <div *ngFor="let event of savedEvents" class="event-card">
+      <h3>{{ event.eventName }}</h3>
+      <p><strong>Event Date:</strong> {{ event.eventDate | date: 'fullDate' }}</p>
+      <p><strong>Event ID:</strong> {{ event.eventId }}</p>
+
+      <!-- Book Now button -->
+      <button (click)="bookTicket(event)" class="book-now-btn">Book Now</button>
+
+      <!-- Remove from Saved Events button -->
+      <button (click)="removeEvent(event)" class="remove-event-btn">Remove from Saved Events</button>
+    </div>
+  </div>
+
+  <!-- Template for no saved events -->
+  <ng-template #noEvents>
+    <p>No saved events found. Start exploring and save your favorite events!</p>
+  </ng-template>
+  <button class="back-btn" (click)="onBack()">Back</button>
+</div>

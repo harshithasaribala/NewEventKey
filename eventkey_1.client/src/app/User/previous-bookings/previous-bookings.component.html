@@ -1,0 +1,25 @@
+<div class="container">
+  <div *ngIf="bookings.length > 0; else noBookings">
+    <h2>Your Previous Bookings</h2>
+    <div *ngFor="let booking of bookings">
+      <div class="booking">
+        <p><strong>Event Name:</strong> {{ booking.eventName }}</p>
+        <p><strong>Event Date:</strong> {{ booking.eventDate | date: 'fullDate'}}</p>
+        <p><strong>Event Time:</strong> {{ booking.eventTime }}</p>
+        <p><strong>Location:</strong> {{ booking.eventLocation }}</p>
+        <p><strong>Tickets Booked:</strong> {{ booking.numberOfTickets }}</p>
+        <p><strong>Total Amount:</strong> ₹{{ booking.totalAmount }}</p>
+        <p><strong>Booking Date:</strong> {{ booking.bookingDate | date: 'fullDate' }}</p>
+      </div>
+      <hr />
+    </div>
+    <!-- Back Button -->
+    <button (click)="onBack()">Back</button>
+  </div>
+
+  <ng-template #noBookings>
+    <p>No bookings found.</p>
+   <p>To Book tickets click the below button!!!</p>
+    <button class="go-to-event-details" (click)="goToEventDetails()">Go to Event Details</button>
+  </ng-template>
+</div>

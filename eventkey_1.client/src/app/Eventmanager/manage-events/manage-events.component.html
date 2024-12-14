@@ -1,0 +1,27 @@
+<div class="manage-events-container">
+  <h2>Manage Events</h2>
+
+  <!-- Grid container for events -->
+  <div class="events-grid">
+    <div *ngFor="let event of events" class="event-card">
+      <h3>{{ event.eventName }}</h3>
+      <p><strong>Event ID:</strong> {{ event.eventId }}</p>
+      <p><strong>Event Date:</strong> {{ event.eventDate | date:'fullDate' }}</p>
+      <p><strong>Event Time:</strong> {{ event.eventTime  }}</p>
+      <p><strong>Max Count:</strong> {{ event.maxAttendees }}</p>
+      <p><strong>Description:</strong> {{ event.description }}</p>
+      <p><strong>Price:</strong> {{ event.ticketPrice | currency:'INR' }}</p>
+
+      <!-- Action buttons -->
+      <div class="event-actions">
+        <button (click)="navigateToEditEvent(event.eventId)">Edit Event</button>
+        <button (click)="deleteEvent(event.eventId)">Delete Event</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back button -->
+  <div class="back-button-container">
+    <button (click)="goBack()">Back</button>
+  </div>
+</div>

@@ -182,7 +182,8 @@ namespace EventKey_1.Server.Controllers
                 {
                     return Ok(new
                     {
-                        userId = user.Id
+                        userId = user.Id,
+                        userName=user.FullName
                     });
                 }
                 else
@@ -198,7 +199,8 @@ namespace EventKey_1.Server.Controllers
                 {
                     return Ok(new
                     {
-                       eid = eventManager.EmId
+                       eid = eventManager.EmId,
+                       ename=eventManager.FullName
                     });
                 }
                 else

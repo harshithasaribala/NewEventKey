@@ -1,0 +1,98 @@
+/* Overall container styling */
+.container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Title for the page */
+h2 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* If there are no bookings */
+ng-template {
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+}
+
+/* Booking card layout */
+.booking {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+  /* Add spacing between booking details */
+  .booking p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+  }
+
+    /* Bold text for labels */
+    .booking p strong {
+      font-weight: 600;
+      color: #333;
+    }
+
+/* Stylish line separating bookings */
+hr {
+  border: 1px solid #eee;
+  margin: 20px 0;
+}
+
+/* Display image or event icon if needed */
+.booking img {
+  width: 100%;
+  max-width: 300px;
+  margin-top: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Handle mobile responsiveness */
+@media (max-width: 768px) {
+  .booking {
+    padding: 15px;
+  }
+
+    .booking p {
+      font-size: 14px;
+    }
+}
+/* Go to Event Details Button Styling */
+button.go-to-event-details {
+  background-color: #28a745; /* Green background */
+  color: white; /* White text */
+  padding: 12px 24px; /* Padding for size */
+  border: none; /* Remove default border */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 16px; /* Font size */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+  margin-top: 20px; /* Space above the button */
+}
+
+  /* Hover effect */
+  button.go-to-event-details:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: translateY(-2px); /* Lift effect */
+  }
+
+  /* Focus effect */
+  button.go-to-event-details:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.3); /* Green glow effect */
+  }
+
+  /* Disabled Button State (Optional) */
+  button.go-to-event-details:disabled {
+    background-color: #d6e9c6; /* Light green */
+    color: #6c757d; /* Gray text */
+    cursor: not-allowed; /* Disabled cursor */
+  }
