@@ -1,16 +1,16 @@
 body {
-  margin-top: 50px;
+  margin-top: 70px;
   text-align: justify;
+}
+
+.form-check {
+  font-size: 14px;
 }
 
 .form-label {
   color: black;
-  font-size: 36px;
+  font-size: 16px;
   font-weight: bold;
-}
-
-.form-check {
-  font-size: 18px;
 }
 
 .form-control {
@@ -18,12 +18,12 @@ body {
 }
 
 .btn-secondary {
-  font-size: 20px;
+  font-size: 13px;
   border-radius: 8px;
 }
 
 .btn-primary {
-  font-size: 20px;
+  font-size: 13px;
   border-radius: 8px;
   padding: 12px 20px;
 }

@@ -46,11 +46,11 @@ export class SavedEventsComponent implements OnInit {
   removeEvent(eventId: string): void {
     this.authService.removeSavedEvent(this.userId, eventId).subscribe(
       () => {
-        // After successful removal, update the list
         this.savedEvents = this.savedEvents.filter(event => event.eventId !== eventId);
         alert('Event removed successfully!');
       },
       (error) => {
+
         console.error('Error removing event:', error);
       }
     );

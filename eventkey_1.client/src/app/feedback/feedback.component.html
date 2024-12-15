@@ -1,0 +1,104 @@
+<form [formGroup]="feedbackForm" (ngSubmit)="submitFeedback()">
+  <div class="feedback-container">
+    <h2>Feedback</h2>
+    <p>We value your feedback. Please rate your experience and share your thoughts below.</p>
+
+    <!-- User ID Section -->
+    <div class="form-group">
+      <label for="userId">User ID</label>
+      <input type="text" id="userId" class="form-control" [value]="userId" readonly />
+    </div>
+
+    <!-- Event ID Section -->
+    <div class="form-group">
+      <label for="eventId">Event ID:</label>
+      <input id="eventId"
+             type="text"
+             formControlName="eventId"
+             class="form-control"
+             placeholder="Enter Event ID" />
+      <div *ngIf="feedbackForm.controls['eventId'].invalid && feedbackForm.controls['eventId'].touched" class="error-message">
+        Event ID is required.
+      </div>
+    </div>
+
+    <!-- Event Name Section -->
+    <div class="form-group">
+      <label for="eventName">Event Name:</label>
+      <input id="eventName"
+             type="text"
+             formControlName="eventName"
+             class="form-control"
+             placeholder="Enter Event Name" />
+      <div *ngIf="feedbackForm.controls['eventName'].invalid && feedbackForm.controls['eventName'].touched" class="error-message">
+        Event Name is required.
+      </div>
+    </div>
+
+    <!-- Event Date Section -->
+    <div class="form-group">
+      <label for="eventDate">Event Date:</label>
+      <input id="eventDate"
+             type="date"
+             formControlName="eventDate"
+             class="form-control" />
+      <div *ngIf="feedbackForm.controls['eventDate'].invalid && feedbackForm.controls['eventDate'].touched" class="error-message">
+        <div *ngIf="feedbackForm.controls['eventDate'].errors?.['eventDateInvalid']">
+          Event Date must be before today's date.
+        </div>
+        <div *ngIf="feedbackForm.controls['eventDate'].errors?.['required']">
+          Event Date is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Rating Section -->
+    <div class="rating">
+      <p>Rate the Event:</p>
+      <div class="stars">
+        <span (click)="setRating(1)" [style.color]="feedbackForm.controls['rating'].value >= 1 ? '#f5a623' : '#ccc'">&#9733;</span>
+        <span (click)="setRating(2)" [style.color]="feedbackForm.controls['rating'].value >= 2 ? '#f5a623' : '#ccc'">&#9733;</span>
+        <span (click)="setRating(3)" [style.color]="feedbackForm.controls['rating'].value >= 3 ? '#f5a623' : '#ccc'">&#9733;</span>
+        <span (click)="setRating(4)" [style.color]="feedbackForm.controls['rating'].value >= 4 ? '#f5a623' : '#ccc'">&#9733;</span>
+        <span (click)="setRating(5)" [style.color]="feedbackForm.controls['rating'].value >= 5 ? '#f5a623' : '#ccc'">&#9733;</span>
+      </div>
+      <div *ngIf="feedbackForm.controls['rating'].invalid && feedbackForm.controls['rating'].touched" class="error-message">
+        Please rate the event (1-5).
+      </div>
+    </div>
+
+    <!-- Feedback Text Area -->
+    <div class="feedback-text">
+      <label for="feedback">Your Feedback:</label>
+      <textarea id="feedback" rows="5" placeholder="Write your feedback here..." formControlName="feedbackText"></textarea>
+      <div *ngIf="feedbackForm.controls['feedbackText'].invalid && feedbackForm.controls['feedbackText'].touched" class="error-message">
+        Feedback must be at least 50 characters long.
+      </div>
+    </div>
+
+
+    <!-- Image Upload Section -->
+    <div class="form-group">
+      <label for="image">Upload an Image:</label>
+      <input type="file" id="image" (change)="onFileSelected($event)" />
+      <div *ngIf="uploadedPhoto" class="image-preview">
+        <img [src]="uploadedPhoto" alt="Uploaded Image" width="100" />
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="submit">
+      <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()" (click)="submitFeedback()">
+        Submit Feedback
+      </button>
+
+      <!-- Reset Button -->
+      <button type="button" (click)="resetForm()">Reset</button>
+    </div>
+
+    <!-- Thank You Message -->
+    <div class="thank-you" *ngIf="showThankYouMessage">
+      <p>Thank you for your feedback!</p>
+    </div>
+  </div>
+</form>

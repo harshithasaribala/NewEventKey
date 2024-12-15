@@ -33,10 +33,10 @@
            formControlName="eventDate"
            class="form-control"
            [class.is-invalid]="editEventForm.get('eventDate')?.invalid && editEventForm.get('eventDate')?.touched" />
-    <div *ngIf="editEventForm.get('eventDate')?.errors?.required && editEventForm.get('eventDate')?.touched" class="error">
+    <div *ngIf="editEventForm.get('eventDate')?.errors?.['required'] && editEventForm.get('eventDate')?.touched" class="error">
       Event Date is required.
     </div>
-    <div *ngIf="editEventForm.get('eventDate')?.errors?.futureDate && editEventForm.get('eventDate')?.touched" class="error">
+    <div *ngIf="editEventForm.get('eventDate')?.errors?.['futureDate'] && editEventForm.get('eventDate')?.touched" class="error">
       Event Date must not be in the past.
     </div>
   </div>
@@ -83,10 +83,10 @@
            type="number"
            class="form-control"
            [class.is-invalid]="editEventForm.get('ticketPrice')?.invalid && editEventForm.get('ticketPrice')?.touched" />
-    <div *ngIf="editEventForm.get('ticketPrice')?.errors?.required && editEventForm.get('ticketPrice')?.touched" class="error">
+    <div *ngIf="editEventForm.get('ticketPrice')?.errors?.['required'] && editEventForm.get('ticketPrice')?.touched" class="error">
       Ticket Price is required.
     </div>
-    <div *ngIf="editEventForm.get('ticketPrice')?.errors?.min && editEventForm.get('ticketPrice')?.touched" class="error">
+    <div *ngIf="editEventForm.get('ticketPrice')?.errors?.['min'] && editEventForm.get('ticketPrice')?.touched" class="error">
       Ticket Price must be greater than or equal to 0.
     </div>
   </div>
@@ -99,10 +99,10 @@
            type="number"
            class="form-control"
            [class.is-invalid]="editEventForm.get('maxAttendees')?.invalid && editEventForm.get('maxAttendees')?.touched" />
-    <div *ngIf="editEventForm.get('maxAttendees')?.errors?.required && editEventForm.get('maxAttendees')?.touched" class="error">
+    <div *ngIf="editEventForm.get('maxAttendees')?.errors?.['required'] && editEventForm.get('maxAttendees')?.touched" class="error">
       Max Attendees is required.
     </div>
-    <div *ngIf="editEventForm.get('maxAttendees')?.errors?.min && editEventForm.get('maxAttendees')?.touched" class="error">
+    <div *ngIf="editEventForm.get('maxAttendees')?.errors?.['min'] && editEventForm.get('maxAttendees')?.touched" class="error">
       Max Attendees must be greater than 0.
     </div>
   </div>

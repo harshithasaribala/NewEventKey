@@ -63,10 +63,10 @@
              id="eventDate"
              formControlName="eventDate"
              [class.invalid]="createEventForm.get('eventDate')?.invalid && createEventForm.get('eventDate')?.touched">
-      <div *ngIf="createEventForm.get('eventDate')?.errors?.required && createEventForm.get('eventDate')?.touched" class="error">
+      <div *ngIf="createEventForm.get('eventDate')?.errors?.['required'] && createEventForm.get('eventDate')?.touched" class="error">
         Event date is required.
       </div>
-      <div *ngIf="createEventForm.get('eventDate')?.errors?.futureDate && createEventForm.get('eventDate')?.touched" class="error">
+      <div *ngIf="createEventForm.get('eventDate')?.errors?.['futureDate'] && createEventForm.get('eventDate')?.touched" class="error">
         Event date must be in the future.
       </div>
     </div>

@@ -23,87 +23,156 @@ namespace EventKey_1.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> AddFeedback([FromForm] FeedbackDto feedbackDto)
         {
-            if (feedbackDto == null)
-                return BadRequest("Feedback cannot be null.");
-
-            // Handle image upload
-            string imagePath = null;
-            if (feedbackDto.Image != null)
+            try
             {
-                // Validate file type
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-                var fileExtension = Path.GetExtension(feedbackDto.Image.FileName).ToLower();
-                if (!allowedExtensions.Contains(fileExtension))
+                // Check if feedbackDto is null
+                if (feedbackDto == null)
                 {
-                    return BadRequest("Invalid file type. Only JPG, PNG, and GIF are allowed.");
+                    return BadRequest(new { Message = "Feedback cannot be null." });
                 }
 
-                // Validate file size (5 MB max)
-                const long maxFileSize = 5 * 1024 * 1024; // 5 MB
-                if (feedbackDto.Image.Length > maxFileSize)
+                // Validate required fields
+                if (string.IsNullOrEmpty(feedbackDto.UserId) ||
+                    string.IsNullOrEmpty(feedbackDto.EventId) ||
+                    string.IsNullOrEmpty(feedbackDto.EventName) ||
+                    feedbackDto.EventDate == default ||
+                    string.IsNullOrEmpty(feedbackDto.FeedbackText) ||
+                    feedbackDto.Rating < 1 || feedbackDto.Rating > 5)
                 {
-                    return BadRequest("File size exceeds the maximum allowed size of 5 MB.");
+                    return BadRequest(new { Message = "One or more required fields are missing or invalid." });
                 }
 
-                try
+                // Handle image upload
+                string imagePath = null;
+                if (feedbackDto.Image != null)
                 {
-                    var uploadsFolder = Path.Combine("wwwroot", "images", "feedback");
-                    Directory.CreateDirectory(uploadsFolder);
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(feedbackDto.Image.FileName);
-                    imagePath = Path.Combine(uploadsFolder, fileName);
-                    using (var stream = new FileStream(imagePath, FileMode.Create))
+                    // Validate file type
+                    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+                    var fileExtension = Path.GetExtension(feedbackDto.Image.FileName).ToLower();
+                    if (!allowedExtensions.Contains(fileExtension))
                     {
-                        await feedbackDto.Image.CopyToAsync(stream);
+                        return BadRequest(new { Message = "Invalid file type. Only JPG, PNG, and GIF are allowed." });
                     }
-                    imagePath = Path.Combine("images", "feedback", fileName); // Relative path for client use
+
+                    // Validate file size (5 MB max)
+                    const long maxFileSize = 5 * 1024 * 1024; // 5 MB
+                    if (feedbackDto.Image.Length > maxFileSize)
+                    {
+                        return BadRequest(new { Message = "File size exceeds the maximum allowed size of 5 MB." });
+                    }
+
+                    try
+                    {
+                        // Save the image to the server
+                        var uploadsFolder = Path.Combine("wwwroot", "images", "feedback");
+                        Directory.CreateDirectory(uploadsFolder); // Ensure the folder exists
+                        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(feedbackDto.Image.FileName);
+                        var filePath = Path.Combine(uploadsFolder, fileName);
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await feedbackDto.Image.CopyToAsync(stream);
+                        }
+                        imagePath = Path.Combine("images", "feedback", fileName); // Relative path for client use
+                    }
+                    catch (Exception ex)
+                    {
+                        return StatusCode(500, new { Message = $"Error saving the image: {ex.Message}" });
+                    }
                 }
-                catch (Exception ex)
+
+                // Save feedback to database
+                var feedback = new Feedback
                 {
-                    return StatusCode(500, $"Internal server error: {ex.Message}");
-                }
+                    UserId = feedbackDto.UserId,
+                    EventId = feedbackDto.EventId,
+                    EventName = feedbackDto.EventName,
+                    EventDate = feedbackDto.EventDate,
+                    FeedbackText = feedbackDto.FeedbackText,
+                    Rating = feedbackDto.Rating,
+                    ImagePath = imagePath,
+                    CreatedAt = DateTime.Now
+                };
+
+                _context.Feedbacks.Add(feedback);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { Message = "Feedback submitted successfully.", FeedbackId = feedback.FeedbackId });
             }
-
-            // Save feedback to database
-            var feedback = new Feedback
+            catch (Exception ex)
             {
-                UserId = feedbackDto.UserId,
-                EventId = feedbackDto.EventId,
-                EventName = feedbackDto.EventName,
-                EventDate = feedbackDto.EventDate,
-                FeedbackText = feedbackDto.FeedbackText,
-                Rating = feedbackDto.Rating,
-                ImagePath = imagePath,
-                CreatedAt = DateTime.Now
-            };
-
-            _context.Feedbacks.Add(feedback);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { Message = "Feedback submitted successfully.", FeedbackId = feedback.FeedbackId });
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
         }
+
 
         // GET: api/Feedback/{eventId}
         [HttpGet("{eventId}")]
         public IActionResult GetFeedbackByEvent(string eventId)
         {
-            var feedbacks = _context.Feedbacks
-                .Where(f => f.EventId == eventId)
-                .Select(f => new
+            try
+            {
+                var feedbacks = _context.Feedbacks
+                    .Where(f => f.EventId == eventId)
+                    .Select(f => new
+                    {
+                        f.UserId,
+                        f.EventName,
+                        f.EventDate,
+                        f.FeedbackText,
+                        f.Rating,
+                        ImageUrl = string.IsNullOrEmpty(f.ImagePath) ? null : $"{Request.Scheme}://{Request.Host}/{f.ImagePath}",
+                        f.CreatedAt
+                    })
+                    .ToList();
+
+                if (!feedbacks.Any())
                 {
-                    f.UserId,
-                    f.EventName,
-                    f.EventDate,
-                    f.FeedbackText,
-                    f.Rating,
-                    ImageUrl = string.IsNullOrEmpty(f.ImagePath) ? null : $"{Request.Scheme}://{Request.Host}/{f.ImagePath}",
-                    f.CreatedAt
-                })
-                .ToList();
+                    return NotFound(new { Message = "No feedback found for this event." });
+                }
 
-            if (!feedbacks.Any())
-                return NotFound("No feedback found for this event.");
+                return Ok(feedbacks);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
+        }
+        [HttpDelete("Event/{eventId}")]
+        public async Task<IActionResult> DeleteFeedbackByEvent(string eventId)
+        {
+            try
+            {
+                // Retrieve all feedback records for the given EventId
+                var feedbacks = _context.Feedbacks.Where(f => f.EventId == eventId).ToList();
 
-            return Ok(feedbacks);
+                if (!feedbacks.Any())
+                {
+                    return NotFound(new { Message = "No feedback found for the specified EventId." });
+                }
+
+                // Delete associated images if they exist
+                foreach (var feedback in feedbacks)
+                {
+                    if (!string.IsNullOrEmpty(feedback.ImagePath))
+                    {
+                        var imagePath = Path.Combine("wwwroot", feedback.ImagePath);
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
+                    }
+                }
+
+                // Remove feedback records from the database
+                _context.Feedbacks.RemoveRange(feedbacks);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { Message = "All feedback for the specified EventId deleted successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
         }
     }
 }

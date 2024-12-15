@@ -29,7 +29,7 @@ export class EditeventComponent implements OnInit {
       eventDate: ['', [Validators.required, this.futureDateValidator()]], // Future date validation
       eventTime: ['', Validators.required],
       location: ['', Validators.required],
-      description: [''],
+      description: ['', Validators.required],
       ticketPrice: ['', [Validators.required, Validators.min(0)]],
       maxAttendees: ['', [Validators.required, Validators.min(1)]],
     });

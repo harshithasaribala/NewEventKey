@@ -1,0 +1,47 @@
+.ticket-sales-container {
+  margin: 20px;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.chart-container {
+  width: 80%;
+  height: 400px;
+  margin: 0 auto;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+.event-card {
+  border: 1px solid #ddd;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.event-title {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+canvas {
+  width: 100% !important;
+  height: 300px !important;
+}
+
+.revenue-details {
+  margin-top: 10px;
+  text-align: center;
+}
+
+  .revenue-details p {
+    margin: 5px 0;
+    font-size: 16px;
+  }

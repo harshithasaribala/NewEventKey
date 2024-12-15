@@ -24,6 +24,10 @@ import { ETicketComponent } from './User/e-ticket/e-ticket.component';
 import { SavedEventsComponent } from './User/saved-events/saved-events.component';
 import { PreviousBookingsComponent } from './User/previous-bookings/previous-bookings.component';
 import { ManageEventsComponent } from './Eventmanager/manage-events/manage-events.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { RevenueVisualizationComponent } from './admin/revenue-visualization/revenue-visualization.component';
+import { ManageAccountsComponent } from './admin/manage-accounts/manage-accounts.component';
+import { TicketSalesComponent } from './Eventmanager/ticket-sales/ticket-sales.component';
 
 @NgModule({
   declarations: [
@@ -44,10 +48,10 @@ import { ManageEventsComponent } from './Eventmanager/manage-events/manage-event
     TicketBookingComponent,
     ETicketComponent,
     SavedEventsComponent,
-    PreviousBookingsComponent, ManageEventsComponent
+    PreviousBookingsComponent, ManageEventsComponent, FeedbackComponent, RevenueVisualizationComponent, ManageAccountsComponent, TicketSalesComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule, FormsModule,AppRoutingModule, RouterModule, RouterLink,ReactiveFormsModule
+    BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, RouterModule, RouterLink, ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

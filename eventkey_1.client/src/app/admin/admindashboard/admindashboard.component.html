@@ -1,1 +1,37 @@
-<p>admindashboard works!</p>
+<div class="navbar">
+  <h1>Admin Dashboard</h1>
+</div>
+
+<div class="container">
+  <div class="sidebar">
+    <h2>Admin Features</h2>
+    <ul>
+      <li><a>View Feedback</a></li>
+      <li><a href="#" (click)="navigateToAccounts()">Manage Accounts</a></li>
+      <li>
+        <a href="#" (click)="navigateToRevenue()">Revenue Visualization</a>
+      </li>
+      <li><button class="logout-btn" (click)="logout()">Logout</button></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <p>Welcome to the Admin Dashboard.</p>
+
+    <div class="charts-container">
+      <!-- Registered Users Chart -->
+      <div class="chart-box">
+        <h3>Total Registered Users</h3>
+        <canvas id="registeredUsersChart" width="400" height="400"></canvas>
+      </div>
+
+      <!-- Registered Event Managers Chart -->
+      <div class="chart-box">
+        <h3>Total Event Managers</h3>
+        <canvas id="eventManagersChart" width="400" height="400"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>

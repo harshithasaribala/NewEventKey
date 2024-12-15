@@ -2,7 +2,7 @@
   <h2>Your E-Ticket</h2>
   <div class="ticket">
     <h3>{{ event.eventName }}</h3>
-    <p><strong>User Name:</strong> {{ userName }}</p>
+    <p><strong>Booked By:</strong> {{ userName }}</p>
     <p><strong>Number of Tickets:</strong> {{ numberOfTickets }}</p>
     <p><strong>Total Cost:</strong> {{ totalCost | currency:'INR' }}</p>
     <p><strong>Event Date:</strong> {{ event.eventDate | date: 'fullDate' }}</p>

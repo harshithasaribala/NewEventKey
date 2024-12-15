@@ -15,8 +15,11 @@ export class TicketBookingComponent implements OnInit {
   userName: string = '';
   event: any;
   numberOfTickets: number = 1;
-  totalCost: number = 0;
+  baseCost: number = 0; // Base cost before GST
+  gstAmount: number = 0; // GST amount
+  totalCost: number = 0; // Total cost including GST
   userProfile: any;
+  gstRate: number = 18; // GST rate in percentage
 
   constructor(
     private route: ActivatedRoute,
@@ -74,19 +77,23 @@ export class TicketBookingComponent implements OnInit {
   }
 
   updateTotalCost() {
-    // Calculate total cost dynamically based on the number of tickets
-    this.totalCost = this.numberOfTickets * this.event.ticketPrice;
+    // Calculate base cost and GST amount
+    this.baseCost = this.numberOfTickets * this.event.ticketPrice;
+    this.gstAmount = (this.baseCost * this.gstRate) / 100;
+    this.totalCost = this.baseCost + this.gstAmount;
   }
 
   cancelBooking() {
     this.router.navigate([`/userdashboard/${this.userId}/eventdetails`]);
   }
-  
+
   proceedToConfirm() {
     const bookingDetails = {
       userId: this.userId,
       eventId: this.eventId,
       numberOfTickets: this.numberOfTickets,
+      baseCost: this.baseCost,
+      gstAmount: this.gstAmount,
       totalAmount: this.totalCost,
       eventName: this.event.eventName,
       eventDate: this.event.eventDate,

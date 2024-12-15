@@ -87,4 +87,7 @@ export class UserdashboardComponent implements OnInit {
   navigateToMyBookings() {
     this.router.navigate([`/userdashboard/${this.userId}/previousBookings`]);
   }
+  naviagteToFeedBack() {
+    this.router.navigate([`/userdashboard/${this.userId}/feedback`]);
+  }
 }

@@ -105,6 +105,10 @@ export class EventmanagerdashboardComponent implements OnInit {
     // Navigate to the event creation page with the current user ID
     this.router.navigate([`eventmanagerdashboard/${this.eventManagerId}/eventcreation`]);
   }
+  navigateToTicketSales() {
+    // Navigate to the event creation page with the current user ID
+    this.router.navigate([`eventmanagerdashboard/${this.eventManagerId}/ticket-sales`]);
+  }
 
   loadEventManagerProfile() {
     // Dynamically load the event manager profile component

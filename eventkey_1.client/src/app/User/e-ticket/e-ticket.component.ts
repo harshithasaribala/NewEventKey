@@ -17,8 +17,10 @@ export class ETicketComponent implements OnInit {
   event: any;
   userProfile: any;
   numberOfTickets!: number;
-  totalCost!: number;
-
+  gstRate: number = 18;
+  baseCost: number = 0; // Base cost before GST
+  gstAmount: number = 0; // GST amount
+  totalCost: number = 0; // Total cost including GST
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -73,7 +75,9 @@ export class ETicketComponent implements OnInit {
 
         // Calculate total cost after fetching event details
         if (this.event && this.event.ticketPrice) {
-          this.totalCost = this.numberOfTickets * this.event.ticketPrice;
+          this.baseCost = this.numberOfTickets * this.event.ticketPrice;
+          this.gstAmount = (this.baseCost * this.gstRate) / 100;
+          this.totalCost = this.baseCost + this.gstAmount;
         }
       },
       (error) => {

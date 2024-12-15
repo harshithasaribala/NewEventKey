@@ -9,6 +9,7 @@ export class AuthService {
   private apiUrl = 'https://localhost:7172/api/Account';
   private eventsUrl = 'https://localhost:7172/api/Events';
   private bookingsUrl = 'https://localhost:7172/api/Bookings';
+  private feedBackUrl = 'https://localhost:7172/api/Feedback';
   constructor(private http: HttpClient) { }
 
   // Sign up method
@@ -68,5 +69,8 @@ export class AuthService {
   }
   updateEvent(eventId: string, eventData: any) {
     return this.http.put(`${this.eventsUrl}/${eventId}`, eventData);
+  }
+  submitFeedback(feedbackData: any): Observable<any> {
+    return this.http.post(`${this.feedBackUrl}`, feedbackData);
   }
 }

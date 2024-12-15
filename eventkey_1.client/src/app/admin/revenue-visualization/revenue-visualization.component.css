@@ -1,0 +1,41 @@
+.revenue-dashboard {
+  text-align: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.revenue-heading {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.revenue-info {
+  margin-bottom: 30px;
+  font-size: 1.5rem;
+  color: #555;
+}
+
+  .revenue-info h2,
+  .revenue-info h3 {
+    margin: 10px 0;
+  }
+
+.charts-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.chart-box {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

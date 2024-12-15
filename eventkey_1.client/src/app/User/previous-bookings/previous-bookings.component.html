@@ -1,6 +1,6 @@
 <div class="container">
   <div *ngIf="bookings.length > 0; else noBookings">
-    <h2>Your Previous Bookings</h2>
+    <h2>Your Bookings</h2>
     <div *ngFor="let booking of bookings">
       <div class="booking">
         <p><strong>Event Name:</strong> {{ booking.eventName }}</p>
