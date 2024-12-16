@@ -71,6 +71,7 @@ export class AuthService {
     return this.http.put(`${this.eventsUrl}/${eventId}`, eventData);
   }
   submitFeedback(feedbackData: any): Observable<any> {
+    console.log(`${this.feedBackUrl}`, feedbackData);
     return this.http.post(`${this.feedBackUrl}`, feedbackData);
   }
 }

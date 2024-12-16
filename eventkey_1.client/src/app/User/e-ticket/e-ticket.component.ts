@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import html2canvas from 'html2canvas';
 import { AuthService } from '../../services/auth.service';
 import { Location } from '@angular/common';
+import { SessionService } from '../../services/session.service';
 @Component({
   selector: 'app-e-ticket',
   standalone:false,
@@ -25,7 +26,8 @@ export class ETicketComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private location: Location
+    private location: Location,
+    private sessionService: SessionService
   ) { }
 
   ngOnInit() {
@@ -37,15 +39,14 @@ export class ETicketComponent implements OnInit {
         console.error('No user ID found in route parameters');
       }
     });
-    this.route.paramMap.subscribe(params => {
-      this.userId = params.get('userId') || '';
-      if (this.userId) {
+    const retrievedId = this.sessionService.getItem('userId');
+    if (retrievedId) {
+      this.userId = retrievedId; 
         this.getUserProfile(this.userId); // Fetch profile if userId exists
       } else {
         console.error('No user ID found in route parameters');
         this.router.navigate(['/login']);
       }
-    });
 
   }
   getUserProfile(userId: string): void {

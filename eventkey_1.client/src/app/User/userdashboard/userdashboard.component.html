@@ -27,16 +27,16 @@
 <div class="dashboard-container">
   <aside class="sidebar">
     <ul>
-      <li><a href="#" (click)="navigateToEventDetails()"> Events</a></li>
-      <li><a href="#" (click)="navigateToMyBookings()">My Bookings</a></li>
-      <li><a href="#" (click)="navigateToSavedEvents()"> Saved Events</a></li>
-      <li><a href="#" (click)="naviagteToFeedBack()"> FeedBack</a></li>
+      <li><button href="#" (click)="loadComponent('event_details')"> Events</button></li>
+      <li><button href="#" (click)="loadComponent('my_bookings')">My Bookings</button></li>
+      <li><button href="#" (click)="loadComponent('saved_events')"> Saved Events</button></li>
+      <li><button href="#" (click)="naviagteTOfeed()"> FeedBack</button></li>
     </ul>
   </aside>
 
   <!-- Main Content Area -->
   <main class="dashboard-content">
-    <router-outlet></router-outlet>
+    <!--<router-outlet></router-outlet>-->
     <ng-container #dynamicComponentContainer></ng-container>
   </main>
 </div>

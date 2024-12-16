@@ -80,7 +80,7 @@
     <!-- Image Upload Section -->
     <div class="form-group">
       <label for="image">Upload an Image:</label>
-      <input type="file" id="image" (change)="onFileSelected($event)" />
+      <input type="file" id="image" (change)="onFileSelected($event)" formControlName="imagePath" />
       <div *ngIf="uploadedPhoto" class="image-preview">
         <img [src]="uploadedPhoto" alt="Uploaded Image" width="100" />
       </div>

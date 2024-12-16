@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -6,7 +7,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-feedback',
-  standalone: false,
+  standalone:false,
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.css']
 })
@@ -16,13 +17,13 @@ export class FeedbackComponent implements OnInit {
   selectedFile: File | null = null;
   uploadedPhoto: string | null = null;
   showThankYouMessage: boolean = false;
-  uploadedImage: File | null = null;
+
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private authService: AuthService) {
     this.feedbackForm = this.fb.group({
       userId: ['', [Validators.required]],
       eventId: ['', [Validators.required]],
       eventName: ['', [Validators.required]],
-      eventDate: ['', [Validators.required, this.dateLessThanCurrent.bind(this)]],
+      eventDate: ['', [Validators.required, this.dateLessThanCurrent]],
       feedbackText: ['', [Validators.required, Validators.minLength(50)]],
       rating: [null, [Validators.required, Validators.min(1), Validators.max(5)]],
       imagePath: ['']
@@ -37,12 +38,15 @@ export class FeedbackComponent implements OnInit {
       alert('Invalid or missing User ID in the URL.');
     }
   }
+
   setRating(rating: number): void {
     this.feedbackForm.controls['rating'].setValue(rating);
   }
+
   isFormValid(): boolean {
     return this.feedbackForm.valid;
   }
+
   dateLessThanCurrent(control: AbstractControl): { [key: string]: any } | null {
     const today = new Date();
     const eventDate = new Date(control.value);
@@ -71,15 +75,15 @@ export class FeedbackComponent implements OnInit {
       formData.append('FeedbackText', this.feedbackForm.controls['feedbackText'].value);
       formData.append('Rating', this.feedbackForm.controls['rating'].value.toString());
 
-      if (this.uploadedImage) {
-        formData.append('Image', this.uploadedImage, this.uploadedImage.name);
+      if (this.selectedFile) {
+        formData.append('Image', this.selectedFile, this.selectedFile.name);
       }
 
       this.authService.submitFeedback(formData).subscribe(
         (response) => {
           console.log('Feedback submitted successfully:', response);
           this.showThankYouMessage = true;
-          this.feedbackForm.reset();
+          this.resetForm();
         },
         (error: HttpErrorResponse) => {
           console.error('Error submitting feedback:', error);
@@ -90,7 +94,6 @@ export class FeedbackComponent implements OnInit {
       alert('Please fill in all required fields.');
     }
   }
-
 
   resetForm(): void {
     this.feedbackForm.reset();

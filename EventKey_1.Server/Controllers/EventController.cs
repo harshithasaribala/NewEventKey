@@ -153,9 +153,9 @@ namespace EventKey_1.Server.Controllers
 
             return Ok(new
             {
-                EventId = eventObj.EventId,
-                EventName = eventObj.EventName,
-                MaxAttendees = eventObj.MaxAttendees,
+                eventId = eventObj.EventId,
+                eventName = eventObj.EventName,
+                maxAttendees = eventObj.MaxAttendees,
                 RegisteredCount = eventObj.RegisteredAttendees,
                 AvailableTickets = eventObj.MaxAttendees - eventObj.RegisteredAttendees
             });

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { SessionService } from '../../services/session.service';
 @Component({
   selector: 'app-event-details',
   standalone: false,
@@ -11,10 +12,13 @@ import { Location } from '@angular/common';
 export class EventDetailsComponent implements OnInit {
   @Input() events: any[] = [];
   userId!: string;
-  constructor(private eventService: AuthService, private router: Router,private route:ActivatedRoute,private location :Location) { }
+  constructor(private eventService: AuthService, private router: Router,private route:ActivatedRoute,private location :Location,private sessionService:SessionService) { }
 
   ngOnInit() {
-    this.userId = this.route.snapshot.paramMap.get('userId')!;
+    const retrievedId = this.sessionService.getItem('userId');
+    if (retrievedId) {
+      this.userId = retrievedId;
+    }
     this.eventService.fetchEvents().subscribe(
       (response) => {
         this.events = response;
@@ -50,7 +54,7 @@ export class EventDetailsComponent implements OnInit {
   }
 
   bookTicket(event: any) {
-    this.router.navigate([`/userdashboard/${this.userId}/eventdetails/${event.eventId}/ticketbooking`]);
+    this.router.navigate([`/userdashboard/eventdetails/${event.eventId}/ticketbooking`]);
   }
 
   saveEvent(event: any): void {

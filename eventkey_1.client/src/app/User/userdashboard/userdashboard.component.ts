@@ -4,6 +4,9 @@ import { UserProfileComponent } from '../userprofile/userprofile.component';
 import { AuthService } from '../../services/auth.service';
 import { EventDetailsComponent } from '../event-details/event-details.component';
 import { SavedEventsComponent } from '../saved-events/saved-events.component';
+import { SessionService } from '../../services/session.service';
+import { PreviousBookingsComponent } from '../previous-bookings/previous-bookings.component';
+import { FeedbackComponent } from '../../feedback/feedback.component';
 
 @Component({
   selector: 'app-userdashboard',
@@ -22,20 +25,19 @@ export class UserdashboardComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver,
     private userService: AuthService,
     private router: Router,
-    private route: ActivatedRoute // To access route parameters
+    private route: ActivatedRoute,
+    private sessionService: SessionService
   ) { }
 
   ngOnInit(): void {
-    // Fetch userId from route parameters
-    this.route.paramMap.subscribe(params => {
-      this.userId = params.get('userId') || '';
-      if (this.userId) {
+    const retrievedId = this.sessionService.getItem('userId');
+    if (retrievedId) {
+      this.userId = retrievedId;  // Assign only if it's not null
         this.getUserProfile(this.userId); // Fetch profile if userId exists
       } else {
         console.error('No user ID found in route parameters');
         this.router.navigate(['/login']);
       }
-    });
   }
 
   // Fetch user profile data
@@ -61,6 +63,7 @@ export class UserdashboardComponent implements OnInit {
     // Remove user details from session storage and redirect to login
     sessionStorage.removeItem('userDetails');
     sessionStorage.clear();
+    this.sessionService.clear();
     this.router.navigate(['/login']);
   }
 
@@ -70,10 +73,18 @@ export class UserdashboardComponent implements OnInit {
     if (section == 'profile') {
       this.loadUserProfile();
     }
-  }
-  navigateToEventDetails() {
-    // Navigate to the event details page with the current user ID
-    this.router.navigate([`/userdashboard/${this.userId}/eventdetails`]);
+    if (section == 'event_details') {
+      this.loadEventDetails();
+    }
+    if (section == 'saved_events') {
+      this.loadSavedEvents();
+    }
+    if (section == 'my_bookings') {
+      this.loadSavedEvents();
+    }
+    //if (section == 'feedback') {
+    //  this.loadFeedBack();
+    //}
   }
   loadUserProfile() {
     // Dynamically load the user profile component
@@ -81,13 +92,23 @@ export class UserdashboardComponent implements OnInit {
     const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
     componentRef.instance.user = this.userProfile; // Pass the profile data
   }
-  navigateToSavedEvents() {
-    this.router.navigate([`/userdashboard/${this.userId}/savedEvents`]);
+  loadEventDetails() {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(EventDetailsComponent);
+    const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
   }
-  navigateToMyBookings() {
-    this.router.navigate([`/userdashboard/${this.userId}/previousBookings`]);
+  loadSavedEvents() {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(SavedEventsComponent);
+    const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
   }
-  naviagteToFeedBack() {
-    this.router.navigate([`/userdashboard/${this.userId}/feedback`]);
+  loadMyBookings() {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(PreviousBookingsComponent);
+    const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
   }
+  naviagteTOfeed() {
+    this.router.navigate([`userdashboard/${this.userId}/feedback`]);
+  }
+  //loadFeedBack() {
+  //  const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FeedbackComponent);
+  //  const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
+  //}
 }

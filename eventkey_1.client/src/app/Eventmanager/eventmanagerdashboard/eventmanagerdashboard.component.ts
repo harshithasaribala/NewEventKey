@@ -3,6 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { EmprofileComponent } from '../emprofile/emprofile.component';
 import { AuthService } from '../../services/auth.service'; // Assuming you have a service to fetch profile details
 import { EventcreationComponent } from '../eventcreation/eventcreation.component';
+import { SessionService } from '../../services/session.service';
+import { ManageEventsComponent } from '../manage-events/manage-events.component';
+import { TicketSalesComponent } from '../ticket-sales/ticket-sales.component';
 
 
 @Component({
@@ -19,18 +22,20 @@ export class EventmanagerdashboardComponent implements OnInit {
   isDropdownVisible: boolean = false;
   eventManagerId: string = ''; // To store event manager ID from route parameter
   showManageEventOptions: boolean = false;
-  eventId: string = ''
+  eventId: string = '';
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private authService: AuthService, // Assuming you have a service for profile data
     private router: Router,
-    private route: ActivatedRoute // To access route parameters
+    private route: ActivatedRoute,
+    private sessionService:SessionService
   ) { }
 
   ngOnInit(): void {
     // Fetch eventManagerId from route parameters
-    this.route.paramMap.subscribe(params => {
-      this.eventManagerId = params.get('eid') || '';
+    const retrievedId = this.sessionService.getItem('eid');
+    if (retrievedId) {
+      this.eventManagerId = retrievedId;  // Assign only if it's not null
       if (this.eventManagerId) {
         this.getEventManagerProfile(this.eventManagerId); // Fetch profile if eventManagerId exists
         this.getEventsByManagerId(this.eventManagerId); // Fetch events
@@ -38,7 +43,7 @@ export class EventmanagerdashboardComponent implements OnInit {
         console.error('No event manager ID found in route parameters');
         this.router.navigate(['/login']);
       }
-    });
+    }
   }
 
   // Fetch event manager profile data
@@ -96,18 +101,29 @@ export class EventmanagerdashboardComponent implements OnInit {
       case 'emprofile':
         this.loadEventManagerProfile();
         break;
+      case 'create':
+        this.loadEventCreation();
+        break;
+      case 'manage':
+        this.loadManageEvents();
+        break;
+      case 'sales':
+        this.loadSales();
+        break;
       default:
         console.warn('Unknown section:', section);
     }
   }
 
-  navigateToEventCreation() {
+  loadEventCreation() {
     // Navigate to the event creation page with the current user ID
-    this.router.navigate([`eventmanagerdashboard/${this.eventManagerId}/eventcreation`]);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(EventcreationComponent);
+    const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
   }
-  navigateToTicketSales() {
+ loadSales() {
     // Navigate to the event creation page with the current user ID
-    this.router.navigate([`eventmanagerdashboard/${this.eventManagerId}/ticket-sales`]);
+   const componentFactory = this.componentFactoryResolver.resolveComponentFactory(TicketSalesComponent);
+   const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
   }
 
   loadEventManagerProfile() {
@@ -117,7 +133,8 @@ export class EventmanagerdashboardComponent implements OnInit {
     componentRef.instance.em = this.eventManagerProfile; // Pass the profile data
   }
 
-  navigateToManageEvents() {
-    this.router.navigate([`eventmanagerdashboard/${this.eventManagerId}/manageEvents`]);
+  loadManageEvents() {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(ManageEventsComponent);
+    const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
   }
 }

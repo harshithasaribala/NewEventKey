@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Location } from '@angular/common';
+import { SessionService } from '../../services/session.service';
 
 @Component({
   selector: 'app-ticket-booking',
@@ -25,6 +26,7 @@ export class TicketBookingComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
+    private sessionService: SessionService,
     private location: Location
   ) { }
 
@@ -39,15 +41,14 @@ export class TicketBookingComponent implements OnInit {
       }
     });
 
-    this.route.paramMap.subscribe((params) => {
-      this.userId = params.get('userId') || '';
-      if (this.userId) {
+    const retrievedId = this.sessionService.getItem('userId');
+    if (retrievedId) {
+      this.userId = retrievedId; 
         this.getUserProfile(this.userId);
       } else {
         console.error('No user ID found in route parameters');
         this.router.navigate(['/login']);
       }
-    });
   }
 
   getUserProfile(userId: string): void {
@@ -84,7 +85,7 @@ export class TicketBookingComponent implements OnInit {
   }
 
   cancelBooking() {
-    this.router.navigate([`/userdashboard/${this.userId}/eventdetails`]);
+    this.router.navigate([`/userdashboard/eventdetails`]);
   }
 
   proceedToConfirm() {
@@ -103,16 +104,27 @@ export class TicketBookingComponent implements OnInit {
       bookingDate: new Date().toISOString(),
     };
 
-    // Call AuthService to save booking
+    // Save booking details
     this.authService.saveBooking(bookingDetails).subscribe(
       (response: any) => {
         console.log(bookingDetails);
         alert('Booking saved successfully');
 
-        // After saving, proceed to e-ticket generation
-        this.router.navigate([`/userdashboard/${this.userId}/eventdetails/${this.eventId}/ticketbooking/eticket`], {
-          state: { event: this.event, tickets: this.numberOfTickets },
-        });
+        // Update event register count after booking is saved
+        this.authService.registerTickets(this.eventId, this.numberOfTickets).subscribe(
+          (updateResponse: any) => {
+            console.log('Register count updated successfully', updateResponse);
+
+            // Navigate to e-ticket generation
+            this.router.navigate([`/userdashboard/eventdetails/${this.eventId}/ticketbooking/eticket`], {
+              state: { event: this.event, tickets: this.numberOfTickets },
+            });
+          },
+          (updateError) => {
+            console.error('Error updating register count:', updateError);
+            alert('Booking saved, but there was an error updating the event details.');
+          }
+        );
       },
       (error) => {
         console.log(bookingDetails);

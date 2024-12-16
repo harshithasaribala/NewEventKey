@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SessionService } from '../../services/session.service';
 
 @Component({
   selector: 'app-editevent',
@@ -20,7 +21,8 @@ export class EditeventComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private eventService: AuthService // Service to fetch/update event data
+    private eventService: AuthService,
+    private sessionService :SessionService
   ) {
     // Initialize the form group with validators
     this.editEventForm = this.fb.group({
@@ -37,14 +39,15 @@ export class EditeventComponent implements OnInit {
 
   ngOnInit(): void {
     // Fetch eventManagerId from route parameters
-    this.route.paramMap.subscribe(params => {
-      this.eventManagerId = params.get('eid') || '';
-      if (!this.eventManagerId) {
-        console.error('No event manager ID found in route parameters');
-        this.router.navigate(['/login']); // Redirect to login if no manager ID
-        return; // Stop further execution
-      }
-    });
+    const retrievedId = this.sessionService.getItem('eid');
+    if (retrievedId) {
+      this.eventManagerId = retrievedId;
+    }
+    if (!this.eventManagerId) {
+      console.error('No event manager ID found in route parameters');
+      this.router.navigate(['/login']); // Redirect to login if no manager ID
+      return; // Stop further execution
+    }
 
     // Fetch eventId from route parameters
     const eventId = this.route.snapshot.paramMap.get('eventid');
@@ -62,6 +65,7 @@ export class EditeventComponent implements OnInit {
     this.eventService.fetchEventDetails(eventId).subscribe(
       (response) => {
         this.editEventForm.patchValue({
+          eventId: response.eventId,
           eventName: response.eventName,
           eventDate: response.eventDate, // Ensure date format matches input type="date"
           eventTime: response.eventTime,
@@ -89,7 +93,7 @@ export class EditeventComponent implements OnInit {
           this.successMessage = 'Event updated successfully!';
           this.errorMessage = '';
           alert(this.successMessage);
-          this.router.navigate([`/eventmanagerdashboard/${this.eventManagerId}/manageEvents`]);
+          this.router.navigate([`/eventmanagerdashboard/manageEvents`]);
         },
         (error) => {
           console.error('Error updating event', error);
@@ -105,7 +109,7 @@ export class EditeventComponent implements OnInit {
 
   cancelEdit(): void {
     // Navigate back to the manage events screen
-    this.router.navigate([`/eventmanagerdashboard/${this.eventManagerId}/manageEvents`]);
+    this.router.navigate([`/eventmanagerdashboard/manageEvents`]);
   }
 
   /**

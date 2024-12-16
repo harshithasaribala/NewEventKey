@@ -28,6 +28,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { RevenueVisualizationComponent } from './admin/revenue-visualization/revenue-visualization.component';
 import { ManageAccountsComponent } from './admin/manage-accounts/manage-accounts.component';
 import { TicketSalesComponent } from './Eventmanager/ticket-sales/ticket-sales.component';
+import { SessionService } from './services/session.service';
 
 @NgModule({
   declarations: [

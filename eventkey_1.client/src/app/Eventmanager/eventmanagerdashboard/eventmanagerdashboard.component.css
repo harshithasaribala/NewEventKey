@@ -7,6 +7,8 @@
   justify-content: space-between;
   align-items: center;
   font-family: Arial, sans-serif;
+  position:sticky;
+  top:0px;
 }
 
   .main-header .logo img {
@@ -38,7 +40,7 @@
   padding: 15px;
 }
 
-  .sidebar a {
+  .sidebar button {
     display: block;
     padding: 10px;
     margin-bottom: 10px;
@@ -49,7 +51,7 @@
     transition: background-color 0.3s;
   }
 
-    .sidebar a:hover {
+    .sidebar button:hover {
       background-color: #007bff;
       color: white;
     }

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { SessionService } from '../../services/session.service';
 @Component({
   selector: 'app-manage-events',
   standalone: false,
@@ -17,18 +18,20 @@ export class ManageEventsComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute, // For extracting route parameters
-    private location: Location // For back navigation
+    private location: Location,
+    private sessionService: SessionService
   ) { }
 
   ngOnInit(): void {
 
-    this.route.paramMap.subscribe(params => {
-      this.eventManagerId = params.get('eid') || '';
+    const retrievedId = this.sessionService.getItem('eid');
+    if (retrievedId) {
+      this.eventManagerId = retrievedId;
+    }
       console.log(`Event Manager ID: ${this.eventManagerId}`);
       if (this.eventManagerId) {
         this.fetchEventDetails(this.eventManagerId);
       }
-    });
     }
 
   fetchEventDetails(eventmanagerId: string): void {
@@ -46,7 +49,7 @@ export class ManageEventsComponent implements OnInit {
   navigateToEditEvent(eventId: string): void {
     if (this.eventManagerId) {
       // Navigate to the edit event page with eventmanagerId and eventId in the route
-      this.router.navigate([`eventmanagerdashboard/${this.eventManagerId}/manageEvents/${eventId}/editEvent`]);
+      this.router.navigate([`eventmanagerdashboard/manageEvents/${eventId}/editEvent`]);
     }
   }
 

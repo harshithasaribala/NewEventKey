@@ -15,9 +15,9 @@
 <div class="dashboard-container">
   <div class="sidebar">
     <nav>
-      <a href="#" (click)="navigateToEventCreation()">Create Event</a>
-      <a href="#" (click)="navigateToManageEvents()">Manage Event</a>
-      <a href="#" (click)="navigateToTicketSales()">Ticket Sales</a>
+      <button href="#" (click)="loadComponent('create')">Create Event</button>
+      <button href="#" (click)="loadComponent('manage')">Manage Event</button>
+      <button href="#" (click)="loadComponent('sales')">Ticket Sales</button>
     </nav>
   </div>
 

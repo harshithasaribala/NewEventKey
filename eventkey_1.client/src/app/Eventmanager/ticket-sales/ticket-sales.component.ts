@@ -11,6 +11,7 @@ import {
   LinearScale,
   Title,
 } from 'chart.js';
+import { SessionService } from '../../services/session.service';
 
 @Component({
   selector: 'app-ticket-sales',
@@ -25,7 +26,7 @@ export class TicketSalesComponent implements OnInit, AfterViewInit {
   public revenueDetails: any[] = []; // Store revenue details for each event
   public managerId: string = ''; // Will hold the EMId from the route
 
-  constructor(private adminService: AdminService, private route: ActivatedRoute) {
+  constructor(private adminService: AdminService, private route: ActivatedRoute, private sessionService:SessionService) {
     Chart.register(
       DoughnutController,
       ArcElement,
@@ -39,7 +40,10 @@ export class TicketSalesComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     // Get the manager ID from the route parameters
-    this.managerId = this.route.snapshot.paramMap.get('eid')!;
+    const retrievedId = this.sessionService.getItem('eid');
+    if (retrievedId) {
+      this.managerId = retrievedId;
+    }
     console.log(this.managerId);
     // Fetch sales data for this manager
     this.adminService.getSalesData(this.managerId).subscribe(data => {

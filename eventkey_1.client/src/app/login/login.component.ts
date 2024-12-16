@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { SessionService } from '../services/session.service'; // Import the SessionService
 
 @Component({
   selector: 'app-login',
@@ -17,6 +17,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private sessionService: SessionService, // Inject SessionService
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -41,9 +42,9 @@ export class LoginComponent {
 
           // Handle redirection and storage based on userType
           if (formData.userType === 'User') {
-            this.handleLoginSuccess(response.userId, '/userdashboard', 'userId');
+            this.handleLoginSuccess(response.userId, 'userdashboard', 'userId');
           } else if (formData.userType === 'EventManager') {
-            this.handleLoginSuccess(response.eid, '/eventmanagerdashboard', 'eid');
+            this.handleLoginSuccess(response.eid, 'eventmanagerdashboard', 'eid');
           } else {
             alert('Invalid user type.');
           }
@@ -61,9 +62,8 @@ export class LoginComponent {
   handleLoginSuccess(id: string, redirectPath: string, storageKey: string): void {
     if (id) {
       alert(`Welcome, ${id}`);
-      sessionStorage.setItem(storageKey, id);
-      // Use Router's navigate to pass the userId or eid as a route parameter
-      this.router.navigate([redirectPath, id]);  // Passing id as route parameter
+      this.sessionService.setItem(storageKey, id); // Use SessionService to store the ID
+      this.router.navigate([redirectPath]); // Navigate to the dashboard
     } else {
       alert('Unable to retrieve user ID. Please try again.');
     }

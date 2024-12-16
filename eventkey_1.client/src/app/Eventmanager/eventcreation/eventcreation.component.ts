@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { SessionService } from '../../services/session.service';
 
 @Component({
   selector: 'app-eventcreation',
@@ -20,7 +21,8 @@ export class EventcreationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private sessionService:SessionService
   ) {
     this.createEventForm = this.fb.group({
       emId: ['', Validators.required],  // The emId field will be pre-filled
@@ -39,10 +41,10 @@ export class EventcreationComponent implements OnInit {
 
   ngOnInit(): void {
     // Fetch event manager ID from route parameters and pre-fill the form
-    this.activatedRoute.params.subscribe(params => {
-      this.emId = params['eid'];
-      this.createEventForm.get('emId')?.setValue(this.emId);
-    });
+    const retrievedId = this.sessionService.getItem('eid');
+    if (retrievedId) {
+      this.emId = retrievedId;
+    }
 
     // Fetch profile by event manager ID and pre-fill email in the form
     this.authService.getProfileById(this.emId).subscribe(profile => {
