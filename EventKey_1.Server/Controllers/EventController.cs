@@ -257,5 +257,23 @@ namespace EventKey_1.Server.Controllers
 
             return NoContent(); // HTTP 204
         }
+        // GET: api/Events/upcoming
+        [HttpGet("upcoming")]
+        public async Task<ActionResult<IEnumerable<Events>>> GetUpcomingEvents()
+        {
+            var upcomingEvents = await _context.Events
+                .Where(e => e.EventDate > DateTime.Now)
+                .OrderBy(e => e.EventDate)
+                .Take(2)
+                .ToListAsync();
+
+            if (upcomingEvents == null || !upcomingEvents.Any())
+            {
+                return NotFound("No upcoming events found.");
+            }
+
+            return Ok(upcomingEvents);
+        }
+
     }
 }

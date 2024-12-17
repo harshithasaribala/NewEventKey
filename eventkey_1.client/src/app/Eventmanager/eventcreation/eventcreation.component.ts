@@ -44,13 +44,13 @@ export class EventcreationComponent implements OnInit {
     const retrievedId = this.sessionService.getItem('eid');
     if (retrievedId) {
       this.emId = retrievedId;
+      this.createEventForm.get('emId')?.setValue(this.emId);
+      // Fetch profile by event manager ID and pre-fill email in the form
+      this.authService.getProfileById(this.emId).subscribe(profile => {
+        this.email = profile.email; // Assuming the profile has an email field
+        this.createEventForm.get('email')?.setValue(this.email);
+      });
     }
-
-    // Fetch profile by event manager ID and pre-fill email in the form
-    this.authService.getProfileById(this.emId).subscribe(profile => {
-      this.email = profile.email; // Assuming the profile has an email field
-      this.createEventForm.get('email')?.setValue(this.email);
-    });
   }
 
   createEvent(): void {

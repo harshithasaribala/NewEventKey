@@ -1,41 +1,57 @@
-<div class="main-header">
-  <div class="logo">
-    <a class="navbar-brand d-flex align-items-center" href="/">
-      <img src="assets/EventKey/assets/logo/favicon.jpeg" alt="Icon" width="75" height="75" class="me-2" />
-    </a>
-  </div>
-  <h1>{{ eventManagerName }}'s Dashboard</h1>
-  <nav class="nav-menu">
-    <button (click)="loadComponent('home')">Home</button>
-    <button (click)="loadComponent('emprofile')">My Profile</button>
-    <button (click)="logout()">Logout</button>
-  </nav>
-</div>
-
-<div class="dashboard-container">
-  <div class="sidebar">
-    <nav>
-      <button href="#" (click)="loadComponent('create')">Create Event</button>
-      <button href="#" (click)="loadComponent('manage')">Manage Event</button>
-      <button href="#" (click)="loadComponent('sales')">Ticket Sales</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventKey Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="main-header">
+    <div class="logo">
+      <a href="/">
+        <img src="assets/EventKey/assets/logo/favicon.jpeg" alt="Logo" />
+      </a>
+    </div>
+    <h1>Welcome, {{ eventManagerName }}</h1>
+    <nav class="nav-menu">
+      <button (click)="loadComponent('home')">Home</button>
+      <button (click)="loadComponent('emprofile')">My Profile</button>
+      <button (click)="logout()">Logout</button>
     </nav>
   </div>
 
-  <div class="dashboard-content">
-    <div class="events-list">
-      <div *ngFor="let event of events" class="event-item">
-        <h3>{{ event.eventName }}</h3>
-        <p><strong>Event ID:</strong> {{ event.eventId }}</p>
-        <p><strong>Event Date:</strong> {{ event.eventDate | date: 'fullDate'}}</p>
-        <p><strong>Event Time:</strong> {{ event.eventTime }}</p>
-        <p><strong>Max Count:</strong> {{ event.maxAttendees }}</p>
-        <p><strong>Description:</strong> {{ event.description }}</p>
-        <p><strong>Price:</strong> {{ event.ticketPrice | currency:'INR' }}</p>
-        <p><strong>Registered Count:</strong> {{ event.registeredAttendees }}</p>
+  <div class="main-container">
+    <aside class="sidebar">
+      <nav>
+        <button href="#" (click)="loadComponent('create')"><i class="fas fa-plus me-2"></i>&nbsp; Create Event</button>
+        <button href="#" (click)="loadComponent('manage')"><i class="fas fa-tasks me-2"></i>&nbsp; Manage Events</button>
+        <button href="#" (click)="loadComponent('sales')"><i class="fas fa-ticket-alt me-2"></i>&nbsp; Ticket Sales</button>
+      </nav>
+
+      <footer class="footer" style="color:white">
+        <p>&copy; 2024 EventKey. Designed and developed by Initiators ❤️</p>
+      </footer>
+    </aside>
+
+    <div class="dashboard-content">
+      <div *ngIf="activeView === 'eventList'">
+        <div class="events-list">
+          <div *ngFor="let event of events" class="event-item">
+            <h3>{{ event.eventName }}</h3>
+            <p><strong>Event ID:</strong> {{ event.eventId }}</p>
+            <p><strong>Event Date:</strong> {{ event.eventDate | date: 'fullDate'}}</p>
+            <p><strong>Event Time:</strong> {{ event.eventTime }}</p>
+            <p><strong>Max Count:</strong> {{ event.maxAttendees }}</p>
+            <p><strong>Description:</strong> {{ event.description }}</p>
+            <p><strong>Price:</strong> {{ event.ticketPrice | currency:'INR' }}</p>
+            <p><strong>Registered Count:</strong> {{ event.registeredAttendees }}</p>
+          </div>
+        </div>
       </div>
+      <ng-template #dynamicComponentContainer></ng-template>
     </div>
-    <router-outlet></router-outlet>
   </div>
 
-  <ng-template #dynamicComponentContainer></ng-template>
-</div>
+</body>
+</html>

@@ -1,17 +1,78 @@
-<div class="eticket-container" #ticketContainer>
-  <h2>Your E-Ticket</h2>
-  <div class="ticket">
-    <h3>{{ event.eventName }}</h3>
-    <p><strong>Booked By:</strong> {{ userName }}</p>
-    <p><strong>Number of Tickets:</strong> {{ numberOfTickets }}</p>
-    <p><strong>Total Cost:</strong> {{ totalCost | currency:'INR' }}</p>
-    <p><strong>Event Date:</strong> {{ event.eventDate | date: 'fullDate' }}</p>
-    <p><strong>Event Time:</strong> {{ event.eventTime }}</p>
-    <p><strong>Venue:</strong> {{ event.location }}</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event E-Ticket</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+<body>
+  <!-- Particle Background -->
+  <div id="particles-js"></div>
+
+  <!-- Marquee -->
+  <div class="marquee">
+    🎉 Book Your Tickets Now and Experience the Best Events with EventKey! 🎉
   </div>
-  <div class="buttons">
-    <button (click)="downloadETicket()">Download E-Ticket</button>
-    <button class="back-btn" (click)="onBack()">Back</button>
-    <button class="my-bookings-btn" (click)="viewBookings()">My Bookings</button>
+  
+    <!-- Ticket Container -->
+  <div class="ticket-container" #ticketContainer>
+    <!-- Header -->
+    <div class="ticket-header">
+      <h3>{{ event.eventName }}</h3>
+    </div>
+
+    <!-- Body -->
+    <div class="ticket-body">
+      <div class="ticket">
+        <p><strong>Booked By:</strong> {{ userName }}</p>
+        <p><strong>Number of Tickets:</strong> {{ numberOfTickets }}</p>
+        <p><strong>Total Cost:</strong> {{ totalCost | currency:'INR' }}</p>
+        <p><strong>Event Date:</strong> {{ event.eventDate | date: 'fullDate' }}</p>
+        <p><strong>Event Time:</strong> {{ event.eventTime }}</p>
+        <p><strong>Venue:</strong> {{ event.location }}</p>
+      </div>
+      <div class="qr-code">
+        <img src="assets/EventKey/assets/logo/favicon.jpeg" alt="QR Code">
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="ticket-footer">
+      Thank You for Choosing EventKey - Your Event, Your Experience!
+    </div>
   </div>
-</div>
+      <!-- Buttons Section -->
+      <div class="buttons">
+        <button (click)="downloadETicket()">Download E-Ticket</button>
+        <button class="back-btn" (click)="onBack()">Back</button>
+        <button class="my-bookings-btn" (click)="viewBookings()">My Bookings</button>
+      </div>
+
+    <!-- Particles JS -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 80, density: { enable: true, value_area: 800 } },
+          color: { value: "#ffffff" },
+          shape: { type: "circle" },
+          opacity: { value: 0.5, random: false },
+          size: { value: 3, random: true },
+          line_linked: { enable: true, color: "#ffffff", opacity: 0.3, width: 1 },
+          move: { enable: true, speed: 2, direction: "none", random: false, straight: false }
+        },
+        interactivity: {
+          events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
+          modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
+        }
+      });
+    </script>
+
+    <!-- Bootstrap 5 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

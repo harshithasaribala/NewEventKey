@@ -28,9 +28,6 @@ export class PreviousBookingsComponent implements OnInit {
       }
     });
   }
-  goToEventDetails() {
-    this.router.navigate([`/userdashboard/${this.userId}/eventdetails`]);
-  }
   fetchBookings(userId: string): void {
     this.authService.getBookingsByUserId(userId).subscribe(
       (response) => {

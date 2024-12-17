@@ -20,7 +20,7 @@ export class UserdashboardComponent implements OnInit {
   userProfile: any; // To store user profile details
   isDropdownVisible: boolean = false;
   userId: string = ''; // To store user ID from route parameter
-
+  activeView: string = 'overview';
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private userService: AuthService,
@@ -70,22 +70,32 @@ export class UserdashboardComponent implements OnInit {
   loadComponent(section: string) {
     // Clear the current dynamic component and load the appropriate one
     this.dynamicComponentContainer.clear();
-    if (section == 'profile') {
-      this.loadUserProfile();
+    this.activeView = section;
+    switch (section) {
+      case 'home':
+        this.activeView = 'overview';
+        break;
+      case 'profile':
+        this.loadUserProfile();
+        break;
+      case 'event_details':
+        this.loadEventDetails();
+        break;
+      case 'saved_events':
+        this.loadSavedEvents();
+        break;
+      case 'my_bookings':
+        this.loadMyBookings()
+        break;
+      case 'feedback':
+        this.loadFeedBack();
+        break;
+      default:
+        console.error('Unknown section:', section);
+        break;
     }
-    if (section == 'event_details') {
-      this.loadEventDetails();
-    }
-    if (section == 'saved_events') {
-      this.loadSavedEvents();
-    }
-    if (section == 'my_bookings') {
-      this.loadSavedEvents();
-    }
-    //if (section == 'feedback') {
-    //  this.loadFeedBack();
-    //}
   }
+
   loadUserProfile() {
     // Dynamically load the user profile component
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UserProfileComponent);
@@ -104,11 +114,8 @@ export class UserdashboardComponent implements OnInit {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(PreviousBookingsComponent);
     const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
   }
-  naviagteTOfeed() {
-    this.router.navigate([`userdashboard/${this.userId}/feedback`]);
+  loadFeedBack() {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FeedbackComponent);
+    const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
   }
-  //loadFeedBack() {
-  //  const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FeedbackComponent);
-  //  const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
-  //}
 }

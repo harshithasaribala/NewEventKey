@@ -109,7 +109,7 @@ export class EditeventComponent implements OnInit {
 
   cancelEdit(): void {
     // Navigate back to the manage events screen
-    this.router.navigate([`/eventmanagerdashboard/manageEvents`]);
+    this.router.navigate([`/eventmanagerdashboard`]);
   }
 
   /**

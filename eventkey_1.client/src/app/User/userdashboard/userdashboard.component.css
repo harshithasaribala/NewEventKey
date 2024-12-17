@@ -1,161 +1,124 @@
-/* Main Header Styling */
+/* Body and general layout */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
 .main-header {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  padding: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: black; /* Header Background Color */
-  padding: 10px 20px;
-  color: white;
-  width:1150px;
-  position:sticky;
-  top:0px;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-}
-
-.logo-text {
-  font-weight: bold;
-  font-size: 28px;
-  color: white;
-  margin-left: 10px;
-}
-
-.nav-menu {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-  .nav-menu button {
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-
-    .nav-menu button:hover {
-      color: #ffcc00;
-    }
-
-/* Dropdown Styles */
-.dropdown {
-  position: relative;
-}
-
-.dropdown-toggle {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-  .dropdown-toggle:hover {
-    color: #ffcc00; /* Highlight on hover */
-  }
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: #343a40; /* Dark background for dropdown */
-  color: white;
-  padding: 10px 0;
-  border-radius: 5px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  display: none; /* Initially hide dropdown */
-  width: 150px;
-}
-
-  .dropdown-menu a {
-    padding: 10px 20px;
-    display: block;
-    text-decoration: none;
-    color: white;
-  }
-
-    .dropdown-menu a:hover {
-      background-color: #007bff;
-    }
-
-  .dropdown-menu.show {
-    display: block; /* Show dropdown when toggled */
-  }
-
-/* Sidebar Styles */
-.dashboard-container {
-  display: flex;
-  min-height: 100vh;
-}
-
-.sidebar {
-  width: 150px;
-  background-color: #343a40;
-  padding-top: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   position: fixed;
-  margin-top:100px;
-  height: 100%;
-
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
+  .main-header .logo img {
+    max-height: 70px;
   }
 
-  .sidebar li {
-    margin: 10px 0;
-  }
-
-  .sidebar button {
-    display: block;
-    padding: 10px;
+  .main-header h1 {
+    margin: 0;
+    font-size: 40px;
     color: white;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    transition: background-color 0.3s ease;
+    text-align:center;
   }
 
-    .sidebar button:hover {
-      background-color: #007bff;
+  .main-header .nav-menu {
+    margin-right: 100px;
+    display: flex;
+    gap: 20px;
+  }
+
+    .main-header .nav-menu button {
+      padding: 8px 30px;
+      border: none;
+      background-color: #6a11cb;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: 15px;
     }
 
-/* Main Content Area */
-.dashboard-content {
-  flex-grow: 1;
-  margin-left: 220px;
+      .main-header .nav-menu button:hover {
+        background-color: #2575fc;
+      }
+
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 100px; /* Adjust this if header height changes */
+  left: 0;
+  width: 250px;
+  height: 100vh;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
   padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 900;
 }
 
-/* Mobile Responsiveness */
+/* Sidebar buttons styling */
+.sidebar-button {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  border: none; /* Remove border */
+  padding: 15px 25px; /* Add padding for spacing */
+  width: 100%; /* Make buttons span the full width of the sidebar */
+  text-align: left; /* Align text to the left */
+  font-size: 16px; /* Set a readable font size */
+  color: white; /* Text color */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  display: flex; /* Align icon and text inline */
+  align-items: center; /* Vertically align the icon and text */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+  .sidebar-button i {
+    font-size: 20px; /* Set size of the icon */
+  }
+
+  /* Hover effect */
+  .sidebar-button:hover {
+    background-color: #f1f1f1; /* Light background on hover */
+    color: #007bff; /* Change text color to blue on hover */
+  }
+
+  /* Active state */
+  .sidebar-button:active {
+    background-color: #e0e0e0; /* Slightly darker background when clicked */
+  }
+.sidebar footer {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  text-align: center;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+  margin-left: 270px; /* Make space for the sidebar */
+  margin-top: 90px; /* Make space for the header */
+  padding: 20px;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  background-color: #f4f4f4;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+/* Ensuring responsiveness */
 @media (max-width: 768px) {
-  .main-header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .nav-menu {
-      font-size:14px;
-    flex-direction: column;
-    margin-top: 10px;
-  }
-
-    .nav-menu a {
-      margin-bottom: 10px;
-    }
-
-  .dashboard-container {
-    flex-direction: column;
-  }
-
   .sidebar {
     position: relative;
+    top: 0;
     width: 100%;
     height: auto;
   }

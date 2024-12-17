@@ -1,37 +1,59 @@
-<div class="navbar">
-  <h1>Admin Dashboard</h1>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1><i class="fas fa-user-shield me-2"></i>&nbsp; &nbsp; Admin Dashboard</h1>
+  </div>
 
-<div class="container">
+  <!-- Sidebar -->
   <div class="sidebar">
     <h2>Admin Features</h2>
     <ul>
-      <li><a>View Feedback</a></li>
-      <li><a href="#" (click)="navigateToAccounts()">Manage Accounts</a></li>
-      <li>
-        <a href="#" (click)="navigateToRevenue()">Revenue Visualization</a>
-      </li>
-      <li><button class="logout-btn" (click)="logout()">Logout</button></li>
+      <li><button (click)="loadComponent('feedback')"><i class="fas fa-comments me-2"></i>View Feedback</button></li>
+      <li><button (click)="loadComponent('accounts')"><i class="fas fa-users-cog me-2"></i>Manage Accounts</button></li>
+      <li><button (click)="loadComponent('revenue')"><i class="fas fa-chart-line me-2"></i>Revenue Visualization</button></li>
+      <li><button  (click)="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</button></li>
     </ul>
   </div>
 
-  <div class="main-content">
-    <p>Welcome to the Admin Dashboard.</p>
+  <!-- Main Content -->
+  <div class="dashboard-content">
+    <div *ngIf="activeView === 'charts'">
+      <div class="events-list">
+        <div class="main-content">
+          <p>Welcome to the Admin Dashboard.</p>
 
-    <div class="charts-container">
-      <!-- Registered Users Chart -->
-      <div class="chart-box">
-        <h3>Total Registered Users</h3>
-        <canvas id="registeredUsersChart" width="400" height="400"></canvas>
-      </div>
+          <div class="charts-container">
+            <!-- Registered Users Chart -->
+            <div class="chart-box">
+              <h3>Total Registered Users</h3>
+              <canvas id="registeredUsersChart" width="400" height="400"></canvas>
+            </div>
 
-      <!-- Registered Event Managers Chart -->
-      <div class="chart-box">
-        <h3>Total Event Managers</h3>
-        <canvas id="eventManagersChart" width="400" height="400"></canvas>
+            <!-- Registered Event Managers Chart -->
+            <div class="chart-box">
+              <h3>Total Event Managers</h3>
+              <canvas id="eventManagersChart" width="400" height="400"></canvas>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    <ng-template #dynamicComponentContainer></ng-template>
   </div>
+  <!-- Bootstrap JS and Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <router-outlet></router-outlet>
-</div>
+
+</body>
+</html>

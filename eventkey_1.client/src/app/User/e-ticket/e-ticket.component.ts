@@ -105,9 +105,9 @@ export class ETicketComponent implements OnInit {
     link.click();
   }
   viewBookings() {
-    this.router.navigate([`/userdashboard/${this.userId}/previousBookings`]);
+    this.router.navigate([`/userdashboard`]);
   }
   onBack(): void {
-    this.location.back();
+    this.router.navigate([`/userdashboard`]);
   }
 }

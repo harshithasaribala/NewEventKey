@@ -65,13 +65,13 @@ export class SignupComponent {
 
             // Check if eventType is present in the response
             if (response.eventType) {
-              generatedId = response.emId;  // Assuming emId is the Event Manager ID
+              generatedId = response.emId;  
             } else {
-              generatedId = response.userId;  // Assuming userId is the regular User ID
+              generatedId = response.userId;  
             }
 
             // Show confirmation message with the correct ID
-            const confirmationMessage = `Signup successful! Your generated ID is: ${generatedId}. Click OK to go to the login page.`;
+            const confirmationMessage = `Signup successfull! Click OK to go to the login page.`;
 
             if (confirm(confirmationMessage)) {
               // Navigate to login page after confirmation

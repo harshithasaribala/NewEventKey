@@ -1,65 +1,85 @@
 body {
-  margin-top: 50px;
-  text-align: justify;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-top:0px;
 }
 
-.form-label {
-  color: black;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.form-check {
-  font-size: 14px;
-}
-
-.form-control {
-  border-radius: 8px;
-}
-
-.btn-secondary {
-  font-size: 14px;
-  border-radius: 8px;
-}
-
-.btn-primary {
-  font-size: 14px;
-  border-radius: 8px;
-  padding: 12px 20px;
-}
-
-.d-flex {
-  justify-content: space-between;
-}
-
-.mb-3 {
-  margin-bottom: 20px;
+.container {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  max-width: 500px;
+  margin: 50px auto 100px auto;
 }
 
 .logo {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-}
-
-.header-area {
-  background-color: #f8f9fa;
-  padding: 20px 0;
-}
-
-.navbar-brand img {
   width: 100px;
   height: 100px;
+  border: 5px solid #f8f9fa;
 }
 
-.navbar-nav .nav-item a {
-  font-size: 15px;
-  padding: 10px 15px;
-  color: black;
+h2 {
+  font-size: 2rem;
   font-weight: bold;
-  text-decoration: none;
+  color: #6a11cb;
 }
 
-  .navbar-nav .nav-item a:hover {
-    color: #007bff;
+label {
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: #6a11cb;
+  border: none;
+  transition: all 0.3s ease-in-out;
+  padding-left: 5px;
+}
+
+  .btn-primary:hover {
+    background-color: #2575fc;
+    transform: scale(1.05);
   }
+
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+.text-primary {
+  color: #6a11cb !important;
+}
+
+.footer {
+  
+  color: black;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+  .footer a {
+    color: #6a11cb;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+  }
+
+    .footer a:hover {
+      color: #f8f9fa;
+      transform: scale(1.2);
+    }
+
+/* Ensure scrollability */
+html {
+  overflow-y: auto;
+}
+
+.scrollable-footer {
+  margin-top: auto;
+}

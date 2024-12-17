@@ -117,7 +117,6 @@ namespace EventKey_1.Server.Controllers
             return NoContent(); // Successfully deleted
         }
 
-        // GET: api/Bookings/revenue
         [HttpGet("revenue")]
         public async Task<IActionResult> GetRevenueData()
         {
@@ -132,16 +131,18 @@ namespace EventKey_1.Server.Controllers
             // Fetch event details for all unique EventIds in bookings
             var eventIds = bookings.Select(b => b.EventId).Distinct();
             var events = await _context.Events
-                                       .Where(e => eventIds.Contains(e.EventId)) // Ensure 'EventId' is correct
-                                       .ToDictionaryAsync(e => e.EventId, e => e.TicketPrice);
+                .Where(e => eventIds.Contains(e.EventId)) // Ensure 'EventId' is string
+                .ToDictionaryAsync(e => e.EventId, e => e.TicketPrice);
 
             if (events == null || events.Count == 0)
             {
                 return NotFound("No event details found.");
             }
 
-            // Calculate total revenue
             decimal totalRevenue = 0;
+            var revenuePerEvent = new Dictionary<string, decimal>();
+
+            // Calculate total revenue and revenue per event
             foreach (var booking in bookings)
             {
                 if (events.TryGetValue(booking.EventId, out var ticketPrice))
@@ -149,33 +150,26 @@ namespace EventKey_1.Server.Controllers
                     var baseAmount = booking.NumberOfTickets * ticketPrice;
                     var totalAmount = baseAmount + (baseAmount * GST_RATE); // Include GST
                     totalRevenue += totalAmount;
+
+                    if (!revenuePerEvent.ContainsKey(booking.EventId))
+                    {
+                        revenuePerEvent[booking.EventId] = 0;
+                    }
+                    revenuePerEvent[booking.EventId] += totalAmount;
                 }
             }
 
-            // Calculate monthly revenue
-            var monthlyRevenue = bookings
-                .Where(b => b.BookingDate != null)  // Ensure that BookingDate is not null
-                .GroupBy(b => new { b.BookingDate.Month, b.BookingDate.Year }) // Group by BookingDate
-                .Select(group =>
-                {
-                    var revenue = group.Sum(booking =>
-                    {
-                        if (events.TryGetValue(booking.EventId, out var ticketPrice))
-                        {
-                            var baseAmount = booking.NumberOfTickets * ticketPrice;
-                            return baseAmount + (baseAmount * GST_RATE);
-                        }
-                        return 0m;
-                    });
+            // Calculate average revenue per event
+            var averageRevenuePerEvent = revenuePerEvent.Any()
+                ? revenuePerEvent.Values.Average()
+                : 0;
 
-                    return new
-                    {
-                        Month = $"{group.Key.Month}/{group.Key.Year}",
-                        Revenue = revenue
-                    };
-                })
-                .OrderBy(m => m.Month)
-                .ToList();
+            // Prepare data for frontend
+            var revenuePerEventList = revenuePerEvent.Select(kvp => new
+            {
+                EventId = kvp.Key,
+                Revenue = kvp.Value
+            }).ToList();
 
             // Admin Commission Calculation (20%)
             var adminCommission = totalRevenue * 0.2m;
@@ -184,9 +178,12 @@ namespace EventKey_1.Server.Controllers
             {
                 totalRevenue,
                 adminCommission,
-                monthlyRevenue
+                averageRevenuePerEvent,
+                revenuePerEvent = revenuePerEventList
             });
         }
+
+
         [HttpGet("salesData/{managerId}")]
         public async Task<IActionResult> GetSalesDataByManager(string managerId)
         {

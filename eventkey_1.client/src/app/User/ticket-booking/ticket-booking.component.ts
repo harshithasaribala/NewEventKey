@@ -4,6 +4,8 @@ import { AuthService } from '../../services/auth.service';
 import { Location } from '@angular/common';
 import { SessionService } from '../../services/session.service';
 
+declare const google: any; // Declare Google Pay global object
+
 @Component({
   selector: 'app-ticket-booking',
   standalone: false,
@@ -21,6 +23,9 @@ export class TicketBookingComponent implements OnInit {
   totalCost: number = 0; // Total cost including GST
   userProfile: any;
   gstRate: number = 18; // GST rate in percentage
+
+  googlePayClient: any; // Google Pay Client
+  paymentRequest: any; // Google Pay Payment Request
 
   constructor(
     private route: ActivatedRoute,
@@ -43,12 +48,15 @@ export class TicketBookingComponent implements OnInit {
 
     const retrievedId = this.sessionService.getItem('userId');
     if (retrievedId) {
-      this.userId = retrievedId; 
-        this.getUserProfile(this.userId);
-      } else {
-        console.error('No user ID found in route parameters');
-        this.router.navigate(['/login']);
-      }
+      this.userId = retrievedId;
+      this.getUserProfile(this.userId);
+    } else {
+      console.error('No user ID found in session storage');
+      this.router.navigate(['/login']);
+    }
+
+    // Initialize Google Pay
+    this.initGooglePay();
   }
 
   getUserProfile(userId: string): void {
@@ -65,10 +73,9 @@ export class TicketBookingComponent implements OnInit {
   }
 
   fetchEventDetails(eventId: string): void {
-    this.authService.fetchEventDetails(this.eventId).subscribe(
+    this.authService.fetchEventDetails(eventId).subscribe(
       (response) => {
         this.event = response;
-        console.log('Event details fetched:', this.event);
         this.updateTotalCost();
       },
       (error) => {
@@ -78,15 +85,15 @@ export class TicketBookingComponent implements OnInit {
   }
 
   updateTotalCost() {
-    // Calculate base cost and GST amount
     this.baseCost = this.numberOfTickets * this.event.ticketPrice;
     this.gstAmount = (this.baseCost * this.gstRate) / 100;
     this.totalCost = this.baseCost + this.gstAmount;
   }
 
   cancelBooking() {
-    this.router.navigate([`/userdashboard/eventdetails`]);
+    this.router.navigate([`/userdashboard`]);
   }
+
 
   proceedToConfirm() {
     const bookingDetails = {
@@ -134,7 +141,111 @@ export class TicketBookingComponent implements OnInit {
     );
   }
 
-  onBack(): void {
-    this.location.back();
+
+  /** Initialize Google Pay API **/
+  initGooglePay() {
+    const googlePayClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
+    const paymentDataRequest = {
+      allowedPaymentMethods: [
+        {
+          type: 'CARD',
+          parameters: {
+            allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+            allowedCardNetworks: ['MASTERCARD', 'VISA'],
+          },
+        },
+        {
+          type: 'TOKENIZED_CARD',
+          parameters: {
+            allowedAuthMethods: ['CRYPTOGRAM_3DS'],
+            allowedCardNetworks: ['MASTERCARD', 'VISA'],
+          },
+        },
+      ],
+      transactionInfo: {
+        totalPriceStatus: 'FINAL',
+        totalPrice: '10.00',
+        currencyCode: 'USD',
+      },
+      merchantInfo: {
+        merchantName: 'Example Merchant',
+        merchantId: '01234567890123456789',
+      },
+    };
+
+    const googlePayConfig = {
+      apiVersion: 2,
+      apiVersionMinor: 0,
+      allowedPaymentMethods: [
+        {
+          type: 'CARD',
+          parameters: {
+            allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+            allowedCardNetworks: ['VISA', 'MASTERCARD']
+          },
+          tokenizationSpecification: {
+            type: 'PAYMENT_GATEWAY',
+            parameters: {
+              gateway: 'phonepe', // Replace with your gateway name
+              gatewayMerchantId: 'harshithasaribala@axl' // Replace with your ID
+            }
+          }
+        }
+      ],
+      merchantInfo: {
+        merchantName: 'Event Booking System',
+        merchantId: 'harshithasaribala@axl' // Your Google Pay Merchant ID
+      },
+      transactionInfo: {
+        totalPriceStatus: 'FINAL',
+        totalPrice: this.totalCost.toFixed(2),
+        currencyCode: 'INR',
+        countryCode: 'IN'
+      }
+    };
+
+    this.googlePayClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
+    this.googlePayClient.isReadyToPay({
+      allowedPaymentMethods: googlePayConfig.allowedPaymentMethods
+    })
+      .then((response: any) => {
+        if (response.result) {
+          console.log('Google Pay is ready');
+          this.paymentRequest = googlePayConfig;
+        } else {
+          console.error('Google Pay is not ready');
+        }
+      })
+      .catch((err: any) => {
+        console.error('Google Pay initialization failed:', err);
+      });
+  }
+
+  /** Trigger Google Pay Payment */
+  onGooglePayClick() {
+    if (!this.paymentRequest) {
+      alert('Google Pay is not available');
+      return;
+    }
+
+    const paymentDataRequest = Object.assign({}, this.paymentRequest, {
+      transactionInfo: {
+        totalPriceStatus: 'FINAL',
+        totalPrice: this.totalCost.toFixed(2), // Ensure this reflects the updated total cost
+        currencyCode: 'INR',
+        countryCode: 'IN'
+      }
+    });
+
+    this.googlePayClient.loadPaymentData(paymentDataRequest)
+      .then((paymentData: any) => {
+        console.log('Payment Successful:', paymentData);
+        alert('Payment successful! Booking confirmed.');
+        this.proceedToConfirm();
+      })
+      .catch((err: any) => {
+        console.error('Payment failed:', err);
+        alert('Google Pay payment failed. Please try again.');
+      });
   }
 }

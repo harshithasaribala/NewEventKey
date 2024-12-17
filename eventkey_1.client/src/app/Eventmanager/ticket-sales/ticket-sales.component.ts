@@ -1,16 +1,7 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
-import { AdminService } from '../../services/admin.service'; // Import AdminService for API calls
-import { ActivatedRoute } from '@angular/router'; // To get route parameters
-import {
-  Chart,
-  DoughnutController,
-  ArcElement,
-  Tooltip,
-  Legend,
-  CategoryScale,
-  LinearScale,
-  Title,
-} from 'chart.js';
+import { Component, OnInit, AfterViewInit, ViewChildren, QueryList, ElementRef } from '@angular/core';
+import { AdminService } from '../../services/admin.service';
+import { ActivatedRoute } from '@angular/router';
+import { Chart, DoughnutController, ArcElement, Tooltip, Legend, Title } from 'chart.js';
 import { SessionService } from '../../services/session.service';
 
 @Component({
@@ -20,92 +11,87 @@ import { SessionService } from '../../services/session.service';
   styleUrls: ['./ticket-sales.component.css']
 })
 export class TicketSalesComponent implements OnInit, AfterViewInit {
+  @ViewChildren('ticketSalesChart') chartElements!: QueryList<ElementRef>;
 
-  @ViewChild('ticketSalesChart') ticketSalesChart: ElementRef | undefined; // Reference to the canvas element
-  public charts: any[] = []; // To store individual charts for each event
-  public revenueDetails: any[] = []; // Store revenue details for each event
-  public managerId: string = ''; // Will hold the EMId from the route
+  public revenueDetails: any[] = []; // Array to store revenue details
+  public managerId: string = ''; // Manager ID
 
-  constructor(private adminService: AdminService, private route: ActivatedRoute, private sessionService:SessionService) {
-    Chart.register(
-      DoughnutController,
-      ArcElement,
-      Tooltip,
-      Legend,
-      CategoryScale,
-      LinearScale,
-      Title
-    );
+  constructor(
+    private adminService: AdminService,
+    private route: ActivatedRoute,
+    private sessionService: SessionService
+  ) {
+    // Register required Chart.js components
+    Chart.register(DoughnutController, ArcElement, Tooltip, Legend, Title);
   }
 
   ngOnInit(): void {
-    // Get the manager ID from the route parameters
     const retrievedId = this.sessionService.getItem('eid');
     if (retrievedId) {
       this.managerId = retrievedId;
     }
-    console.log(this.managerId);
-    // Fetch sales data for this manager
-    this.adminService.getSalesData(this.managerId).subscribe(data => {
-      console.log(data); 
-      // Handle the case where there might be no data
-      if (!data || data.length === 0) {
-        console.error('No data found for the given manager ID');
-        return;
-      }
 
-      // Prepare the data and create charts
-      data.forEach((eventData: any) => {
-        const eventName = eventData.eventName;
-        const totalTicketsBooked = eventData.totalTicketsBooked;
-        const remainingTickets = eventData.remainingTickets;
-        const totalRevenue = totalTicketsBooked * eventData.ticketPrice; // Assuming a property `TicketPrice`
-        const adminShare = totalRevenue * 0.2;
-
-        // Store revenue details
-        this.revenueDetails.push({
-          eventName,
-          totalRevenue,
-          adminShare
-        });
-
-        // Create a pie chart for each event
-        this.charts.push(new Chart(`ticketSalesChart-${eventName}`, {
-          type: 'pie',
-          data: {
-            labels: ['Total Tickets Booked', 'Remaining Tickets'],
-            datasets: [{
-              data: [totalTicketsBooked, remainingTickets],
-              backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
-              borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: {
-                position: 'top',
-              },
-              tooltip: {
-                enabled: true
-              }
-            }
-          }
-        }));
-      });
-    });
+    this.fetchSalesData();
   }
 
   ngAfterViewInit(): void {
-    // Ensure that the canvas elements are available after view initialization
+    // Render charts after DOM elements are ready
     setTimeout(() => {
-      this.charts.forEach((chart, index) => {
-        const canvasElement = document.getElementById(`ticketSalesChart-${this.revenueDetails[index].eventName}`) as HTMLCanvasElement;
-        if (canvasElement) {
-          chart.update();
+      if (!this.revenueDetails || this.revenueDetails.length === 0) {
+        console.error('No revenue details available for chart rendering.');
+        return;
+      }
+
+      this.chartElements.forEach((chartElement, index) => {
+        const canvas = chartElement.nativeElement as HTMLCanvasElement;
+        const event = this.revenueDetails[index];
+
+        if (canvas) {
+          new Chart(canvas, {
+            type: 'doughnut',
+            data: {
+              labels: ['Total Tickets Booked', 'Remaining Tickets'],
+              datasets: [{
+                data: [event.totalTicketsBooked, event.remainingTickets],
+                backgroundColor: ['#36A2EB', '#FF6384'],
+                borderColor: ['#36A2EB', '#FF6384'],
+                borderWidth: 1,
+                
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'top',
+                },
+                tooltip: {
+                  enabled: true,
+                },
+              },
+            },
+          });
+        } else {
+          console.error('Canvas not found for event:', event.eventName);
         }
       });
+    }, 500); // Delay to ensure DOM is rendered
+  }
+
+  fetchSalesData() {
+    this.adminService.getSalesData(this.managerId).subscribe((data: any) => {
+      if (!data || data.length === 0) {
+        console.error('No sales data available');
+        return;
+      }
+
+      this.revenueDetails = data.map((eventData: any) => ({
+        eventName: eventData.eventName,
+        totalTicketsBooked: eventData.totalTicketsBooked,
+        remainingTickets: eventData.remainingTickets,
+        totalRevenue: eventData.totalTicketsBooked * eventData.ticketPrice,
+        adminShare: (eventData.totalTicketsBooked * eventData.ticketPrice) * 0.2
+      }));
     });
   }
 }

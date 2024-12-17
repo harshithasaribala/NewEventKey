@@ -42,9 +42,11 @@ export class UserProfileComponent implements OnInit {
   updateProfile(): void {
     if (this.userId) {
       this.user.userType = 'User';
+      console.log(this.user);
       this.authService.updateProfileById(this.userId, this.user).subscribe({
+        
         next: (response) => {
-          console.error('Sucess:', response);
+          console.log('Sucess:', response);
           alert('Profile updated successfully!');
         },
         error: (err) => {

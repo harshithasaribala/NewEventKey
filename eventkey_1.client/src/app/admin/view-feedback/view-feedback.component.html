@@ -1,0 +1,17 @@
+<!-- src/app/feedbacks/feedbacks.component.html -->
+<div *ngIf="loading" class="loading">Loading feedbacks...</div>
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+<div *ngIf="!loading && !errorMessage">
+  <div *ngIf="feedbacks.length === 0" class="no-feedbacks">No feedbacks available.</div>
+  <div *ngFor="let feedback of feedbacks" class="feedback-card">
+    <img *ngIf="feedback.imageUrl" [src]="feedback.imageUrl" alt="Feedback Image" class="feedback-image">
+    <div class="feedback-details">
+      <h4>{{ feedback.eventName }}</h4>
+      <p><strong>User:</strong> {{ feedback.userId }}</p>
+      <p><strong>Date:</strong> {{ feedback.eventDate | date }}</p>
+      <p><strong>Rating:</strong> {{ feedback.rating }}</p>
+      <p>{{ feedback.feedbackText }}</p>
+    </div>
+    <button class="delete-button" (click)="deleteFeedback(feedback.eventId)">Delete</button>
+  </div>
+</div>

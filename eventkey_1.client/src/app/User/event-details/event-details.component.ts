@@ -37,7 +37,7 @@ export class EventDetailsComponent implements OnInit {
       case 'concert':
         return 'assets/EventKey/assets/images/Events/Concert.jpg';
       case 'workshop':
-        return 'assets/EventKey/assets/images/Events/Workshop.jpg';
+        return 'assets/EventKey/assets/images/Events/workshop.jpg';
       case 'comedy':
         return 'assets/EventKey/assets/images/Events/Comedy.jpg';
       case 'adventure':
@@ -45,11 +45,11 @@ export class EventDetailsComponent implements OnInit {
       case 'foodfestival':
         return 'assets/EventKey/assets/images/Events/FoodFestival.jpg';
       case 'socialawarness':
-        return 'assets/EventKey/assets/images/Events/SocialAwareness.jpg';
+        return 'assets/EventKey/assets/images/Events/SocialAwarness.jpg';
       case 'parks':
-        return 'assets/EventKey/assets/images/Events/Parks.jpg';
+        return 'assets/EventKey/assets/images/Events/park.jpg';
       default:
-        return 'assets/images/default-event.jpg';
+        return 'assets/EventKey/assets/images/Events/default.png';
     }
   }
 
@@ -74,8 +74,5 @@ export class EventDetailsComponent implements OnInit {
         alert('An error occurred while saving the event. Please try again later.');
       }
     );
-  }
-  onBack(): void {
-    this.location.back();
   }
 }

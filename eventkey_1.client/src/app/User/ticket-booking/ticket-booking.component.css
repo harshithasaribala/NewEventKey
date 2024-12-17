@@ -53,10 +53,12 @@
     font-size: 1em;
     transition: background-color 0.3s ease;
   }
-
-    .buttons button:hover {
-      background-color: #45a049;
-    }
+.buttons .gpay-button{
+    background-color:beige;
+}
+.buttons button:hover {
+  background-color: #45a049;
+}
 
     .buttons button[type="button"] {
       background-color: #f44336;

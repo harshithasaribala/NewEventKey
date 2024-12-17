@@ -1,19 +1,18 @@
+<h2>Ticket Sales </h2>
 <div class="ticket-sales-container">
-  <h2>Ticket Sales for Event Manager</h2>
+
 
   <div *ngFor="let event of revenueDetails; let i = index" class="event-card">
     <div class="event-title">
       <h3>{{ event.eventName }}</h3>
     </div>
 
-    <!-- Display the pie chart for each event -->
-    <canvas id="ticketSalesChart-{{ event.eventName }}"></canvas>
+    <!-- Use index for unique IDs -->
+    <canvas #ticketSalesChart id="ticketSalesChart"></canvas>
 
-    <!-- Display the total revenue and admin share below the chart -->
     <div class="revenue-details">
       <p>Total Revenue: {{ event.totalRevenue | currency : 'INR' }}</p>
-      <p>Admin Share (20%): {{ event.adminShare | currency :'INR' }}</p>
+      <p>Admin Share (20%): {{ event.adminShare | currency : 'INR' }}</p>
     </div>
   </div>
-
 </div>

@@ -53,6 +53,7 @@
 .photo-preview {
   margin-top: 15px;
   text-align: center;
+  
 }
 
   .photo-preview img {
@@ -131,6 +132,7 @@ textarea {
 /* Submit Button */
 .submit {
   text-align: center;
+  padding-top: 20px;
 }
 
   .submit button {
@@ -143,6 +145,7 @@ textarea {
     font-weight: bold;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.3s ease;
+    
   }
 
     .submit button:hover {

@@ -23,6 +23,8 @@ export class EventmanagerdashboardComponent implements OnInit {
   eventManagerId: string = ''; // To store event manager ID from route parameter
   showManageEventOptions: boolean = false;
   eventId: string = '';
+  activeView: string = 'eventList';
+
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private authService: AuthService, // Assuming you have a service for profile data
@@ -94,9 +96,10 @@ export class EventmanagerdashboardComponent implements OnInit {
 
   loadComponent(section: string) {
     this.dynamicComponentContainer.clear();
+    this.activeView = section;
     switch (section) {
       case 'home':
-        this.router.navigate(['/home']);
+        this.activeView = 'eventList';
         break;
       case 'emprofile':
         this.loadEventManagerProfile();

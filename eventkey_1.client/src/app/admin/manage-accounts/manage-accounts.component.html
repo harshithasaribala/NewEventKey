@@ -1,8 +1,7 @@
 <div class="container">
-  <a class="back-button" (click)="goBack()">← Back to Dashboard</a>
   <h2>Manage Accounts</h2>
   <div class="form-group">
-    <label for="userType">Select User Type:</label>
+    <label for="userType" >Select User Type:</label>
     <select id="userType"
             [(ngModel)]="selectedUserType"
             (change)="fetchAccounts()"

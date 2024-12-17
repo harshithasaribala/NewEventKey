@@ -32,5 +32,8 @@ export class AdminloginComponent {
       alert('Invalid credentials. Please try again.');
     }
   }
+  onReset(): void {
+    this.adminLoginForm.reset();
+  }
 }
 

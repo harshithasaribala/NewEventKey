@@ -29,7 +29,7 @@ import { RevenueVisualizationComponent } from './admin/revenue-visualization/rev
 import { ManageAccountsComponent } from './admin/manage-accounts/manage-accounts.component';
 import { TicketSalesComponent } from './Eventmanager/ticket-sales/ticket-sales.component';
 import { SessionService } from './services/session.service';
-
+import { ViewFeedbackComponent } from './admin/view-feedback/view-feedback.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +49,7 @@ import { SessionService } from './services/session.service';
     TicketBookingComponent,
     ETicketComponent,
     SavedEventsComponent,
-    PreviousBookingsComponent, ManageEventsComponent, FeedbackComponent, RevenueVisualizationComponent, ManageAccountsComponent, TicketSalesComponent
+    PreviousBookingsComponent, ManageEventsComponent, FeedbackComponent, RevenueVisualizationComponent, ManageAccountsComponent, TicketSalesComponent, ViewFeedbackComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, RouterModule, RouterLink, ReactiveFormsModule

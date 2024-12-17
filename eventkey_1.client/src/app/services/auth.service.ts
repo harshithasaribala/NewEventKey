@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { Event } from '../home/event.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -57,6 +57,9 @@ export class AuthService {
   }
   removeSavedEvent(userId: string, eventId: string): Observable<void> {
     return this.http.delete<void>(`${this.eventsUrl}/saved/${userId}/${eventId}`);
+  }
+  getUpcomingEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>(`${this.eventsUrl}/upcoming`);
   }
   saveBooking(bookingDetails: any): Observable<any> {
     return this.http.post(`${this.bookingsUrl}`, bookingDetails);

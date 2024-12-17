@@ -1,68 +1,103 @@
-/* Styling for form container */
-.edit-event-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #141E30, #243B55);
+  color: #333;
+  margin: 0;
+  padding: 0;
 }
 
-  .edit-event-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-/* Form Fields */
-.form-group {
-  margin-bottom: 15px;
+.container {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  margin: 50px auto;
+  padding: 30px;
+  max-width: 700px;
 }
 
-  .form-group label {
+.form-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+  .form-header h2 {
+    font-size: 2rem;
     font-weight: bold;
+    color: #6a11cb;
   }
 
-  .form-group input,
-  .form-group textarea {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: #007bff;
-    }
-
-/* Button Styling */
-.form-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+/* Input Focus Effect */
+.form-control {
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
 }
 
+  .form-control:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 10px rgba(106, 17, 203, 0.3);
+  }
+
+/* Buttons */
 .btn {
+  border-radius: 25px;
   padding: 10px 20px;
-  border-radius: 4px;
-  border: none;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
 }
 
 .btn-primary {
-  background-color: #007bff;
-  color: white;
+  background: #6a11cb;
+  border: none;
 }
 
-  .btn-primary:disabled {
-    background-color: #cccccc;
+  .btn-primary:hover {
+    background: #2575fc;
+    transform: scale(1.05);
   }
 
 .btn-secondary {
-  background-color: #6c757d;
-  color: white;
+  background: #6c757d;
+  color: #fff;
+  border: none;
 }
 
   .btn-secondary:hover {
-    background-color: #5a6268;
+    background: #495057;
+    transform: scale(1.05);
   }
+
+/* Error Messages */
+.error {
+  color: #dc3545;
+  font-size: 0.9rem;
+}
+
+/* Animated Section Headers */
+label {
+  font-weight: bold;
+  color: #495057;
+  margin-top: 10px;
+  display: inline-block;
+  position: relative;
+}
+
+  label::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 3px;
+    background: #6a11cb;
+    transition: width 0.3s ease-in-out;
+  }
+
+  label:hover::after {
+    width: 100%;
+  }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+}

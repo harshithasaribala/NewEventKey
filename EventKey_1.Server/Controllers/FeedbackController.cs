@@ -103,6 +103,39 @@ namespace EventKey_1.Server.Controllers
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
+        // GET: api/Feedback
+        [HttpGet]
+        public IActionResult GetAllFeedback()
+        {
+            try
+            {
+                // Retrieve all feedback records from the database
+                var feedbacks = _context.Feedbacks
+                    .Select(f => new
+                    {
+                        f.UserId,
+                        f.EventId,
+                        f.EventName,
+                        f.EventDate,
+                        f.FeedbackText,
+                        f.Rating,
+                        ImageUrl = string.IsNullOrEmpty(f.ImagePath) ? null : $"{Request.Scheme}://{Request.Host}/{f.ImagePath}",
+                        f.CreatedAt
+                    })
+                    .ToList();
+
+                if (!feedbacks.Any())
+                {
+                    return NotFound(new { Message = "No feedback found." });
+                }
+
+                return Ok(feedbacks);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
+        }
 
 
         // GET: api/Feedback/{eventId}

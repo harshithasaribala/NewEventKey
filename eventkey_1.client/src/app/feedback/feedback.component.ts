@@ -1,13 +1,14 @@
-
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SessionService } from '../services/session.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-feedback',
-  standalone:false,
+  standalone: false,
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.css']
 })
@@ -17,8 +18,14 @@ export class FeedbackComponent implements OnInit {
   selectedFile: File | null = null;
   uploadedPhoto: string | null = null;
   showThankYouMessage: boolean = false;
+  isSubmitting: boolean = false; // Prevent double submission
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private sessionService: SessionService
+  ) {
     this.feedbackForm = this.fb.group({
       userId: ['', [Validators.required]],
       eventId: ['', [Validators.required]],
@@ -31,11 +38,12 @@ export class FeedbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userId = this.route.snapshot.paramMap.get('userId')!;
-    if (this.userId) {
+    const retrievedId = this.sessionService.getItem('userId');
+    if (retrievedId) {
+      this.userId = retrievedId;
       this.feedbackForm.controls['userId'].setValue(this.userId);
     } else {
-      alert('Invalid or missing User ID in the URL.');
+      alert('Invalid or missing User ID in the session.');
     }
   }
 
@@ -65,34 +73,45 @@ export class FeedbackComponent implements OnInit {
     }
   }
 
-  submitFeedback(): void {
-    if (this.feedbackForm.valid) {
-      const formData = new FormData();
-      formData.append('UserId', this.feedbackForm.controls['userId'].value);
-      formData.append('EventId', this.feedbackForm.controls['eventId'].value);
-      formData.append('EventName', this.feedbackForm.controls['eventName'].value);
-      formData.append('EventDate', this.feedbackForm.controls['eventDate'].value);
-      formData.append('FeedbackText', this.feedbackForm.controls['feedbackText'].value);
-      formData.append('Rating', this.feedbackForm.controls['rating'].value.toString());
-
-      if (this.selectedFile) {
-        formData.append('Image', this.selectedFile, this.selectedFile.name);
-      }
-
-      this.authService.submitFeedback(formData).subscribe(
-        (response) => {
-          console.log('Feedback submitted successfully:', response);
-          this.showThankYouMessage = true;
-          this.resetForm();
-        },
-        (error: HttpErrorResponse) => {
-          console.error('Error submitting feedback:', error);
-          alert('Error submitting feedback. Please try again.');
-        }
-      );
-    } else {
-      alert('Please fill in all required fields.');
+  submitFeedback(event?: Event): void {
+    if (event) {
+      event.preventDefault(); // Prevent form default submission
+      event.stopPropagation();
     }
+
+    if (this.isSubmitting || !this.feedbackForm.valid) {
+      return; // Prevent double submission or invalid form submission
+    }
+
+    this.isSubmitting = true; // Block multiple submissions
+
+    const formData = new FormData();
+    formData.append('UserId', this.feedbackForm.controls['userId'].value);
+    formData.append('EventId', this.feedbackForm.controls['eventId'].value);
+    formData.append('EventName', this.feedbackForm.controls['eventName'].value);
+    formData.append('EventDate', this.feedbackForm.controls['eventDate'].value);
+    formData.append('FeedbackText', this.feedbackForm.controls['feedbackText'].value);
+    formData.append('Rating', this.feedbackForm.controls['rating'].value.toString());
+
+    if (this.selectedFile) {
+      formData.append('Image', this.selectedFile, this.selectedFile.name);
+    }
+
+    this.authService.submitFeedback(formData).pipe(take(1)).subscribe(
+      (response) => {
+        alert('Feedback submitted successfully');
+        console.log('Feedback submitted successfully:', response);
+        this.showThankYouMessage = true;
+        this.resetForm();
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error submitting feedback:', error);
+        alert('Error submitting feedback. Please try again.');
+      },
+      () => {
+        this.isSubmitting = false; // Reset flag after completion
+      }
+    );
   }
 
   resetForm(): void {
@@ -100,5 +119,6 @@ export class FeedbackComponent implements OnInit {
     this.selectedFile = null;
     this.uploadedPhoto = null;
     this.showThankYouMessage = false;
+    this.isSubmitting = false;
   }
 }

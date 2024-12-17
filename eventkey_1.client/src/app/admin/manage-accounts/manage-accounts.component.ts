@@ -50,7 +50,4 @@ export class ManageAccountsComponent implements OnInit {
       );
     }
   }
-  goBack(): void {
-    this.location.back(); // Navigate to the previous route
-  }
 }

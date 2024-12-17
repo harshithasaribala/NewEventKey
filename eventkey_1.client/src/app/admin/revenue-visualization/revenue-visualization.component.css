@@ -1,41 +1,34 @@
-.revenue-dashboard {
-  text-align: center;
+.revenue-card {
+  margin: 10px auto;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
 }
 
-.revenue-heading {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-.revenue-info {
-  margin-bottom: 30px;
-  font-size: 1.5rem;
-  color: #555;
-}
-
-  .revenue-info h2,
-  .revenue-info h3 {
-    margin: 10px 0;
+  .revenue-card h2 {
+    color: #444;
   }
 
+  .revenue-card h3 {
+    color: #66bb6a;
+    font-weight: bold;
+  }
 .charts-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   flex-wrap: wrap;
-  gap: 20px;
+  margin-top: 20px;
 }
 
 .chart-box {
-  width: 100%;
-  max-width: 600px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  max-width: 400px;
+  margin: 10px;
+  text-align: center;
 }
+
+  .chart-box canvas {
+    max-width: 100%;
+  }

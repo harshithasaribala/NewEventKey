@@ -1,18 +1,23 @@
 <div class="revenue-dashboard">
-  <!-- Heading -->
-  <h1 class="revenue-heading">Revenue Visualization</h1>
-
-  <!-- Total Amount Received -->
+  <!-- Revenue Cards -->
   <div class="revenue-info">
-    <h2>Total Amount Received: ₹{{ totalRevenue }}</h2>
-    <h3>Admin's Commission (20%): ₹{{ adminCommission }}</h3>
+    <h2>Total Revenue: ₹{{ totalRevenue }}</h2>
+    <h3>Admin Commission (20%): ₹{{ adminCommission }}</h3>
+    <h3>Average Revenue Per Event: ₹{{ averageRevenuePerEvent }}</h3>
   </div>
 
-  <!-- Monthly Revenue Chart -->
+  <!-- Visualizations -->
   <div class="charts-container">
+    <!-- Pie Chart for Revenue Breakdown -->
     <div class="chart-box">
-      <h3>Monthly Revenue Breakdown</h3>
-      <canvas id="revenueChart" width="400" height="400"></canvas>
+      <h3>Revenue Breakdown</h3>
+      <canvas id="pieChart" width="400" height="400"></canvas>
+    </div>
+
+    <!-- Bar Chart for Revenue Per Event -->
+    <div class="chart-box">
+      <h3>Revenue Per Event</h3>
+      <canvas id="barChart" width="400" height="400"></canvas>
     </div>
   </div>
 </div>

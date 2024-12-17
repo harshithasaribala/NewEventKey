@@ -12,7 +12,4 @@
     <None Include=".bin\node.cmd" />
     <None Include=".bin\npm.cmd" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\app\admin\" />
-  </ItemGroup>
 </Project>
