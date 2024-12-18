@@ -16,7 +16,11 @@ export class AuthService {
   signUp(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}`, userData);
   }
-
+  checkUserExistence(email: string, phoneNumber: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/check-user`, {
+      params: { email, phoneNumber }
+    });
+  }
   // Login method
   login(credentials: { userType: string; email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials);

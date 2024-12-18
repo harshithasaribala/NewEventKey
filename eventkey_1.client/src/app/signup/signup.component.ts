@@ -54,39 +54,47 @@ export class SignupComponent {
   // Form submit method
   onSubmit() {
     if (this.SignUpFormGroup.valid) {
-      const userData = this.SignUpFormGroup.value;
+      const { email, phoneNumber } = this.SignUpFormGroup.value;
 
-      // Call signUp method from the service to send data to the API
-      this.authService.signUp(userData).subscribe(
-        (response) => {
-          console.log('SignUp successful', response);
-          if (response) {
-            let generatedId: string;
+      // Call the checkUserExistence method
+      this.authService.checkUserExistence(email, phoneNumber).subscribe(
+        (exists) => {
+          if (exists) {
+            alert('User already exists with this email or phone number!');
+          } else {
+            // Proceed with signup if user does not exist
+            this.authService.signUp(this.SignUpFormGroup.value).subscribe(
+              (response) => {
+                console.log('SignUp successful', response);
+                if (response) {
+                  let generatedId: string;
 
-            // Check if eventType is present in the response
-            if (response.eventType) {
-              generatedId = response.emId;  
-            } else {
-              generatedId = response.userId;  
-            }
+                  if (response.eventType) {
+                    generatedId = response.emId;
+                  } else {
+                    generatedId = response.userId;
+                  }
 
-            // Show confirmation message with the correct ID
-            const confirmationMessage = `Signup successfull! Click OK to go to the login page.`;
+                  const confirmationMessage = `Signup successful! Click OK to go to the login page.`;
 
-            if (confirm(confirmationMessage)) {
-              // Navigate to login page after confirmation
-              this.router.navigate(['/login']);
-            }
-          }
-       else {
-            console.log('Error: Response does not contain an ID');
+                  if (confirm(confirmationMessage)) {
+                    this.router.navigate(['/login']);
+                  }
+                } else {
+                  console.log('Error: Response does not contain an ID');
+                }
+              },
+              (error) => {
+                console.error('Error during sign up', error);
+              }
+            );
           }
         },
         (error) => {
-          console.error('Error during sign up', error);
+          console.error('Error checking user existence', error);
         }
       );
-
     }
   }
+
 }

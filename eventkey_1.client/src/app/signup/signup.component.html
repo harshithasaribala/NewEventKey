@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
+
   <section class="SignUp">
     <div class="d-flex align-items-center justify-content-start mb-3">
       <!-- Logo -->
@@ -17,157 +18,157 @@
            style="width: 150px; height: 150px;" />
       <!-- Text -->
       <h2 class="mb-0 fw-bold">&nbsp;&nbsp; SignUp Form</h2>
-      </div>
-      <div class="container bg-white shadow-lg p-5 rounded">
+    </div>
+    <div class="container bg-white shadow-lg p-5 rounded">
 
-        <form [formGroup]="SignUpFormGroup" (ngSubmit)="onSubmit()">
-          <!-- Sign Up As -->
-          <div class="mb-3">
-            <label class="form-label fw-semibold"><strong>Sign Up As</strong></label>
-            <div class="form-check">
-              <input class="form-check-input"
-                     type="radio"
-                     formControlName="userType"
-                     value="User"
-                     (change)="toggleEventType(false)"
-                     required />
-              <label class="form-check-label">User</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input"
-                     type="radio"
-                     formControlName="userType"
-                     value="Event Manager"
-                     (change)="toggleEventType(true)"
-                     required />
-              <label class="form-check-label">Event Manager</label>
-            </div>
-            <div *ngIf="SignUpFormGroup.controls['userType'].invalid && SignUpFormGroup.controls['userType'].touched" class="text-danger">
-              Please select a user type.
+      <form [formGroup]="SignUpFormGroup" (ngSubmit)="onSubmit()">
+        <!-- Sign Up As -->
+        <div class="mb-3">
+          <label class="form-label fw-semibold"><strong>Sign Up As</strong></label>
+          <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   formControlName="userType"
+                   value="User"
+                   (change)="toggleEventType(false)"
+                   required />
+            <label class="form-check-label">User</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   formControlName="userType"
+                   value="Event Manager"
+                   (change)="toggleEventType(true)"
+                   required />
+            <label class="form-check-label">Event Manager</label>
+          </div>
+          <div *ngIf="SignUpFormGroup.controls['userType'].invalid && SignUpFormGroup.controls['userType'].touched" class="text-danger">
+            Please select a user type.
+          </div>
+        </div>
+
+        <!-- Event Manager Section -->
+        <div *ngIf="isEventManager" class="mb-3">
+          <label for="eventType" class="form-label fw-semibold">Types of Events Conducted</label>
+          <select class="form-control" formControlName="eventType" required>
+            <option value="" disabled>Select an option</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Corporate">Corporate</option>
+            <option value="Social">Social</option>
+            <option value="Educational">Educational</option>
+          </select>
+          <div *ngIf="SignUpFormGroup.controls['eventType'].invalid && SignUpFormGroup.controls['eventType'].touched" class="text-danger">
+            Please select the event type.
+          </div>
+
+          <label for="companyName" class="form-label fw-semibold mt-3">Company Name</label>
+          <input type="text"
+                 class="form-control"
+                 formControlName="companyName"
+                 placeholder="Enter Company Name" />
+          <div *ngIf="SignUpFormGroup.controls['companyName'].invalid && SignUpFormGroup.controls['companyName'].touched" class="text-danger">
+            Company Name is required.
+          </div>
+        </div>
+
+        <!-- General Inputs -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="fullName" class="form-label fw-semibold">Full Name</label>
+            <input type="text" class="form-control" formControlName="fullName" placeholder="Enter Full Name" />
+            <div *ngIf="SignUpFormGroup.controls['fullName'].invalid && SignUpFormGroup.controls['fullName'].touched" class="text-danger">
+              Full Name must be at least 5 characters long.
             </div>
           </div>
 
-          <!-- Event Manager Section -->
-          <div *ngIf="isEventManager" class="mb-3">
-            <label for="eventType" class="form-label fw-semibold">Types of Events Conducted</label>
-            <select class="form-control" formControlName="eventType" required>
-              <option value="" disabled>Select an option</option>
-              <option value="Entertainment">Entertainment</option>
-              <option value="Corporate">Corporate</option>
-              <option value="Social">Social</option>
-              <option value="Educational">Educational</option>
+          <div class="col-md-6 mb-3">
+            <label for="age" class="form-label fw-semibold">Age</label>
+            <input type="number" class="form-control" formControlName="age" placeholder="Enter Age" />
+            <div *ngIf="SignUpFormGroup.controls['age'].invalid && SignUpFormGroup.controls['age'].touched" class="text-danger">
+              Age must be between 18 and 100.
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="gender" class="form-label fw-semibold">Gender</label>
+            <select class="form-control" formControlName="gender">
+              <option value="" disabled>Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
             </select>
-            <div *ngIf="SignUpFormGroup.controls['eventType'].invalid && SignUpFormGroup.controls['eventType'].touched" class="text-danger">
-              Please select the event type.
-            </div>
-
-            <label for="companyName" class="form-label fw-semibold mt-3">Company Name</label>
-            <input type="text"
-                   class="form-control"
-                   formControlName="companyName"
-                   placeholder="Enter Company Name" />
-            <div *ngIf="SignUpFormGroup.controls['companyName'].invalid && SignUpFormGroup.controls['companyName'].touched" class="text-danger">
-              Company Name is required.
+            <div *ngIf="SignUpFormGroup.controls['gender'].invalid && SignUpFormGroup.controls['gender'].touched" class="text-danger">
+              Please select a gender.
             </div>
           </div>
 
-          <!-- General Inputs -->
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="fullName" class="form-label fw-semibold">Full Name</label>
-              <input type="text" class="form-control" formControlName="fullName" placeholder="Enter Full Name" />
-              <div *ngIf="SignUpFormGroup.controls['fullName'].invalid && SignUpFormGroup.controls['fullName'].touched" class="text-danger">
-                Full Name must be at least 5 characters long.
-              </div>
+          <div class="col-md-6 mb-3">
+            <label for="email" class="form-label fw-semibold">Email</label>
+            <input type="email" class="form-control" formControlName="email" placeholder="Enter Email" />
+            <div *ngIf="SignUpFormGroup.controls['email'].invalid && SignUpFormGroup.controls['email'].touched" class="text-danger">
+              Please enter a valid email address.
             </div>
+          </div>
+        </div>
 
-            <div class="col-md-6 mb-3">
-              <label for="age" class="form-label fw-semibold">Age</label>
-              <input type="number" class="form-control" formControlName="age" placeholder="Enter Age" />
-              <div *ngIf="SignUpFormGroup.controls['age'].invalid && SignUpFormGroup.controls['age'].touched" class="text-danger">
-                Age must be between 18 and 100.
-              </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="password" class="form-label fw-semibold">Password</label>
+            <input type="password" class="form-control" formControlName="password" placeholder="Enter Password" />
+            <div *ngIf="SignUpFormGroup.controls['password'].invalid && SignUpFormGroup.controls['password'].touched" class="text-danger">
+              Password must be at least 8 characters and contain a letter, symbol, and number.
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="gender" class="form-label fw-semibold">Gender</label>
-              <select class="form-control" formControlName="gender">
-                <option value="" disabled>Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-              <div *ngIf="SignUpFormGroup.controls['gender'].invalid && SignUpFormGroup.controls['gender'].touched" class="text-danger">
-                Please select a gender.
-              </div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label for="email" class="form-label fw-semibold">Email</label>
-              <input type="email" class="form-control" formControlName="email" placeholder="Enter Email" />
-              <div *ngIf="SignUpFormGroup.controls['email'].invalid && SignUpFormGroup.controls['email'].touched" class="text-danger">
-                Please enter a valid email address.
-              </div>
+          <div class="col-md-6 mb-3">
+            <label for="confirmPassword" class="form-label fw-semibold">Confirm Password</label>
+            <input type="password" class="form-control" formControlName="confirmPassword" placeholder="Confirm Password" />
+            <div *ngIf="SignUpFormGroup.hasError('passwordMismatch') && SignUpFormGroup.controls['confirmPassword'].touched" class="text-danger">
+              Passwords do not match.
             </div>
           </div>
+        </div>
 
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label for="password" class="form-label fw-semibold">Password</label>
-              <input type="password" class="form-control" formControlName="password" placeholder="Enter Password" />
-              <div *ngIf="SignUpFormGroup.controls['password'].invalid && SignUpFormGroup.controls['password'].touched" class="text-danger">
-                Password must be at least 8 characters and contain a letter, symbol, and number.
-              </div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-              <label for="confirmPassword" class="form-label fw-semibold">Confirm Password</label>
-              <input type="password" class="form-control" formControlName="confirmPassword" placeholder="Confirm Password" />
-              <div *ngIf="SignUpFormGroup.hasError('passwordMismatch') && SignUpFormGroup.controls['confirmPassword'].touched" class="text-danger">
-                Passwords do not match.
-              </div>
-            </div>
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label fw-semibold">Phone Number</label>
+          <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Enter Phone Number" />
+          <div *ngIf="SignUpFormGroup.controls['phoneNumber'].invalid && SignUpFormGroup.controls['phoneNumber'].touched" class="text-danger">
+            Phone number must be a 10-digit number.
           </div>
+        </div>
 
-          <div class="mb-3">
-            <label for="phoneNumber" class="form-label fw-semibold">Phone Number</label>
-            <input type="text" class="form-control" formControlName="phoneNumber" placeholder="Enter Phone Number" />
-            <div *ngIf="SignUpFormGroup.controls['phoneNumber'].invalid && SignUpFormGroup.controls['phoneNumber'].touched" class="text-danger">
-              Phone number must be a 10-digit number.
-            </div>
+        <div class="mb-3">
+          <label for="address" class="form-label fw-semibold">Address</label>
+          <textarea class="form-control" formControlName="address" rows="3" placeholder="Enter Address"></textarea>
+          <div *ngIf="SignUpFormGroup.controls['address'].invalid && SignUpFormGroup.controls['address'].touched" class="text-danger">
+            Address is required.
           </div>
+        </div>
 
-          <div class="mb-3">
-            <label for="address" class="form-label fw-semibold">Address</label>
-            <textarea class="form-control" formControlName="address" rows="3" placeholder="Enter Address"></textarea>
-            <div *ngIf="SignUpFormGroup.controls['address'].invalid && SignUpFormGroup.controls['address'].touched" class="text-danger">
-              Address is required.
-            </div>
-          </div>
+        <!-- Buttons -->
+        <div class="d-flex justify-content-center gap-3">
+          <button type="reset" class="btn btn-secondary rounded-pill px-4">Reset</button>
+          <button type="submit" class="btn btn-primary rounded-pill px-4" [disabled]="SignUpFormGroup.invalid">Sign Up</button>
+        </div>
 
-          <!-- Buttons -->
-          <div class="d-flex justify-content-center gap-3">
-            <button type="reset" class="btn btn-secondary rounded-pill px-4">Reset</button>
-            <button type="submit" class="btn btn-primary rounded-pill px-4" [disabled]="SignUpFormGroup.invalid">Sign Up</button>
-          </div>
-
-          <p class="text-center mt-4">
-            Already have an account? <a href="./login" class="text-primary fw-bold">Login here</a>.
-          </p>
-          <a routerLink="/home" class="text-primary fw-bold" style="text-align:center"> Wanna Go back To Home!!! Click on this</a>
-        </form>
-        <footer class="footer scrollable-footer">
-          <p>&copy; 2024 EventKey. Designed and developed by Initiators ❤️</p>
-          <div>
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-google-plus"></i></a>
-          </div>
-        </footer>
-      </div>
+        <p class="text-center mt-4">
+          Already have an account? <a href="./login" class="text-primary fw-bold">Login here</a>.
+        </p>
+        <a routerLink="/home" class="text-primary fw-bold" style="text-align:center"> Wanna Go back To Home!!! Click on this</a>
+      </form>
+      <footer class="footer scrollable-footer">
+        <p>&copy; 2024 EventKey. Designed and developed by Initiators ❤️</p>
+        <div>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+          <a href="#"><i class="fab fa-google-plus"></i></a>
+        </div>
+      </footer>
+    </div>
   </section>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>

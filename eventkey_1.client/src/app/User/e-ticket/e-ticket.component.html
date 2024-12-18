@@ -11,46 +11,46 @@
 </head>
 <body>
   <!-- Particle Background -->
-  <div id="particles-js"></div>
+  <div id="particles-js">  </div>
 
-  <!-- Marquee -->
-  <div class="marquee">
-    🎉 Book Your Tickets Now and Experience the Best Events with EventKey! 🎉
-  </div>
-  
+    <!-- Marquee -->
+    <div class="marquee">
+      🎉 Book Your Tickets Now and Experience the Best Events with EventKey! 🎉
+    </div>
+
     <!-- Ticket Container -->
-  <div class="ticket-container" #ticketContainer>
-    <!-- Header -->
-    <div class="ticket-header">
-      <h3>{{ event.eventName }}</h3>
-    </div>
+    <div class="ticket-container" #ticketContainer>
+      <!-- Header -->
+      <div class="ticket-header">
+        <h3>{{ event.eventName }}</h3>
+      </div>
 
-    <!-- Body -->
-    <div class="ticket-body">
-      <div class="ticket">
-        <p><strong>Booked By:</strong> {{ userName }}</p>
-        <p><strong>Number of Tickets:</strong> {{ numberOfTickets }}</p>
-        <p><strong>Total Cost:</strong> {{ totalCost | currency:'INR' }}</p>
-        <p><strong>Event Date:</strong> {{ event.eventDate | date: 'fullDate' }}</p>
-        <p><strong>Event Time:</strong> {{ event.eventTime }}</p>
-        <p><strong>Venue:</strong> {{ event.location }}</p>
+      <!-- Body -->
+      <div class="ticket-body">
+        <div class="ticket">
+          <p><strong>Booked By:</strong> {{ userName }}</p>
+          <p><strong>Number of Tickets:</strong> {{ numberOfTickets }}</p>
+          <p><strong>Total Cost:</strong> {{ totalCost | currency:'INR' }}</p>
+          <p><strong>Event Date:</strong> {{ event.eventDate | date: 'fullDate' }}</p>
+          <p><strong>Event Time:</strong> {{ event.eventTime }}</p>
+          <p><strong>Venue:</strong> {{ event.location }}</p>
+        </div>
+        <div class="qr-code">
+          <img src="assets/EventKey/assets/logo/favicon.jpeg" alt="QR Code">
+        </div>
       </div>
-      <div class="qr-code">
-        <img src="assets/EventKey/assets/logo/favicon.jpeg" alt="QR Code">
-      </div>
-    </div>
 
-    <!-- Footer -->
-    <div class="ticket-footer">
-      Thank You for Choosing EventKey - Your Event, Your Experience!
-    </div>
-  </div>
-      <!-- Buttons Section -->
-      <div class="buttons">
-        <button (click)="downloadETicket()">Download E-Ticket</button>
-        <button class="back-btn" (click)="onBack()">Back</button>
-        <button class="my-bookings-btn" (click)="viewBookings()">My Bookings</button>
+      <!-- Footer -->
+      <div class="ticket-footer">
+        Thank You for Choosing EventKey - Your Event, Your Experience!
       </div>
+    </div>
+    <!-- Buttons Section -->
+    <div class="buttons">
+      <button (click)="downloadETicket()">Download E-Ticket</button>
+ 
+      <button class="my-bookings-btn" (click)="viewBookings()">My Bookings</button>
+    </div>
 
     <!-- Particles JS -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>

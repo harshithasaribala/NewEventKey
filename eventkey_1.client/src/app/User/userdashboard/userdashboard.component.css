@@ -26,6 +26,7 @@ body {
     font-size: 40px;
     color: white;
     text-align:center;
+    font-weight:bold;
   }
 
   .main-header .nav-menu {
@@ -66,11 +67,11 @@ body {
 /* Sidebar buttons styling */
 .sidebar-button {
   background: linear-gradient(135deg, #6a11cb, #2575fc);
-  border: none; /* Remove border */
+  border: 2px,dashed white; /* Remove border */
   padding: 15px 25px; /* Add padding for spacing */
   width: 100%; /* Make buttons span the full width of the sidebar */
   text-align: left; /* Align text to the left */
-  font-size: 16px; /* Set a readable font size */
+  font-size: 20px; /* Set a readable font size */
   color: white; /* Text color */
   cursor: pointer; /* Change cursor to pointer on hover */
   display: flex; /* Align icon and text inline */

@@ -42,6 +42,8 @@ export class UserProfileComponent implements OnInit {
   updateProfile(): void {
     if (this.userId) {
       this.user.userType = 'User';
+      this.user.eventType = '';
+      this.user.companyName = '';
       console.log(this.user);
       this.authService.updateProfileById(this.userId, this.user).subscribe({
         

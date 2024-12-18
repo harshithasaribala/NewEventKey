@@ -214,6 +214,24 @@ namespace EventKey_1.Server.Controllers
             }
         }
 
+        [HttpGet("check-user")]
+        public async Task<IActionResult> CheckUser([FromQuery] string email, [FromQuery] string phoneNumber)
+        {
+            if (string.IsNullOrEmpty(email) && string.IsNullOrEmpty(phoneNumber))
+            {
+                return BadRequest("At least one of Email or Phone Number is required.");
+            }
+
+            var userExists = await _context.User.AnyAsync(u => u.Email == email || u.PhoneNumber == phoneNumber);
+            var eventManagerExists = await _context.EventManager.AnyAsync(em => em.Email == email || em.PhoneNumber == phoneNumber);
+
+            if (userExists || eventManagerExists)
+            {
+                return Ok(new { exists = true, message = "A user with the given email or phone number already exists." });
+            }
+
+            return Ok(new { exists = false, message = "No user found with the given email or phone number." });
+        }
 
     }
 }

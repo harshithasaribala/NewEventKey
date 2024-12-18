@@ -21,12 +21,14 @@
         <option value="" disabled>Select Event Type</option>
         <option value="Conference">Conference</option>
         <option value="concert">Concerts</option>
+        <option value="sports">Sports</option>
         <option value="workshop">Workshops</option>
         <option value="comedy">Comedy Show</option>
         <option value="adventure">Adventure Trips</option>
         <option value="FoodFestival">Food Festival</option>
         <option value="SocialAwareness">Social Activities</option>
         <option value="parks">Amusement Parks</option>
+
       </select>
       <div *ngIf="createEventForm.get('eventType')?.invalid && createEventForm.get('eventType')?.touched" class="error">
         Event type is required.

@@ -35,6 +35,7 @@ body {
     margin: 0;
     font-size: 45px;
     color: white;
+    font-weight:bold;
   }
 
   .main-header .nav-menu {
@@ -120,7 +121,21 @@ body {
   flex-grow: 1;
   overflow-y: auto;
 }
-
+.event-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #6a11cb;
+  color: white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
 .events-list {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2 items per row */
@@ -130,13 +145,14 @@ body {
 
 .event-item {
   background: #fff;
+  border: 3px solid transparent;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   transition: transform 0.3s, box-shadow 0.3s;
   overflow: hidden;
   position: relative;
-  margin-left:15px;
+  margin-left: 15px;
 }
 
   .event-item:hover {
@@ -144,17 +160,28 @@ body {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
 
+
+  /* Hover Effect */
+  .event-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Event Content Styling */
   .event-item h3 {
     color: #6a11cb;
     font-weight: bold;
+    font-size: 1.5rem;
     margin-bottom: 10px;
+    text-align: center;
   }
 
-  .event-item p {
-    margin: 5px 0;
-    font-size: 0.9rem;
+  .event-item p{
+    font-size: 1rem;
     color: #555;
+    margin: 5px 0;
   }
+
 
   .event-item button {
     background-color: #6a11cb;

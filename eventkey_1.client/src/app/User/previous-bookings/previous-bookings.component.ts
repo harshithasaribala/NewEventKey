@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Location } from '@angular/common';
+import { SessionService } from '../../services/session.service';
 @Component({
   selector: 'app-previous-bookings',
   standalone: false,
@@ -15,18 +16,19 @@ export class PreviousBookingsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,private router:Router,
-    private authService: AuthService, private location:Location
+    private authService: AuthService, private location:Location,private sessionService:SessionService
   ) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.userId = params.get('userId') || '';
+    const retrievedId = this.sessionService.getItem('userId');
+    if (retrievedId) {
+      this.userId = retrievedId;
       if (this.userId) {
         this.fetchBookings(this.userId);
       } else {
         console.error('No user ID found in route parameters');
       }
-    });
+    }
   }
   fetchBookings(userId: string): void {
     this.authService.getBookingsByUserId(userId).subscribe(

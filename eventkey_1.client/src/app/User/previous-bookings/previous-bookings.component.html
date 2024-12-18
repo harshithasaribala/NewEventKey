@@ -1,25 +1,50 @@
-<div class="container">
-  <div *ngIf="bookings.length > 0; else noBookings">
-    <h2>Your Bookings</h2>
-    <div *ngFor="let booking of bookings">
-      <div class="booking">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Main Container -->
+  <div class="container mt-5">
+    <!-- Conditional Rendering -->
+    <div *ngIf="bookings.length > 0; else noBookings">
+      <h2>My Bookings</h2>
+      <!-- Booking Details -->
+      <div *ngFor="let booking of bookings" class="booking-container">
         <p><strong>Event Name:</strong> {{ booking.eventName }}</p>
-        <p><strong>Event Date:</strong> {{ booking.eventDate | date: 'fullDate'}}</p>
+        <p><strong>Event Date:</strong> {{ booking.eventDate | date: 'fullDate' }}</p>
         <p><strong>Event Time:</strong> {{ booking.eventTime }}</p>
         <p><strong>Location:</strong> {{ booking.eventLocation }}</p>
         <p><strong>Tickets Booked:</strong> {{ booking.numberOfTickets }}</p>
         <p><strong>Total Amount:</strong> ₹{{ booking.totalAmount }}</p>
         <p><strong>Booking Date:</strong> {{ booking.bookingDate | date: 'fullDate' }}</p>
+        <hr />
       </div>
-      <hr />
+
+      <!-- Back Button -->
+      <button class="btn-back" (click)="onBack()">
+        <i class="fas fa-arrow-left me-2"></i>Back
+      </button>
     </div>
-    <!-- Back Button -->
-    <button (click)="onBack()">Back</button>
+
+    <!-- No Bookings Template -->
+    <ng-template #noBookings>
+      <div class="no-bookings">
+        <i class="fas fa-calendar-times"></i>
+        <p>No bookings found.</p>
+        <p>Wanna book tickets!</p>
+        <h3 class="go-to-events-btn">
+          <i class="fas fa-ticket-alt me-2"></i>Go to Events
+        </h3>
+      </div>
+    </ng-template>
   </div>
 
-  <ng-template #noBookings>
-    <p>No bookings found.</p>
-   <p>To Book tickets click the below button!!!</p>
-    <button class="go-to-event-details">Go to Events</button>
-  </ng-template>
-</div>
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

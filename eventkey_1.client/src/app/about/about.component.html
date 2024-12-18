@@ -1,4 +1,4 @@
-<!--<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,7 +6,6 @@
   <title>About Us - EventKey</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
 </head>
 <body>
   <header>
@@ -14,7 +13,7 @@
       <div class="header-area">
         <nav class="navbar navbar-expand-lg navbar-dark">
           <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand">
               <img src="assets/EventKey/assets/logo/favicon.jpeg" alt="Icon" width="70" height="70">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu">
@@ -24,7 +23,6 @@
               <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/about">About Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="/events">Events</a></li>
                 <li class="nav-item"><a class="nav-link" href="/login">LogIn</a></li>
                 <li class="nav-item"><a class="nav-link" href="/signup">SignUp</a></li>
                 <li class="nav-item"><a class="nav-link" href="/admin-login">Admin LogIn</a></li>
@@ -44,7 +42,7 @@
     <ul>
       <li>Wide selection of events across multiple categories.</li>
       <li>Secure payment gateway for hassle-free transactions.</li>
-      <li>Instant e-ticket generation and QR-based entry system.</li>
+      <li>Instant e-ticket generation</li>
       <li>User-friendly platform for organizers and attendees alike.</li>
     </ul>
     <h3>Contact Us</h3>
@@ -81,7 +79,8 @@
   </div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>$(window).scroll(function () {
+  <script>
+    $(window).scroll(function () {
       if ($(this).scrollTop() > 100) {
         $('#scroll-Top .return-to-top').fadeIn();
       } else {
@@ -92,7 +91,7 @@
     $('#scroll-Top .return-to-top').click(function () {
       $('html, body').animate({ scrollTop: 0 }, 800);
       return false;
-    });</script>
-
+    });
+  </script>
 </body>
-</html>-->
+</html>

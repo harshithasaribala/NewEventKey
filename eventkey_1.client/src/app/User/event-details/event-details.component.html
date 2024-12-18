@@ -1,5 +1,13 @@
+<div class="search-container">
+  <input type="text"
+         placeholder="Search events by Type..."
+         [(ngModel)]="searchTerm"
+         (input)="searchEvents()"
+         class="search-input">
+</div>
+
 <div class="event-details-container">
-  <div *ngFor="let event of events" class="event-card">
+  <div *ngFor="let event of filteredEvents" class="event-card">
     <div class="event-image">
       <!-- Display the image based on event type -->
       <img [src]="getEventImage(event.eventType)" alt="Event Image">
@@ -40,7 +48,7 @@
       </div>
       <div class="event-item">
         <strong>Available Seats:</strong>
-        <p>{{ event.maxAttendees - event.registeredAttendees}}</p>
+        <p>{{ event.maxAttendees - event.registeredAttendees }}</p>
       </div>
     </div>
     <div class="buttons">
@@ -48,5 +56,4 @@
       <button (click)="saveEvent(event)" class="save-event-btn">Save Event</button>
     </div>
   </div>
-
 </div>

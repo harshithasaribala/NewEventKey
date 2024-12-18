@@ -112,6 +112,8 @@ body {
   gap: 20px; /* Adds spacing between charts */
   justify-content: space-between; /* Space charts evenly */
   flex-wrap: nowrap; /* Prevent wrapping to next line */
+  height:700px;
+  width:500px;
 }
 
 .chart-box {

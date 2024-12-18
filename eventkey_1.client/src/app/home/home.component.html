@@ -148,6 +148,7 @@
           <h4 style="color: #333; font-weight: bold;">"{{ feedback.feedbackText }}"</h4>
           <p style="color: #555; font-style: italic; font-weight: bold;">- {{ feedback.userId }}</p>
           <p style="color: #555; font-weight: bold;">Rating: {{ feedback.rating }}/5</p>
+          <p style="color: #555; font-weight: bold;">Feedback given at: {{feedback.createdAt | date:'fullDate'}}</p>
           <p *ngIf="feedback.imageUrl">
             <img [src]="feedback.imageUrl" alt="Feedback Image" style="max-width: 100%; border-radius: 10px;">
           </p>

@@ -10,6 +10,7 @@
       <p><strong>User:</strong> {{ feedback.userId }}</p>
       <p><strong>Date:</strong> {{ feedback.eventDate | date }}</p>
       <p><strong>Rating:</strong> {{ feedback.rating }}</p>
+      <p><strong>Date:</strong> {{ feedback.createdAt | date:'fullDate' }}</p>
       <p>{{ feedback.feedbackText }}</p>
     </div>
     <button class="delete-button" (click)="deleteFeedback(feedback.eventId)">Delete</button>

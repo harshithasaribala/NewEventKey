@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { SessionService } from '../../services/session.service';
+
 @Component({
   selector: 'app-event-details',
   standalone: false,
@@ -12,16 +13,21 @@ import { SessionService } from '../../services/session.service';
 export class EventDetailsComponent implements OnInit {
   @Input() events: any[] = [];
   userId!: string;
-  constructor(private eventService: AuthService, private router: Router,private route:ActivatedRoute,private location :Location,private sessionService:SessionService) { }
+  filteredEvents: any[] = [];
+  searchTerm: string = '';
+
+  constructor(private eventService: AuthService, private router: Router, private route: ActivatedRoute, private location: Location, private sessionService: SessionService) { }
 
   ngOnInit() {
     const retrievedId = this.sessionService.getItem('userId');
     if (retrievedId) {
       this.userId = retrievedId;
     }
+
     this.eventService.fetchEvents().subscribe(
       (response) => {
         this.events = response;
+        this.filteredEvents = [...this.events]; // Initialize filteredEvents with all events
         console.log('Events fetched successfully:', this.events);
       },
       (error) => {
@@ -36,6 +42,8 @@ export class EventDetailsComponent implements OnInit {
         return 'assets/EventKey/assets/images/Events/Conference.jpg';
       case 'concert':
         return 'assets/EventKey/assets/images/Events/Concert.jpg';
+      case 'sports':
+        return 'assets/EventKey/assets/images/Events/Sports.png';
       case 'workshop':
         return 'assets/EventKey/assets/images/Events/workshop.jpg';
       case 'comedy':
@@ -57,21 +65,32 @@ export class EventDetailsComponent implements OnInit {
     this.router.navigate([`/userdashboard/eventdetails/${event.eventId}/ticketbooking`]);
   }
 
+  searchEvents() {
+    const searchTermLower = this.searchTerm.trim().toLowerCase();
+
+    if (!searchTermLower) {
+      // If the search term is empty, display all events
+      this.filteredEvents = [...this.events];
+    } else {
+      // Filter events based on the search term
+      this.filteredEvents = this.events.filter(event =>
+        event.eventName.toLowerCase().includes(searchTermLower)
+      );
+    }
+  }
+
   saveEvent(event: any): void {
     const eventPayload = {
-      userId: this.userId,       // Assuming userId is available
-      eventId: event.eventId     // Assuming event has the eventId
+      userId: this.userId, // Assuming userId is available
+      eventId: event.eventId // Assuming event has the eventId
     };
 
     this.eventService.saveEvent(eventPayload).subscribe(
       (response) => {
         console.log('Event saved successfully:', response);
-        alert(`Event ${event.eventName} has been saved successfully!`);
       },
       (error) => {
-        console.log(eventPayload);
         console.error('Error saving event:', error);
-        alert('An error occurred while saving the event. Please try again later.');
       }
     );
   }
