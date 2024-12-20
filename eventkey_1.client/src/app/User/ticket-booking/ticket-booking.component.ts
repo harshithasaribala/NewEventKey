@@ -4,8 +4,6 @@ import { AuthService } from '../../services/auth.service';
 import { Location } from '@angular/common';
 import { SessionService } from '../../services/session.service';
 
-declare const google: any; // Declare Google Pay global object
-
 @Component({
   selector: 'app-ticket-booking',
   standalone: false,
@@ -18,15 +16,15 @@ export class TicketBookingComponent implements OnInit {
   userName: string = '';
   event: any;
   numberOfTickets: number = 1;
-  baseCost: number = 0; // Base cost before GST
-  gstAmount: number = 0; // GST amount
-  totalCost: number = 0; // Total cost including GST
+  baseCost: number = 0;
+  gstAmount: number = 0;
+  totalCost: number = 0;
   userProfile: any;
-  gstRate: number = 18; // GST rate in percentage
+  gstRate: number = 18;
 
-  googlePayClient: any; // Google Pay Client
-  paymentRequest: any; // Google Pay Payment Request
-
+  googlePayPaymentRequest: any;
+  transactionId: string = ''; // To store the transaction ID
+  paymentStatus: string = ''; // To store the payment status
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -54,9 +52,6 @@ export class TicketBookingComponent implements OnInit {
       console.error('No user ID found in session storage');
       this.router.navigate(['/login']);
     }
-
-    // Initialize Google Pay
-    this.initGooglePay();
   }
 
   getUserProfile(userId: string): void {
@@ -88,12 +83,58 @@ export class TicketBookingComponent implements OnInit {
     this.baseCost = this.numberOfTickets * this.event.ticketPrice;
     this.gstAmount = (this.baseCost * this.gstRate) / 100;
     this.totalCost = this.baseCost + this.gstAmount;
+
+    // Update Google Pay Payment Request
+    this.googlePayPaymentRequest = {
+      apiVersion: 2,
+      apiVersionMinor: 0,
+      allowedPaymentMethods: [
+        {
+          type: 'CARD',
+          parameters: {
+            allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+            allowedCardNetworks: ['AMEX', 'VISA', 'MASTERCARD']
+          },
+          tokenizationSpecification: {
+            type: 'PAYMENT_GATEWAY',
+            parameters: {
+              gateway: 'razorpay',
+              gatewayMerchantId: 'PYzGWGz4fjFHF3'
+            }
+          }
+        }
+      ],
+      merchantInfo: {
+        merchantId: 'BCR2DN4TX7V2F2TQ',
+        merchantName: 'EventKey'
+      },
+      transactionInfo: {
+        totalPriceStatus: 'FINAL',
+        totalPriceLabel: 'Total',
+        totalPrice: this.totalCost.toFixed(2),
+        currencyCode: 'INR',
+        countryCode: 'IN'
+      }
+    };
+  }
+
+  onLoadPaymentData(event: any) {
+    console.log('Payment Success:', event.detail);
+
+    // Extract transaction details
+    const paymentData = event.detail.paymentMethodData.tokenizationData.token; // Tokenization data contains transaction info
+    this.transactionId = paymentData; // Use paymentData or specific transaction ID field
+    this.paymentStatus = 'Success'; // Payment status is 'Success' if callback is triggered successfully
+
+    // Show alert with transaction ID and status
+    alert(`Payment Successful!\n\nTransaction ID: ${this.transactionId}\nPayment Status: ${this.paymentStatus}\n\nThank you for your payment!`);
+
+    this.proceedToConfirm();
   }
 
   cancelBooking() {
     this.router.navigate([`/userdashboard`]);
   }
-
 
   proceedToConfirm() {
     const bookingDetails = {
@@ -139,113 +180,5 @@ export class TicketBookingComponent implements OnInit {
         alert('Unable to save booking details. Please try again.');
       }
     );
-  }
-
-
-  /** Initialize Google Pay API **/
-  initGooglePay() {
-    const googlePayClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
-    const paymentDataRequest = {
-      allowedPaymentMethods: [
-        {
-          type: 'CARD',
-          parameters: {
-            allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-            allowedCardNetworks: ['MASTERCARD', 'VISA'],
-          },
-        },
-        {
-          type: 'TOKENIZED_CARD',
-          parameters: {
-            allowedAuthMethods: ['CRYPTOGRAM_3DS'],
-            allowedCardNetworks: ['MASTERCARD', 'VISA'],
-          },
-        },
-      ],
-      transactionInfo: {
-        totalPriceStatus: 'FINAL',
-        totalPrice: '10.00',
-        currencyCode: 'USD',
-      },
-      merchantInfo: {
-        merchantName: 'Example Merchant',
-        merchantId: '01234567890123456789',
-      },
-    };
-
-    const googlePayConfig = {
-      apiVersion: 2,
-      apiVersionMinor: 0,
-      allowedPaymentMethods: [
-        {
-          type: 'CARD',
-          parameters: {
-            allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-            allowedCardNetworks: ['VISA', 'MASTERCARD']
-          },
-          tokenizationSpecification: {
-            type: 'PAYMENT_GATEWAY',
-            parameters: {
-              gateway: 'phonepe', // Replace with your gateway name
-              gatewayMerchantId: 'harshithasaribala@axl' // Replace with your ID
-            }
-          }
-        }
-      ],
-      merchantInfo: {
-        merchantName: 'Event Booking System',
-        merchantId: 'harshithasaribala@axl' // Your Google Pay Merchant ID
-      },
-      transactionInfo: {
-        totalPriceStatus: 'FINAL',
-        totalPrice: this.totalCost.toFixed(2),
-        currencyCode: 'INR',
-        countryCode: 'IN'
-      }
-    };
-
-    this.googlePayClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
-    this.googlePayClient.isReadyToPay({
-      allowedPaymentMethods: googlePayConfig.allowedPaymentMethods
-    })
-      .then((response: any) => {
-        if (response.result) {
-          console.log('Google Pay is ready');
-          this.paymentRequest = googlePayConfig;
-        } else {
-          console.error('Google Pay is not ready');
-        }
-      })
-      .catch((err: any) => {
-        console.error('Google Pay initialization failed:', err);
-      });
-  }
-
-  /** Trigger Google Pay Payment */
-  onGooglePayClick() {
-    if (!this.paymentRequest) {
-      alert('Google Pay is not available');
-      return;
-    }
-
-    const paymentDataRequest = Object.assign({}, this.paymentRequest, {
-      transactionInfo: {
-        totalPriceStatus: 'FINAL',
-        totalPrice: this.totalCost.toFixed(2), // Ensure this reflects the updated total cost
-        currencyCode: 'INR',
-        countryCode: 'IN'
-      }
-    });
-
-    this.googlePayClient.loadPaymentData(paymentDataRequest)
-      .then((paymentData: any) => {
-        console.log('Payment Successful:', paymentData);
-        alert('Payment successful! Booking confirmed.');
-        this.proceedToConfirm();
-      })
-      .catch((err: any) => {
-        console.error('Payment failed:', err);
-        alert('Google Pay payment failed. Please try again.');
-      });
   }
 }

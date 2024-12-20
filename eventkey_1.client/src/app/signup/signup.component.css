@@ -3,9 +3,9 @@ body {
   margin: 0;
   overflow: hidden;
   font-family: 'Poppins', sans-serif;
-  background-image: url('../../../public/assets/EventKey/assets/images/counter/Gemini_Generated_Image_udkq1fudkq1fudkq.jpg');
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
   color: #333;
-  bottom:0;
+  bottom: 0;
 }
 
 /* SignUp Section */

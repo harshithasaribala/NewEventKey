@@ -52,7 +52,7 @@ export class EventDetailsComponent implements OnInit {
         return 'assets/EventKey/assets/images/Events/Adventure.jpg';
       case 'foodfestival':
         return 'assets/EventKey/assets/images/Events/FoodFestival.jpg';
-      case 'socialawarness':
+      case 'SocialAwareness':
         return 'assets/EventKey/assets/images/Events/SocialAwarness.jpg';
       case 'parks':
         return 'assets/EventKey/assets/images/Events/park.jpg';

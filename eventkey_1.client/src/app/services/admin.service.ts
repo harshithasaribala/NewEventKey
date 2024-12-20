@@ -9,7 +9,7 @@ export interface MonthlyRevenue {
 }
 
 export interface RevenuePerEvent {
-  eventId: string; // or number, based on your backend
+  eventId: string; 
   revenue: number;
 }
 

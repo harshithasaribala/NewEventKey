@@ -6,127 +6,8 @@
   <title>Ticket Booking - EventKey</title>
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script async src="https://pay.google.com/gp/p/js/pay.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #6a11cb, #2575fc);
-      color: #333;
-      min-height: 100vh;
-    }
-
-    .marquee {
-      background: #f4f4f4;
-      color: #6a11cb;
-      font-weight: bold;
-      font-size: 18px;
-      padding: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      overflow: hidden;
-    }
-
-    .container {
-      background: #fff;
-      border-radius: 15px;
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-      padding: 30px;
-      max-width: 600px;
-      margin: 20px auto;
-      animation: slideIn 1.5s ease-out;
-    }
-
-    @keyframes slideIn {
-      from {
-        transform: translateY(100px);
-        opacity: 0;
-      }
-
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
-
-    h2 {
-      text-align: center;
-      font-weight: bold;
-      color: #6a11cb;
-      margin-bottom: 20px;
-    }
-
-    label {
-      font-weight: 600;
-    }
-
-    input,
-    select {
-      border-radius: 8px;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .btn-primary {
-      background-color: #6a11cb;
-      border: none;
-      transition: all 0.3s ease;
-    }
-
-      .btn-primary:hover {
-        background-color: #2575fc;
-        transform: scale(1.05);
-      }
-
-    .btn-secondary {
-      background-color: #6c757d;
-      transition: all 0.3s ease;
-    }
-
-      .btn-secondary:hover {
-        background-color: #495057;
-        transform: scale(1.05);
-      }
-
-    /* Footer Styling */
-    footer {
-      margin-top: 30px;
-      background: linear-gradient(to right, #343a40, #1d1d1f);
-      color: #f8f9fa;
-      text-align: center;
-      padding: 10px 0;
-    }
-
-      footer a {
-        color: #6a11cb;
-        margin: 0 15px;
-        transition: transform 0.3s;
-      }
-
-        footer a:hover {
-          transform: scale(1.2);
-          color: white;
-        }
-
-    /* Marquee animation */
-    .marquee span {
-      display: inline-block;
-      white-space: nowrap;
-      animation: marquee 8s linear infinite;
-    }
-
-    @keyframes marquee {
-      from {
-        transform: translateX(100%);
-      }
-
-      to {
-        transform: translateX(-100%);
-      }
-    }
-  </style>
 </head>
 <body>
   <!-- Marquee -->
@@ -168,17 +49,23 @@
         <input type="text" id="totalCost" [value]="totalCost | currency:'INR'" readonly />
       </div>
 
-      <div class="buttons">
+      <!-- Google Pay Button -->
+      <div id="googlePayContainer" class="mt-3">
+        <google-pay-button environment="TEST"
+                           buttonType="buy"
+                           buttonColor="black"
+                           [paymentRequest]="googlePayPaymentRequest"
+                           (loadpaymentdata)="onLoadPaymentData($event)">
+        </google-pay-button>
+      </div>
+
+      <div class="buttons mt-4">
         <button type="button" (click)="cancelBooking()">Cancel</button>
-        <button type="button" (click)="onGooglePayClick()" class="gpay-button" style="background-color:blue;">
-          Pay with Google Pay
-        </button>
         <button type="submit">Proceed to Confirm</button>
       </div>
       <p style="padding-top:30px;">&copy; 2024 EventKey. Designed with ❤ by Initiators</p>
     </form>
   </div>
-
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

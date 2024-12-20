@@ -16,7 +16,7 @@ export class EditeventComponent implements OnInit {
   eventId: string = ''; // To store the event ID
   successMessage: string = '';
   errorMessage: string = '';
-
+  private fullEventDetails: any = {}; 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -64,6 +64,7 @@ export class EditeventComponent implements OnInit {
     // Fetch event details using the service
     this.eventService.fetchEventDetails(eventId).subscribe(
       (response) => {
+        this.fullEventDetails = response;
         this.editEventForm.patchValue({
           eventId: response.eventId,
           eventName: response.eventName,
@@ -85,15 +86,17 @@ export class EditeventComponent implements OnInit {
 
   saveChanges(): void {
     if (this.editEventForm.valid) {
-      const updatedEvent = this.editEventForm.value;
-
+      const updatedEvent = {
+        ...this.fullEventDetails, // Include non-editable fields
+        ...this.editEventForm.getRawValue()
+      };
       // Save the updated event details using the service
       this.eventService.updateEvent(this.eventId, updatedEvent).subscribe(
         () => {
           this.successMessage = 'Event updated successfully!';
           this.errorMessage = '';
           alert(this.successMessage);
-          this.router.navigate([`/eventmanagerdashboard/manageEvents`]);
+          this.router.navigate([`/eventmanagerdashboard`]);
         },
         (error) => {
           console.error('Error updating event', error);

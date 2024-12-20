@@ -48,6 +48,8 @@ getTopFeedbacks(count: number): any[] {
         return 'assets/EventKey/assets/images/Events/Conference.jpg';
       case 'concert':
         return 'assets/EventKey/assets/images/Events/Concert.jpg';
+      case 'sports':
+        return 'assets/EventKey/assets/images/Events/Sports.png';
       case 'workshop':
         return 'assets/EventKey/assets/images/Events/workshop.jpg';
       case 'comedy':

@@ -38,10 +38,7 @@ namespace EventKey_1.Server.Models
         public int MaxAttendees { get; set; }
 
         public int RegisteredAttendees { get; set; } = 0; // Default value
-
-        // Foreign key to EventManager
         public string EMId { get; set; }
-
 
         // Generate unique ID
         private static string GenerateUniqueId()

@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +30,7 @@ import { ManageAccountsComponent } from './admin/manage-accounts/manage-accounts
 import { TicketSalesComponent } from './Eventmanager/ticket-sales/ticket-sales.component';
 import { SessionService } from './services/session.service';
 import { ViewFeedbackComponent } from './admin/view-feedback/view-feedback.component';
+import { GooglePayButtonModule } from '@google-pay/button-angular';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,8 +53,9 @@ import { ViewFeedbackComponent } from './admin/view-feedback/view-feedback.compo
     PreviousBookingsComponent, ManageEventsComponent, FeedbackComponent, RevenueVisualizationComponent, ManageAccountsComponent, TicketSalesComponent, ViewFeedbackComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, RouterModule, RouterLink, ReactiveFormsModule
+    BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, RouterModule, RouterLink, ReactiveFormsModule, GooglePayButtonModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [],
   bootstrap: [AppComponent]
 })

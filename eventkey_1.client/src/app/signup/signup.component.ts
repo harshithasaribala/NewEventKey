@@ -54,15 +54,15 @@ export class SignupComponent {
   // Form submit method
   onSubmit() {
     if (this.SignUpFormGroup.valid) {
-      const { email, phoneNumber } = this.SignUpFormGroup.value;
+      //const { email, phoneNumber } = this.SignUpFormGroup.value;
 
-      // Call the checkUserExistence method
-      this.authService.checkUserExistence(email, phoneNumber).subscribe(
-        (exists) => {
-          if (exists) {
-            alert('User already exists with this email or phone number!');
-          } else {
-            // Proceed with signup if user does not exist
+      //// Call the checkUserExistence method
+      //this.authService.checkUserExistence(email, phoneNumber).subscribe(
+      //  (exists) => {
+      //    if (exists) {
+      //      alert('User already exists with this email or phone number!');
+      //    } else {
+            
             this.authService.signUp(this.SignUpFormGroup.value).subscribe(
               (response) => {
                 console.log('SignUp successful', response);
@@ -89,12 +89,9 @@ export class SignupComponent {
               }
             );
           }
-        },
-        (error) => {
-          console.error('Error checking user existence', error);
         }
-      );
+      //  (error) => {
+      //    console.error('Error checking user existence', error);
+      //  }
+      //);
     }
-  }
-
-}
