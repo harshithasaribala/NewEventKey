@@ -1,90 +1,51 @@
-/* General Styles */
+/* Container Styling */
 .container {
-  margin: 2rem auto;
-  padding: 2rem;
+  margin: 20px auto;
+  padding: 20px;
   max-width: 800px;
   background-color: #f9f9f9;
-  border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: 'Arial', sans-serif;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
 }
 
-h2 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
-  color: #333;
-}
+  /* Header Styling */
+  .container h2 {
+    text-align: center;
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 20px;
+  }
 
-/* Dropdown */
+/* Form Styling */
 .form-group {
-  margin-bottom: 1.5rem;
-  text-align: center;
+  margin-bottom: 15px;
 }
 
-#userType {
-  width: 50%;
-  padding: 0.5rem;
-  font-size: 1rem;
+  .form-group label {
+    font-size: 1.1em;
+    color: #555;
+  }
+
+.form-control {
+  border-radius: 6px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color 0.3s ease;
+  padding: 10px;
+  font-size: 1em;
 }
 
-  #userType:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-
-/* Table */
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1.5rem;
+/* Spinner Styling */
+.spinner-border {
+  display: block;
+  margin: 20px auto;
+  color: #007bff;
 }
 
-  .table th, .table td {
-    padding: 0.75rem;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-
-  .table thead {
-    background-color: #007bff;
-    color: white;
-  }
-
-  .table tbody tr:hover {
-    background-color: #f1f1f1;
-  }
-
-/* Buttons */
-button {
-  padding: 0.4rem 0.8rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  color: white;
-}
-
-  .btn-danger:hover {
-    background-color: #c82333;
-  }
-
-/* Alerts */
+/* Error and Info Messages */
 .alert {
-  padding: 1rem;
-  margin-top: 1.5rem;
-  border-radius: 4px;
-  font-size: 1rem;
-  text-align: center;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 6px;
 }
 
 .alert-danger {
@@ -99,43 +60,48 @@ button {
   border: 1px solid #bee5eb;
 }
 
-/* Spinner */
-.spinner-border {
-  display: block;
-  margin: 2rem auto;
-  width: 3rem;
-  height: 3rem;
-  border: 0.4em solid rgba(0, 123, 255, 0.2);
-  border-top: 0.4em solid #007bff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+/* Table Styling */
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #fff;
+  margin-top: 15px;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
+  .table th, .table td {
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
   }
 
-  100% {
-    transform: rotate(360deg);
+  .table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
   }
-}
-/* Back Button */
-.back-button {
-  display: inline-block;
-  margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #6c757d;
-  color: white;
-  text-decoration: none;
-  border: none;
+
+  .table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+  }
+
+  .table tbody tr:hover {
+    background-color: #e9ecef;
+  }
+
+/* Button Styling */
+.btn {
+  padding: 5px 10px;
+  font-size: 0.9em;
   border-radius: 4px;
-  font-size: 1rem;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s;
 }
 
-  .back-button:hover {
-    background-color: #5a6268;
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+  .btn-danger:hover {
+    background-color: #c82333;
   }

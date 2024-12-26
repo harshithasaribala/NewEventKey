@@ -15,6 +15,7 @@ import {
 import { ManageAccountsComponent } from '../manage-accounts/manage-accounts.component';
 import { RevenueVisualizationComponent } from '../revenue-visualization/revenue-visualization.component';
 import { ViewFeedbackComponent } from '../view-feedback/view-feedback.component';
+import { PromotionComponent } from '../promotion/promotion.component';
 
 @Component({
   selector: 'app-admindashboard',
@@ -56,6 +57,9 @@ export class AdmindashboardComponent implements OnInit {
       case 'revenue':
         this.loadRevenue();
         break;
+      case 'promote':
+        this.loadPromotion();
+        break;
       default:
         console.warn('Unknown section:', section);
     }
@@ -70,6 +74,10 @@ export class AdmindashboardComponent implements OnInit {
   }
   loadRevenue() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(RevenueVisualizationComponent);
+    const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
+  }
+  loadPromotion() {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(PromotionComponent);
     const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
   }
   ngOnInit(): void {

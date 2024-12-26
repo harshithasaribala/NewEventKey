@@ -15,7 +15,7 @@ namespace EventKey_1.Server.Infrastructure
         public DbSet<Bookings> Bookings { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<SavedEvent> SavedEvent { get; set; }
-
+        public DbSet<UserInsights> UserInsights { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

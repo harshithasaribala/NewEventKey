@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Location } from '@angular/common';
 import { SessionService } from '../../services/session.service';
-
+import { format } from 'date-fns';
 @Component({
   selector: 'app-ticket-booking',
   standalone: false,
@@ -136,7 +136,11 @@ export class TicketBookingComponent implements OnInit {
     this.router.navigate([`/userdashboard`]);
   }
 
+  
   proceedToConfirm() {
+    //const now = new Date();
+    //const bookingDate = new Date().toISOString();
+    //const formattedBookingDate = new Date().toISOString().split('T')[0];
     const bookingDetails = {
       userId: this.userId,
       eventId: this.eventId,
@@ -149,7 +153,7 @@ export class TicketBookingComponent implements OnInit {
       eventTime: this.event.eventTime,
       ticketPrice: this.event.ticketPrice,
       eventLocation: this.event.location,
-      bookingDate: new Date().toISOString(),
+      bookingDate: format(new Date(), 'yyyy-MM-dd'),
     };
 
     // Save booking details

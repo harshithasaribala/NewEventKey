@@ -274,6 +274,54 @@ namespace EventKey_1.Server.Controllers
 
             return Ok(upcomingEvents);
         }
+        // DELETE: api/Events/delete-all
+        [HttpDelete("delete-all")]
+        public async Task<IActionResult> DeleteAllEvents()
+        {
+            var allEvents = await _context.Events.ToListAsync();
+
+            if (allEvents == null || !allEvents.Any())
+            {
+                return NotFound("No events found to delete.");
+            }
+
+            _context.Events.RemoveRange(allEvents);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, $"An error occurred while deleting events: {ex.Message}");
+            }
+
+            return Ok("All events have been deleted successfully.");
+        }
+        // DELETE: api/Events/delete-all
+        [HttpDelete("delete-all-saved")]
+        public async Task<IActionResult> DeleteAllSavedEvents()
+        {
+            var allEvents = await _context.SavedEvent.ToListAsync();
+
+            if (allEvents == null || !allEvents.Any())
+            {
+                return NotFound("No events found to delete.");
+            }
+
+            _context.SavedEvent.RemoveRange(allEvents);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, $"An error occurred while deleting events: {ex.Message}");
+            }
+
+            return Ok("All events have been deleted successfully.");
+        }
 
     }
 }

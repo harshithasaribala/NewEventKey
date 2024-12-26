@@ -22,6 +22,9 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { RevenueVisualizationComponent } from './admin/revenue-visualization/revenue-visualization.component';
 import { TicketSalesComponent } from './Eventmanager/ticket-sales/ticket-sales.component';
 import { ManageAccountsComponent } from './admin/manage-accounts/manage-accounts.component';
+import { TicketCatcherComponent } from './ticket-catcher/ticket-catcher.component';
+import { MemoryMatchingComponent } from './memory-matching/memory-matching.component';
+import { TicketPuzzleComponent } from './ticket-puzzle/ticket-puzzle.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
@@ -46,7 +49,10 @@ const routes: Routes = [
   { path: 'eventmanagerdashboard/manageEvents', component: ManageEventsComponent },
   { path: 'eventmanagerdashboard/manageEvents/:eventid/editEvent', component: EditeventComponent },
   { path: 'eventmanagerdashboard/ticket-sales', component: TicketSalesComponent },
-  { path: 'admindashboard/manage-accounts', component: ManageAccountsComponent }
+  { path: 'admindashboard/manage-accounts', component: ManageAccountsComponent },
+  { path: 'userdashboard/ticket-catcher', component: TicketCatcherComponent },
+  { path: 'userdashboard/ticket-puzzle', component: TicketPuzzleComponent },
+  { path:'userdashboard/memory-matcher', component:MemoryMatchingComponent}
 ];
 
 @NgModule({

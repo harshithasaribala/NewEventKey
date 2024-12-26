@@ -9,31 +9,32 @@
       <input type="text" id="userId" class="form-control" [value]="userId" readonly />
     </div>
 
-    <!-- Event ID Section -->
     <div class="form-group">
-      <label for="eventId">Event ID:</label>
-      <input id="eventId"
-             type="text"
-             formControlName="eventId"
-             class="form-control"
-             placeholder="Enter Event ID" />
-      <div *ngIf="feedbackForm.controls['eventId'].invalid && feedbackForm.controls['eventId'].touched" class="error-message">
-        Event ID is required.
-      </div>
+      <label for="eventId"><strong>Select Event ID:</strong></label>
+      <select id="eventId"
+              class="form-control"
+              formControlName="eventId"
+              [disabled]="bookings.length === 0"
+              required>
+        <option *ngIf="bookings.length === 0" value="" disabled>
+          No events available
+        </option>
+        <option *ngFor="let booking of bookings" [value]="booking.eventId">
+          {{ booking.eventId }}
+        </option>
+      </select>
     </div>
 
-    <!-- Event Name Section -->
     <div class="form-group">
-      <label for="eventName">Event Name:</label>
+      <label for="eventName"><strong>Event Name:</strong></label>
       <input id="eventName"
              type="text"
-             formControlName="eventName"
              class="form-control"
-             placeholder="Enter Event Name" />
-      <div *ngIf="feedbackForm.controls['eventName'].invalid && feedbackForm.controls['eventName'].touched" class="error-message">
-        Event Name is required.
-      </div>
+             [value]="selectedEventName"
+             readonly
+             placeholder="No event selected" />
     </div>
+
 
     <!-- Event Date Section -->
     <div class="form-group">

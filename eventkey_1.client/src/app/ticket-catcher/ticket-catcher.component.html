@@ -1,0 +1,12 @@
+<div class="game-container">
+  <h2>Catch the Event Tickets!</h2>
+  <div class="game-area">
+    <div *ngFor="let ticket of tickets" class="ticket" [ngClass]="{'falling': ticket.falling}" [style.left.px]="ticket.x" [style.top.px]="ticket.y">
+      🎫
+    </div>
+    <div class="basket" [style.left.px]="basketX"></div>
+  </div>
+  <p>Score: {{ score }}</p>
+  <button *ngIf="gameOver" (click)="startGame()">Start New Game</button><br><hr>
+  <button *ngIf="gameOver" (click)="goback()"> Back </button>
+</div>

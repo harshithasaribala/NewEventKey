@@ -17,6 +17,23 @@ namespace EventKey_1.Server.Controllers
         {
             _context = context;
         }
+        // Update all ranks in UserInsights
+        private async Task UpdateUserRanks()
+        {
+            // Fetch all users ordered by TotalPoints descending
+            var allUsers = await _context.UserInsights
+                                          .OrderByDescending(ui => ui.TotalPoints)
+                                          .ToListAsync();
+
+            // Update ranks
+            for (int i = 0; i < allUsers.Count; i++)
+            {
+                allUsers[i].Rank = i + 1; // Rank starts from 1
+            }
+
+            // Save changes
+            await _context.SaveChangesAsync();
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateBooking([FromBody] Bookings booking)
@@ -67,9 +84,37 @@ namespace EventKey_1.Server.Controllers
                 _context.Bookings.Add(booking);
             }
 
+            // Save booking changes
             await _context.SaveChangesAsync();
 
-            return Ok(booking); // Simplified to Ok() for easier integration
+            // Update User Insights
+            var userInsights = await _context.UserInsights
+                                      .FirstOrDefaultAsync(ui => ui.UserId == booking.UserId);
+
+            if (userInsights != null)
+            {
+                userInsights.TotalBookings += booking.NumberOfTickets;
+                userInsights.TotalPoints += booking.NumberOfTickets * 10; // 10 points per booking
+                _context.UserInsights.Update(userInsights);
+            }
+            else
+            {
+                var newUserInsights = new UserInsights
+                {
+                    UserId = booking.UserId,
+                    TotalBookings = booking.NumberOfTickets,
+                    TotalPoints = booking.NumberOfTickets * 10,
+                    Rank = 0 // Temporary, will be updated in UpdateUserRanks
+                };
+                _context.UserInsights.Add(newUserInsights);
+            }
+
+            await _context.SaveChangesAsync();
+
+            // Update ranks for all users
+            await UpdateUserRanks();
+
+            return Ok(booking);
         }
 
         // GET: api/Bookings
@@ -307,6 +352,30 @@ namespace EventKey_1.Server.Controllers
 
     return Ok(revenueData);
 }
+        // DELETE: api/Events/delete-all
+        [HttpDelete("delete-all")]
+        public async Task<IActionResult> DeleteAllBookings()
+        {
+            var allBookings = await _context.Bookings.ToListAsync();
+
+            if (allBookings == null || !allBookings.Any())
+            {
+                return NotFound("No events found to delete.");
+            }
+
+            _context.Bookings.RemoveRange(allBookings);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, $"An error occurred while deleting events: {ex.Message}");
+            }
+
+            return Ok("All events have been deleted successfully.");
+        }
 
     }
 }

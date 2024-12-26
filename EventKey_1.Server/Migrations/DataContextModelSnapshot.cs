@@ -282,6 +282,29 @@ namespace EventKey_1.Server.Migrations
 
                     b.ToTable("User");
                 });
+
+            modelBuilder.Entity("EventKey_1.Server.Models.UserInsights", b =>
+                {
+                    b.Property<int>("Rank")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Rank"));
+
+                    b.Property<int>("TotalBookings")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalPoints")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Rank");
+
+                    b.ToTable("UserInsights");
+                });
 #pragma warning restore 612, 618
         }
     }

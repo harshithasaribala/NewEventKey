@@ -1,0 +1,42 @@
+.game-container {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.game-area {
+  width: 500px;
+  height: 400px;
+  position: relative;
+  background-color: #f0f0f0;
+  border: 2px solid #000;
+  margin: 20px auto;
+}
+
+.ticket {
+  position: absolute;
+  font-size: 30px;
+  transition: top 0.1s ease-in;
+}
+
+.falling {
+  animation: fall 2s infinite;
+}
+
+@keyframes fall {
+  0% {
+    top: -50px;
+  }
+
+  100% {
+    top: 400px;
+  }
+}
+
+.basket {
+  width: 100px;
+  height: 20px;
+  background-color: #ff9900;
+  position: absolute;
+  bottom: 0;
+  left: 200px;
+}

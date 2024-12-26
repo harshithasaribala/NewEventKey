@@ -26,8 +26,10 @@ export class EventDetailsComponent implements OnInit {
 
     this.eventService.fetchEvents().subscribe(
       (response) => {
-        this.events = response;
-        this.filteredEvents = [...this.events]; // Initialize filteredEvents with all events
+        // Filter events to exclude those with a past date
+        const currentDate = new Date();
+        this.events = response.filter((event: any) => new Date(event.eventDate) >= currentDate);
+        this.filteredEvents = [...this.events]; // Initialize filteredEvents with all valid events
         console.log('Events fetched successfully:', this.events);
       },
       (error) => {
@@ -87,6 +89,7 @@ export class EventDetailsComponent implements OnInit {
 
     this.eventService.saveEvent(eventPayload).subscribe(
       (response) => {
+        alert('Event saved successfully');
         console.log('Event saved successfully:', response);
       },
       (error) => {

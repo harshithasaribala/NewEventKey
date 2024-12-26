@@ -55,7 +55,4 @@ export class SavedEventsComponent implements OnInit {
       }
     );
   }
-  onBack(): void {
-    this.location.back();
-  }
 }

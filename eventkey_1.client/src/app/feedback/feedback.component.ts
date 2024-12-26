@@ -19,6 +19,8 @@ export class FeedbackComponent implements OnInit {
   uploadedPhoto: string | null = null;
   showThankYouMessage: boolean = false;
   isSubmitting: boolean = false; // Prevent double submission
+  bookings: { eventId: string; eventName: string }[] = [];
+  selectedEventName: string = ''; // Store the selected event name
 
   constructor(
     private fb: FormBuilder,
@@ -45,6 +47,12 @@ export class FeedbackComponent implements OnInit {
     } else {
       alert('Invalid or missing User ID in the session.');
     }
+    this.fetchEventIds();
+
+    // Watch for changes in eventId and update eventName dynamically
+    this.feedbackForm.get('eventId')?.valueChanges.subscribe((eventId) => {
+      this.updateEventName(eventId);
+    });
   }
 
   setRating(rating: number): void {
@@ -71,6 +79,23 @@ export class FeedbackComponent implements OnInit {
       };
       reader.readAsDataURL(file);
     }
+  }
+
+  fetchEventIds(): void {
+    this.authService.getBookingsByUserId(this.userId).subscribe(
+      (bookings) => {
+        this.bookings = bookings; // Store eventId and eventName pairs
+      },
+      (error) => {
+        console.error('Error fetching event IDs:', error);
+      }
+    );
+  }
+
+  updateEventName(eventId: string): void {
+    const selectedBooking = this.bookings.find((booking) => booking.eventId === eventId);
+    this.selectedEventName = selectedBooking ? selectedBooking.eventName : '';
+    this.feedbackForm.controls['eventName'].setValue(this.selectedEventName);
   }
 
   submitFeedback(event?: Event): void {
@@ -120,5 +145,6 @@ export class FeedbackComponent implements OnInit {
     this.uploadedPhoto = null;
     this.showThankYouMessage = false;
     this.isSubmitting = false;
+    this.selectedEventName = '';
   }
 }

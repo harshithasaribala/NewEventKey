@@ -1,4 +1,5 @@
 using EventKey_1.Server.Infrastructure;
+using EventKey_1.Server.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventKey_1.Server
@@ -8,7 +9,7 @@ namespace EventKey_1.Server
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services.AddScoped<IEmailService, EmailService>();
             // Add services to the container.
             builder.Services.AddControllers();
 

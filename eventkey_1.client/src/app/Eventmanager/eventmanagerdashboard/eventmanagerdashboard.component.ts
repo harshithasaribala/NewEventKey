@@ -6,6 +6,7 @@ import { EventcreationComponent } from '../eventcreation/eventcreation.component
 import { SessionService } from '../../services/session.service';
 import { ManageEventsComponent } from '../manage-events/manage-events.component';
 import { TicketSalesComponent } from '../ticket-sales/ticket-sales.component';
+import { EventPromotionComponent } from '../event-promotion/event-promotion.component';
 
 
 @Component({
@@ -113,24 +114,28 @@ export class EventmanagerdashboardComponent implements OnInit {
       case 'sales':
         this.loadSales();
         break;
+      case 'promote':
+        this.loadPromote();
+        break;
       default:
         console.warn('Unknown section:', section);
     }
   }
 
   loadEventCreation() {
-    // Navigate to the event creation page with the current user ID
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(EventcreationComponent);
     const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
   }
  loadSales() {
-    // Navigate to the event creation page with the current user ID
    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(TicketSalesComponent);
    const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
   }
+  loadPromote() {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(EventPromotionComponent);
+    const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
+  }
 
   loadEventManagerProfile() {
-    // Dynamically load the event manager profile component
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(EmprofileComponent);
     const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
     componentRef.instance.em = this.eventManagerProfile; // Pass the profile data

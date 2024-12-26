@@ -7,6 +7,7 @@ import { SavedEventsComponent } from '../saved-events/saved-events.component';
 import { SessionService } from '../../services/session.service';
 import { PreviousBookingsComponent } from '../previous-bookings/previous-bookings.component';
 import { FeedbackComponent } from '../../feedback/feedback.component';
+import { EventBookingInsightsComponent } from '../event-booking-insights/event-booking-insights.component';
 
 @Component({
   selector: 'app-userdashboard',
@@ -90,6 +91,9 @@ export class UserdashboardComponent implements OnInit {
       case 'feedback':
         this.loadFeedBack();
         break;
+      case 'insights':
+        this.loadInsights();
+        break;
       default:
         console.error('Unknown section:', section);
         break;
@@ -97,10 +101,9 @@ export class UserdashboardComponent implements OnInit {
   }
 
   loadUserProfile() {
-    // Dynamically load the user profile component
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(UserProfileComponent);
     const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
-    componentRef.instance.user = this.userProfile; // Pass the profile data
+    componentRef.instance.user = this.userProfile; 
   }
   loadEventDetails() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(EventDetailsComponent);
@@ -116,6 +119,10 @@ export class UserdashboardComponent implements OnInit {
   }
   loadFeedBack() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FeedbackComponent);
+    const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
+  }
+  loadInsights() {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(EventBookingInsightsComponent);
     const componentRef = this.dynamicComponentContainer.createComponent(componentFactory);
   }
 }

@@ -31,6 +31,12 @@ import { TicketSalesComponent } from './Eventmanager/ticket-sales/ticket-sales.c
 import { SessionService } from './services/session.service';
 import { ViewFeedbackComponent } from './admin/view-feedback/view-feedback.component';
 import { GooglePayButtonModule } from '@google-pay/button-angular';
+import { PromotionComponent } from './admin/promotion/promotion.component';
+import { EventPromotionComponent } from './Eventmanager/event-promotion/event-promotion.component';
+import { EventBookingInsightsComponent } from './User/event-booking-insights/event-booking-insights.component';
+import { TicketCatcherComponent } from './ticket-catcher/ticket-catcher.component';
+import { MemoryMatchingComponent } from './memory-matching/memory-matching.component';
+import { TicketPuzzleComponent } from './ticket-puzzle/ticket-puzzle.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,7 +56,7 @@ import { GooglePayButtonModule } from '@google-pay/button-angular';
     TicketBookingComponent,
     ETicketComponent,
     SavedEventsComponent,
-    PreviousBookingsComponent, ManageEventsComponent, FeedbackComponent, RevenueVisualizationComponent, ManageAccountsComponent, TicketSalesComponent, ViewFeedbackComponent
+    PreviousBookingsComponent, ManageEventsComponent, FeedbackComponent, RevenueVisualizationComponent, ManageAccountsComponent, TicketSalesComponent, ViewFeedbackComponent, PromotionComponent, EventPromotionComponent, EventBookingInsightsComponent, TicketCatcherComponent, MemoryMatchingComponent, TicketPuzzleComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, RouterModule, RouterLink, ReactiveFormsModule, GooglePayButtonModule

@@ -1,0 +1,18 @@
+<div class="game-container">
+  <h2>Memory Matching Game</h2>
+
+  <div class="card-container">
+    <div *ngFor="let card of cards" class="card" [class.flipped]="card.flipped" (click)="flipCard(card)">
+      <div class="card-inner">
+        <div class="card-front"></div>
+        <div class="card-back">{{ card.value }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="gameOver" class="game-over">
+    <h3>Game Over! You matched all the cards!</h3>
+    <button (click)="resetGame()">Play Again</button><br><br>
+    <button (click)="goBack()">Go back</button>
+  </div>
+</div>

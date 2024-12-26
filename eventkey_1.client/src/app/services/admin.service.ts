@@ -28,7 +28,8 @@ export class AdminService {
   private baseUrl = 'https://localhost:7172/api/Account'; // Update with your API URL
   private bookingsUrl = 'https://localhost:7172/api/Bookings';
   private feedbackUrl = 'https://localhost:7172/api/Feedback';
-
+  private mailUrl = 'https://localhost:7172/api/Promotion/send';
+  private insightsUrl = 'https://localhost:7172/api/UserInsights';
   constructor(private http: HttpClient) { }
 
   // Feedback Management
@@ -87,4 +88,15 @@ export class AdminService {
     const params = new HttpParams().set('userType', userType);
     return this.http.delete(`${this.baseUrl}/${id}`, { params });
   }
+  sendPromotionEmail(request: { subject: string, body: string, recipients: string[] }): Observable<any> {
+    return this.http.post(this.mailUrl, request);
+  }
+  getUserInsightsById(userId: string): Observable<any> {
+    const url = `${this.insightsUrl}/${userId}`;
+    return this.http.get<any>(url);
+  }
+  getUserInsightsTop(): Observable<any[]> {
+    return this.http.get<any[]>(this.insightsUrl);
+  }
+
 }

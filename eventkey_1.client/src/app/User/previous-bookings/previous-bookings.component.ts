@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { Location } from '@angular/common';
 import { SessionService } from '../../services/session.service';
 @Component({
   selector: 'app-previous-bookings',
@@ -16,7 +15,7 @@ export class PreviousBookingsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,private router:Router,
-    private authService: AuthService, private location:Location,private sessionService:SessionService
+    private authService: AuthService,private sessionService:SessionService
   ) { }
 
   ngOnInit(): void {
@@ -40,9 +39,6 @@ export class PreviousBookingsComponent implements OnInit {
         console.error('Error fetching bookings:', error);
       }
     );
-  }
-  onBack(): void {
-    this.location.back();
   }
   
 }

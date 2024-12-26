@@ -22,15 +22,28 @@
         <!-- Log In As Section -->
         <div class="mb-4">
           <label class="form-label text-dark"><strong>Log In As</strong></label>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" id="user" formControlName="userType" value="User" required />
-            <label class="form-check-label" for="user">User</label>
+          <div class="form-check" style="display: flex; align-items: center; gap: 8px;">
+            <input class="form-check-input"
+                   type="radio"
+                   id="user"
+                   formControlName="userType"
+                   value="User"
+                   required
+                   style="border: 1px solid #000; width: 18px; height: 18px; appearance: none; border-radius: 50%; position: relative;" />
+            <label class="form-check-label" for="user" style="margin: 0;">User</label>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" id="EventManager" formControlName="userType" value="EventManager" required />
-            <label class="form-check-label" for="EventManager">Event Manager</label>
+          <div class="form-check" style="display: flex; align-items: center; gap: 8px;">
+            <input class="form-check-input"
+                   type="radio"
+                   id="EventManager"
+                   formControlName="userType"
+                   value="EventManager"
+                   required
+                   style="border: 1px solid #000; width: 18px; height: 18px; appearance: none; border-radius: 50%; position: relative;" />
+            <label class="form-check-label" for="EventManager" style="margin: 0;">Event Manager</label>
           </div>
         </div>
+
 
         <!-- Email Input Section -->
         <div class="mb-4">

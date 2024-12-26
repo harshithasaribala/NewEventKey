@@ -1,45 +1,56 @@
-<div class="container">
-  <h2>Manage Accounts</h2>
-  <div class="form-group">
-    <label for="userType" >Select User Type:</label>
-    <select id="userType"
-            [(ngModel)]="selectedUserType"
-            (change)="fetchAccounts()"
-            class="form-control">
-      <option value="User">User</option>
-      <option value="EventManager">Event Manager</option>
-    </select>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h2 class="fas fa-users">&nbsp;&nbsp; Manage Accounts</h2>
+    <div class="form-group">
+      <label for="userType">Select User Type:</label>
+      <select id="userType"
+              [(ngModel)]="selectedUserType"
+              (change)="fetchAccounts()"
+              class="form-control">
+        <option value="User">User</option>
+        <option value="EventManager">Event Manager</option>
+      </select>
+    </div>
+    <div *ngIf="isLoading" class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    <table class="table table-bordered mt-3" *ngIf="accounts.length > 0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let account of accounts">
+          <td>{{ account.id || account.emId }}</td>
+          <td>{{ account.fullName }}</td>
+          <td>{{ account.email }}</td>
+          <td>
+            <button class="btn btn-danger btn-sm"
+                    (click)="deleteAccount(account.id || account.emId)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="accounts.length === 0 && !isLoading" class="alert alert-info">
+      No accounts found.
+    </div>
   </div>
-  <div *ngIf="isLoading" class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-  <div *ngIf="errorMessage" class="alert alert-danger">
-    {{ errorMessage }}
-  </div>
-  <table class="table table-bordered mt-3" *ngIf="accounts.length > 0">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Full Name</th>
-        <th>Email</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let account of accounts">
-        <td>{{ account.id || account.emId }}</td>
-        <td>{{ account.fullName }}</td>
-        <td>{{ account.email }}</td>
-        <td>
-          <button class="btn btn-danger btn-sm"
-                  (click)="deleteAccount(account.id || account.emId)">
-            Delete
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div *ngIf="accounts.length === 0 && !isLoading" class="alert alert-info">
-    No accounts found.
-  </div>
-</div>
+</body>
+</html>

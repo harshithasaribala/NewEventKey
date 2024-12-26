@@ -1,18 +1,185 @@
-<!-- src/app/feedbacks/feedbacks.component.html -->
-<div *ngIf="loading" class="loading">Loading feedbacks...</div>
-<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-<div *ngIf="!loading && !errorMessage">
-  <div *ngIf="feedbacks.length === 0" class="no-feedbacks">No feedbacks available.</div>
-  <div *ngFor="let feedback of feedbacks" class="feedback-card">
-    <img *ngIf="feedback.imageUrl" [src]="feedback.imageUrl" alt="Feedback Image" class="feedback-image">
-    <div class="feedback-details">
-      <h4>{{ feedback.eventName }}</h4>
-      <p><strong>User:</strong> {{ feedback.userId }}</p>
-      <p><strong>Date:</strong> {{ feedback.eventDate | date }}</p>
-      <p><strong>Rating:</strong> {{ feedback.rating }}</p>
-      <p><strong>Date:</strong> {{ feedback.createdAt | date:'fullDate' }}</p>
-      <p>{{ feedback.feedbackText }}</p>
-    </div>
-    <button class="delete-button" (click)="deleteFeedback(feedback.eventId)">Delete</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Feedbacks</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom, #f0f7ff, #e3f2fd);
+      color: #333;
+      margin: 0;
+    }
+
+    /* Header */
+    .logo-container {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+      .logo-container i {
+        font-size: 50px;
+        color: #6a11cb;
+        animation: bounceLogo 1.5s infinite;
+      }
+
+    @keyframes bounceLogo {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .logo-container h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #6a11cb;
+      margin-top: 10px;
+    }
+
+    /* Feedback Card */
+    .feedback-card {
+      background: #ffffff;
+      border: 2px solid #6a11cb;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+
+      .feedback-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      }
+
+    .feedback-image {
+      width: 200px; /* Increased size for better visibility */
+      height: 200px; /* Maintained aspect ratio */
+      border: 3px solid #6a11cb;
+      border-radius: 50%; /* Ensures the image stays circular */
+      object-fit: cover;
+      margin-right: 20px; /* Reduced margin to align properly with the text */
+      flex-shrink: 0; /* Prevents the image from shrinking when the card is resized */
+    }
+
+
+    .feedback-details {
+      flex: 1;
+    }
+
+      .feedback-details h4 {
+        color: #007bff;
+        font-weight: bold;
+      }
+
+      .feedback-details p {
+        margin-bottom: 5px;
+        font-size: 0.95rem;
+      }
+
+    .delete-button {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+      .delete-button:hover {
+        background-color: #c82333;
+        transform: scale(1.05);
+      }
+
+    /* Loading, Error, and No Feedback Styles */
+    .loading, .error, .no-feedbacks {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 20px;
+      color: #555;
+    }
+
+      .no-feedbacks i {
+        font-size: 40px;
+        color: #007bff;
+        margin-bottom: 10px;
+      }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .feedback-card {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .feedback-image {
+        margin: 0 auto 12px auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Unique Header with Logo -->
+  <div class="logo-container">
+    <i class="fas fa-comments"></i>
+    <h1>User Feedbacks</h1>
   </div>
-</div>
+
+  <!-- Feedbacks Container -->
+  <div class="container">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading">
+      <i class="fas fa-spinner fa-spin"></i> Loading feedbacks...
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error">
+      <i class="fas fa-exclamation-triangle"></i> {{ errorMessage }}
+    </div>
+
+    <!-- Feedbacks List -->
+    <div *ngIf="!loading && !errorMessage">
+      <div *ngIf="feedbacks.length === 0" class="no-feedbacks">
+        <i class="fas fa-comments-slash"></i>
+        <p>No feedbacks available.</p>
+      </div>
+
+      <!-- Individual Feedback Card -->
+      <div *ngFor="let feedback of feedbacks" class="feedback-card">
+        <!-- Image -->
+        <img *ngIf="feedback.imageUrl" [src]="feedback.imageUrl" alt="Feedback Image" class="feedback-image">
+
+        <!-- Feedback Details -->
+        <div class="feedback-details">
+          <h4><i class="fas fa-calendar-check me-2"></i>{{ feedback.eventName }}</h4>
+          <p><strong><i class="fas fa-user me-2"></i>User:</strong> {{ feedback.userId }}</p>
+          <p><strong><i class="fas fa-calendar-alt me-2"></i>Date:</strong> {{ feedback.eventDate | date }}</p>
+          <p><strong><i class="fas fa-star me-2"></i>Rating:</strong> {{ feedback.rating }}</p>
+          <p><strong><i class="fas fa-clock me-2"></i>Submitted On:</strong> {{ feedback.createdAt | date:'fullDate' }}</p>
+          <p>{{ feedback.feedbackText }}</p>
+        </div>
+
+        <!-- Delete Button -->
+        <button class="delete-button" (click)="deleteFeedback(feedback.eventId)">
+          <i class="fas fa-trash-alt me-2"></i>Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
