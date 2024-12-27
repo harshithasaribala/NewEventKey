@@ -1,5 +1,5 @@
 .header-area {
-  background-color: #7700ffdb;
+  background-color: black;
   padding: 10px 0;
 }
 
@@ -20,7 +20,7 @@
 }
 
   .navbar-nav .nav-item .nav-link:hover {
-    color: #7700ffdb;
+    color: black;
     background-color: #fff;
     border-radius: 5px;
   }
@@ -32,7 +32,7 @@ body {
 }
 
 h2, h3 {
-  color: #7700ffdb;
+  color: black;
   margin-bottom: 20px;
   font-weight: bold;
 }
@@ -54,11 +54,11 @@ ul {
       font-weight: 900;
       position: absolute;
       left: 0;
-      color: #7700ffdb;
+      color: black;
     }
 
 footer {
-  background-color: #7700ffdb;
+  background-color: black;
   color: #fff;
   padding: 20px 0;
 }
@@ -71,14 +71,14 @@ footer {
   }
 
     footer .footer-social a:hover {
-      color: #7700ffdb;
+      color: black;
     }
 
 #scroll-Top .return-to-top {
   position: fixed;
   bottom: 30px;
   right: 30px;
-  background-color: #7700ffdb;
+  background-color: black;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -96,5 +96,5 @@ footer {
   }
 
   #scroll-Top .return-to-top:hover {
-    background-color: #7700ffdb;
+    background-color: black;
   }
