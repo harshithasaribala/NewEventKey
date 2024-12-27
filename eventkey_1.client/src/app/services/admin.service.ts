@@ -25,11 +25,12 @@ export interface RevenueData {
 })
 export class AdminService {
   private apiUrl = 'https://localhost:7172/api/Admin';
-  private baseUrl = 'https://localhost:7172/api/Account'; // Update with your API URL
+  private baseUrl = 'https://localhost:7172/api/Account'; 
   private bookingsUrl = 'https://localhost:7172/api/Bookings';
   private feedbackUrl = 'https://localhost:7172/api/Feedback';
   private mailUrl = 'https://localhost:7172/api/Promotion/send';
   private insightsUrl = 'https://localhost:7172/api/UserInsights';
+  private eventsUrl = 'https://localhost:7172/api/Events';
   constructor(private http: HttpClient) { }
 
   // Feedback Management
@@ -98,5 +99,16 @@ export class AdminService {
   getUserInsightsTop(): Observable<any[]> {
     return this.http.get<any[]>(this.insightsUrl);
   }
-
+  deleteEvents(): Observable<any[]> {
+    return this.http.delete<any[]>(`${this.eventsUrl}/delete-all`);
+  }
+  deleteSavedEvents(): Observable<any[]> {
+    return this.http.delete<any[]>(`${this.eventsUrl}/delete-all-saved`);
+  }
+  deleteBookings(): Observable<any[]> {
+    return this.http.delete<any[]>(`${this.bookingsUrl}/delete-all`);
+  }
+  deleteInsights(): Observable<any[]> {
+    return this.http.delete<any[]>(this.insightsUrl);
+  }
 }

@@ -1,18 +1,29 @@
 <div class="game-container">
-  <h2>Memory Matching Game</h2>
-
+  <h1>Memory Matching Game 🎟️</h1>
   <div class="card-container">
-    <div *ngFor="let card of cards" class="card" [class.flipped]="card.flipped" (click)="flipCard(card)">
+    <div *ngFor="let card of cards; let i = index"
+         class="card"
+         [ngClass]="{'flipped': isFlipped(i)}"
+         (click)="flipCard(i)">
       <div class="card-inner">
-        <div class="card-front"></div>
-        <div class="card-back">{{ card.value }}</div>
+        <div class="card-front">
+          ?
+        </div>
+        <div class="card-back">
+          {{ card }}
+        </div>
       </div>
     </div>
   </div>
 
-  <div *ngIf="gameOver" class="game-over">
-    <h3>Game Over! You matched all the cards!</h3>
-    <button (click)="resetGame()">Play Again</button><br><br>
-    <button (click)="goBack()">Go back</button>
+  <div class="info">
+    <p>Moves: {{ moves }}</p>
+    <button (click)="resetGame()">Restart Game</button>
   </div>
+
+  <div *ngIf="gameCompleted" class="congratulations show-congratulations">
+    Congratulations! You have completed the game in {{ moves }} moves!
+  </div>
+
+  <button  class="back-btn" (click)="goBack()">Back</button>
 </div>

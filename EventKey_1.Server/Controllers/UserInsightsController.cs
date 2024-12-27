@@ -62,5 +62,15 @@ namespace EventKey_1.Server.Controllers
 
             return Ok(result);
         }
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAllUserInsights()
+        {
+            // Remove all user insights from the database
+            var userInsights = await _context.UserInsights.ToListAsync();
+            _context.UserInsights.RemoveRange(userInsights);
+            await _context.SaveChangesAsync();
+
+            return Ok("All user insights have been deleted.");
+        }
     }
 }

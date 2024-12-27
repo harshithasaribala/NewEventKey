@@ -52,38 +52,81 @@ body {
   .recommendation:hover {
     background-color: #218838;
   }
+.games-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background-color: #f4f4f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 50px auto;
+  font-family: 'Arial', sans-serif;
+}
+
 .game-title {
-  font-size: 3rem;
-  font-weight: bold;
-  color: black;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-size: 2.5rem;
+  color: #4e73df;
+  text-align: center;
   margin-bottom: 20px;
 }
 
-.game-subtitle {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 40px;
+.game-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+}
+
+.game-item {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-.game-btn {
+.game-subtitle {
+  font-size: 1.6rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.game-item p {
   font-size: 1.2rem;
-  padding: 15px 30px;
-  background-color: black;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.game-btn {
+  background-color: #4e73df;
   color: white;
-  font-weight:bold;
+  font-size: 1.2rem;
+  padding: 12px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
   .game-btn:hover {
-    background-color: #e55c00;
-    transform: scale(1.1);
+    background-color: #2d3e50;
+    transform: scale(1.05);
   }
 
-  .game-btn:active {
-    background-color: #cc5200;
+@media (max-width: 600px) {
+  .game-title {
+    font-size: 2rem;
   }
+
+  .game-subtitle {
+    font-size: 1.4rem;
+  }
+
+  .game-btn {
+    font-size: 1rem;
+    padding: 10px 15px;
+  }
+}

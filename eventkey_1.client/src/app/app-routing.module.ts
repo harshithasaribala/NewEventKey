@@ -24,7 +24,6 @@ import { TicketSalesComponent } from './Eventmanager/ticket-sales/ticket-sales.c
 import { ManageAccountsComponent } from './admin/manage-accounts/manage-accounts.component';
 import { TicketCatcherComponent } from './ticket-catcher/ticket-catcher.component';
 import { MemoryMatchingComponent } from './memory-matching/memory-matching.component';
-import { TicketPuzzleComponent } from './ticket-puzzle/ticket-puzzle.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, 
@@ -51,7 +50,6 @@ const routes: Routes = [
   { path: 'eventmanagerdashboard/ticket-sales', component: TicketSalesComponent },
   { path: 'admindashboard/manage-accounts', component: ManageAccountsComponent },
   { path: 'userdashboard/ticket-catcher', component: TicketCatcherComponent },
-  { path: 'userdashboard/ticket-puzzle', component: TicketPuzzleComponent },
   { path:'userdashboard/memory-matcher', component:MemoryMatchingComponent}
 ];
 

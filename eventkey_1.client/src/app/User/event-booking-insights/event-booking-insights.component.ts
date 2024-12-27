@@ -59,7 +59,7 @@ export class EventBookingInsightsComponent implements OnInit{
     );
   }
   NavigateToPlay() {
-    this.router.navigate(['userdashboard/ticket-puzzle']);
+    this.router.navigate(['userdashboard/ticket-catcher']);
   }
   NavigateToPlayMem() {
     this.router.navigate(['userdashboard/memory-matcher']);

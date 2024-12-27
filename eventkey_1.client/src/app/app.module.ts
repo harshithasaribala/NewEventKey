@@ -36,7 +36,6 @@ import { EventPromotionComponent } from './Eventmanager/event-promotion/event-pr
 import { EventBookingInsightsComponent } from './User/event-booking-insights/event-booking-insights.component';
 import { TicketCatcherComponent } from './ticket-catcher/ticket-catcher.component';
 import { MemoryMatchingComponent } from './memory-matching/memory-matching.component';
-import { TicketPuzzleComponent } from './ticket-puzzle/ticket-puzzle.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +55,7 @@ import { TicketPuzzleComponent } from './ticket-puzzle/ticket-puzzle.component';
     TicketBookingComponent,
     ETicketComponent,
     SavedEventsComponent,
-    PreviousBookingsComponent, ManageEventsComponent, FeedbackComponent, RevenueVisualizationComponent, ManageAccountsComponent, TicketSalesComponent, ViewFeedbackComponent, PromotionComponent, EventPromotionComponent, EventBookingInsightsComponent, TicketCatcherComponent, MemoryMatchingComponent, TicketPuzzleComponent
+    PreviousBookingsComponent, ManageEventsComponent, FeedbackComponent, RevenueVisualizationComponent, ManageAccountsComponent, TicketSalesComponent, ViewFeedbackComponent, PromotionComponent, EventPromotionComponent, EventBookingInsightsComponent, TicketCatcherComponent, MemoryMatchingComponent
   ],
   imports: [
     BrowserModule, HttpClientModule, FormsModule, AppRoutingModule, RouterModule, RouterLink, ReactiveFormsModule, GooglePayButtonModule

@@ -157,7 +157,9 @@ export class AdmindashboardComponent implements OnInit {
       },
     });
   }
+  reboot() {
 
+  }
 
   logout() {
     this.router.navigate(['/adminlogin']);
