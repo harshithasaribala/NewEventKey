@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Data</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+  <div class="reset-container">
+    <h2>Are you sure you want to reset the selected data?</h2>
+
+    <!-- Events -->
+    <div class="reset-option">
+      <p><strong>Events:</strong> This will reset all events, including saved events.</p>
+      <button (click)="resetEvents()" class="btn btn-warning">Reset Events</button>
+    </div>
+
+    <!-- Bookings -->
+    <div class="reset-option">
+      <p><strong>Bookings:</strong> This will reset all bookings made.</p>
+      <button (click)="resetBookings()" class="btn btn-warning">Reset Bookings</button>
+    </div>
+
+    <!-- Insights -->
+    <div class="reset-option">
+      <p><strong>Insights:</strong> This will reset all user insights data.</p>
+      <button (click)="resetInsights()" class="btn btn-warning">Reset Insights</button>
+    </div>
+
+    <!-- Cancel button -->
+    <div class="button-group">
+      <button (click)="cancelReset()" class="btn btn-secondary">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
