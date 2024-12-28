@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventKey_1.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241214044919_CreateSaved")]
-    partial class CreateSaved
+    [Migration("20241228043326_EventKey")]
+    partial class EventKey
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,8 +27,11 @@ namespace EventKey_1.Server.Migrations
 
             modelBuilder.Entity("EventKey_1.Server.Models.Bookings", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("BookingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"));
 
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
@@ -48,8 +51,9 @@ namespace EventKey_1.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("EventTime")
-                        .HasColumnType("time");
+                    b.Property<string>("EventTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NumberOfTickets")
                         .HasColumnType("int");
@@ -62,7 +66,11 @@ namespace EventKey_1.Server.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18, 2)");
 
-                    b.HasKey("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BookingId");
 
                     b.ToTable("Bookings");
                 });
@@ -276,6 +284,29 @@ namespace EventKey_1.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("EventKey_1.Server.Models.UserInsights", b =>
+                {
+                    b.Property<int>("Rank")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Rank"));
+
+                    b.Property<int>("TotalBookings")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalPoints")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Rank");
+
+                    b.ToTable("UserInsights");
                 });
 #pragma warning restore 612, 618
         }

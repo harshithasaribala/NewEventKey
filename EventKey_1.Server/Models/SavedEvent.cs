@@ -1,4 +1,4 @@
-﻿using EventKey_1.Server.Migrations;
+﻿
 using System.ComponentModel.DataAnnotations;
 
 namespace EventKey_1.Server.Models
@@ -13,6 +13,5 @@ namespace EventKey_1.Server.Models
         public required DateTime EventDate { get; set; } // Event date
         public required TimeSpan EventTime { get; set; } // Event time
         public required decimal TicketPrice { get; set; } // Event ticket price
-        //public virtual Events Event { get; set; }
     }
 }
