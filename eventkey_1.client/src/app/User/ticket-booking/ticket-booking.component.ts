@@ -138,9 +138,10 @@ export class TicketBookingComponent implements OnInit {
 
   
   proceedToConfirm() {
-    //const now = new Date();
-    //const bookingDate = new Date().toISOString();
-    //const formattedBookingDate = new Date().toISOString().split('T')[0];
+    // Update the booking date
+    const bookingDate = format(new Date(), 'yyyy-MM-dd'); // Get the current date in the desired format
+
+    // Prepare the booking details
     const bookingDetails = {
       userId: this.userId,
       eventId: this.eventId,
@@ -153,21 +154,21 @@ export class TicketBookingComponent implements OnInit {
       eventTime: this.event.eventTime,
       ticketPrice: this.event.ticketPrice,
       eventLocation: this.event.location,
-      bookingDate: format(new Date(), 'yyyy-MM-dd'),
+      bookingDate: bookingDate, // Set the updated booking date here
     };
 
-    // Save booking details
+    // Save the booking details
     this.authService.saveBooking(bookingDetails).subscribe(
       (response: any) => {
-        console.log(bookingDetails);
+        console.log('Booking Details:', bookingDetails);
         alert('Booking saved successfully');
 
-        // Update event register count after booking is saved
+        // After booking is saved, update the event register count
         this.authService.registerTickets(this.eventId, this.numberOfTickets).subscribe(
           (updateResponse: any) => {
             console.log('Register count updated successfully', updateResponse);
 
-            // Navigate to e-ticket generation
+            // Navigate to e-ticket generation page
             this.router.navigate([`/userdashboard/eventdetails/${this.eventId}/ticketbooking/eticket`], {
               state: { event: this.event, tickets: this.numberOfTickets },
             });
@@ -179,10 +180,11 @@ export class TicketBookingComponent implements OnInit {
         );
       },
       (error) => {
-        console.log(bookingDetails);
+        console.log('Booking Details:', bookingDetails);
         console.error('Error saving booking:', error);
         alert('Unable to save booking details. Please try again.');
       }
     );
   }
+
 }

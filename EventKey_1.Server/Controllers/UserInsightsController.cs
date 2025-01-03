@@ -70,7 +70,7 @@ namespace EventKey_1.Server.Controllers
             _context.UserInsights.RemoveRange(userInsights);
             await _context.SaveChangesAsync();
 
-            return Ok("All user insights have been deleted.");
+            return NoContent();
         }
     }
 }

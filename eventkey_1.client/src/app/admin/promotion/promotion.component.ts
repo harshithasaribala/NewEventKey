@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs';
 import { forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-// Define the Account interface outside the component
 interface Account {
   id: string;
   emId: string;
@@ -29,18 +28,26 @@ export class PromotionComponent implements OnInit {
   emailSent: boolean = false;
   emailSubject: string = "Discover EventKey: Unlock your Perfect Experience";
   emailBody: string = `
-    <p>Dear {{fullName}},</p>
-    <p>Are you looking for an all-in-one solution to manage your events with ease? Look no further! We are excited to introduce EventKey, your go-to platform for seamless event planning and management.</p>
-    <p>With EventKey, you can:</p>
-    <ul>
-      <li>Create and manage events effortlessly</li>
-      <li>Track registrations and attendee lists in real-time</li>
-      <li>Send invitations and reminders automatically</li>
-      <li>Analyze event performance with insightful reports</li>
-    </ul>
-    <p>Don't miss out on making your events extraordinary. Visit EventKey today and start creating unforgettable experiences!</p>
-    <p>Best regards,<br>The EventKey Team</p>
-  `;
+  <p>Dear {{fullName}},</p>
+  <p>Are you looking for an all-in-one solution to manage your events with ease? Look no further! We are excited to introduce EventKey, your go-to platform for seamless event planning and management.</p>
+  <p>With EventKey, you can:</p>
+  <ul>
+    <li>Create and manage events effortlessly</li>
+    <li>Track registrations and attendee lists in real-time</li>
+    <li>Send invitations and reminders automatically</li>
+    <li>Analyze event performance with insightful reports</li>
+  </ul>
+  <p>As a User, EventKey offers you a personalized dashboard with exciting features, including:</p>
+  <ul>
+    <li>Search and explore a wide variety of events based on your interests</li>
+    <li>Book tickets with ease and receive instant e-tickets</li>
+    <li>Save your favorite events for future reference</li>
+    <li>Access an exclusive Rewards Zone featuring leaderboards, a gaming zone, and exciting rewards</li>
+    <li>Share valuable feedback to help improve the platform and enhance your experience</li>
+  </ul>
+  <p>Don’t miss out on making your events extraordinary. Whether you're planning an event or simply looking for unforgettable experiences, EventKey is here to simplify it all. Visit EventKey today and start your journey toward seamless event management!</p>
+  <p>Best regards,<br>The EventKey Team</p>
+`;
 
   constructor(private adminService: AdminService) { }
 

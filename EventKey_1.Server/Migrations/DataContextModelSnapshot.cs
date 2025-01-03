@@ -285,11 +285,14 @@ namespace EventKey_1.Server.Migrations
 
             modelBuilder.Entity("EventKey_1.Server.Models.UserInsights", b =>
                 {
-                    b.Property<int>("Rank")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Rank"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Rank")
+                        .HasColumnType("int");
 
                     b.Property<int>("TotalBookings")
                         .HasColumnType("int");
@@ -301,7 +304,7 @@ namespace EventKey_1.Server.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Rank");
+                    b.HasKey("Id");
 
                     b.ToTable("UserInsights");
                 });

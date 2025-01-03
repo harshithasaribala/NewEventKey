@@ -47,7 +47,29 @@
   object-fit: cover;
   border-radius: 8px;
 }
+.card-text i {
+  color: #6c757d; /* Neutral color for icons */
+  margin-right: 8px;
+}
 
+.card-text span {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px; /* Add spacing between rows */
+}
+
+.card-img-top {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.card-footer .btn {
+  width: 48%;
+}
+
+.alert {
+  font-size: 1.2em;
+}
 .event-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

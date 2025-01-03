@@ -296,7 +296,7 @@ namespace EventKey_1.Server.Controllers
                 return StatusCode(500, $"An error occurred while deleting events: {ex.Message}");
             }
 
-            return Ok("All events have been deleted successfully.");
+            return NoContent();
         }
         // DELETE: api/Events/delete-all
         [HttpDelete("delete-all-saved")]
@@ -320,7 +320,7 @@ namespace EventKey_1.Server.Controllers
                 return StatusCode(500, $"An error occurred while deleting events: {ex.Message}");
             }
 
-            return Ok("All events have been deleted successfully.");
+            return NoContent();
         }
 
     }

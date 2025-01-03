@@ -1,7 +1,23 @@
-<h2>Ticket Sales </h2>
-<div class="ticket-sales-container">
+<head>
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+<h2>
+  <i class="bi bi-ticket-detailed" style="font-size: 1.5rem; margin-right: 8px;"></i>
+  Ticket Sales
+</h2>
+
+  <div *ngIf="revenueDetails.length === 0" class="no-events-message">
+    <i class="bi bi-exclamation-circle"></i>
+    <p>No events available to display.</p>
+  </div>
 
 
+<!-- Check if revenueDetails is empty -->
+
+<!-- Display event cards if there are events -->
+<div class="ticket-sales-container" *ngIf="revenueDetails.length > 0">
   <div *ngFor="let event of revenueDetails; let i = index" class="event-card">
     <div class="event-title">
       <h3>{{ event.eventName }}</h3>
@@ -11,8 +27,8 @@
     <canvas #ticketSalesChart id="ticketSalesChart"></canvas>
 
     <div class="revenue-details">
-      <p>Total Revenue: {{ event.totalRevenue | currency : 'INR' }}</p>
-      <p>Admin Share (20%): {{ event.adminShare | currency : 'INR' }}</p>
+      <p><i class="fas fa-dollar-sign"></i> Total Revenue: {{ event.totalRevenue | currency : 'INR' }}</p>
+      <p><i class="fas fa-percent"></i> Admin Share (20%): {{ event.adminShare | currency : 'INR' }}</p>
     </div>
   </div>
 </div>

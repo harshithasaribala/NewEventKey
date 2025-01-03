@@ -7,12 +7,14 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+<h2>My Bookings</h2>
 <body>
+
   <!-- Main Container -->
   <div class="container mt-5">
     <!-- Conditional Rendering -->
     <div *ngIf="bookings.length > 0; else noBookings">
-      <h2>My Bookings</h2>
+
       <!-- Booking Details -->
       <div *ngFor="let booking of bookings" class="booking-container">
         <p><strong>Event Name:</strong> {{ booking.eventName }}</p>
@@ -22,7 +24,6 @@
         <p><strong>Tickets Booked:</strong> {{ booking.numberOfTickets }}</p>
         <p><strong>Total Amount:</strong> ₹{{ booking.totalAmount }}</p>
         <p><strong>Booking Date:</strong> {{ booking.bookingDate | date: 'fullDate' }}</p>
-        <hr />
       </div>
     </div>
 

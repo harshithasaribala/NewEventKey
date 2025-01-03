@@ -20,14 +20,14 @@
               [class.invalid]="createEventForm.get('eventType')?.invalid && createEventForm.get('eventType')?.touched">
         <option value="" disabled>Select Event Type</option>
         <option value="Conference">Conference</option>
-        <option value="concert">Concerts</option>
-        <option value="sports">Sports</option>
-        <option value="workshop">Workshops</option>
-        <option value="comedy">Comedy Show</option>
-        <option value="adventure">Adventure Trips</option>
-        <option value="FoodFestival">Food Festival</option>
+        <option value="Concert">Concerts</option>
+        <option value="Sports">Sports</option>
+        <option value="Workshop">Workshops</option>
+        <option value="Comedy">Comedy Show</option>
+        <option value="Adventure">Adventure Trips</option>
+        <option value="Food Festival">Food Festival</option>
         <option value="Social Awareness">Social Activities</option>
-        <option value="parks">Amusement Parks</option>
+        <option value="Parks">Amusement Parks</option>
 
       </select>
       <div *ngIf="createEventForm.get('eventType')?.invalid && createEventForm.get('eventType')?.touched" class="error">

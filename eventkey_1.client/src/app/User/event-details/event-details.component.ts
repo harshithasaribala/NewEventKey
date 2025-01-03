@@ -16,7 +16,13 @@ export class EventDetailsComponent implements OnInit {
   filteredEvents: any[] = [];
   searchTerm: string = '';
 
-  constructor(private eventService: AuthService, private router: Router, private route: ActivatedRoute, private location: Location, private sessionService: SessionService) { }
+  constructor(
+    private eventService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location,
+    private sessionService: SessionService
+  ) { }
 
   ngOnInit() {
     const retrievedId = this.sessionService.getItem('userId');
@@ -26,10 +32,10 @@ export class EventDetailsComponent implements OnInit {
 
     this.eventService.fetchEvents().subscribe(
       (response) => {
-        // Filter events to exclude those with a past date
         const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0); // Reset time to start of the day
         this.events = response.filter((event: any) => new Date(event.eventDate) >= currentDate);
-        this.filteredEvents = [...this.events]; // Initialize filteredEvents with all valid events
+        this.filteredEvents = [...this.events]; // Initialize with all valid events
         console.log('Events fetched successfully:', this.events);
       },
       (error) => {
@@ -39,27 +45,27 @@ export class EventDetailsComponent implements OnInit {
   }
 
   getEventImage(eventType: string): string {
-    switch (eventType.toLowerCase()) {
-      case 'conference':
+    switch (eventType) {
+      case 'Conference':
         return 'assets/EventKey/assets/images/Events/Conference.jpg';
-      case 'concert':
+      case 'Concert':
         return 'assets/EventKey/assets/images/Events/Concert.jpg';
-      case 'sports':
+      case 'Sports':
         return 'assets/EventKey/assets/images/Events/Sports.png';
-      case 'workshop':
+      case 'Workshop':
         return 'assets/EventKey/assets/images/Events/workshop.jpg';
-      case 'comedy':
+      case 'Comedy':
         return 'assets/EventKey/assets/images/Events/Comedy.jpg';
-      case 'adventure':
+      case 'Adventure':
         return 'assets/EventKey/assets/images/Events/Adventure.jpg';
-      case 'foodfestival':
+      case 'Food Festival':
         return 'assets/EventKey/assets/images/Events/FoodFestival.jpg';
-      case 'SocialAwareness':
+      case 'Social Awareness':
         return 'assets/EventKey/assets/images/Events/SocialAwarness.jpg';
-      case 'parks':
+      case 'Parks':
         return 'assets/EventKey/assets/images/Events/park.jpg';
       default:
-        return 'assets/EventKey/assets/images/Events/default.png';
+        return 'assets/EventKey/assets/images/Events/default.jpg';
     }
   }
 
@@ -69,22 +75,30 @@ export class EventDetailsComponent implements OnInit {
 
   searchEvents() {
     const searchTermLower = this.searchTerm.trim().toLowerCase();
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // Reset time to start of the day
 
     if (!searchTermLower) {
-      // If the search term is empty, display all events
-      this.filteredEvents = [...this.events];
-    } else {
-      // Filter events based on the search term
+      // If no search term, display events with dates from today onwards
       this.filteredEvents = this.events.filter(event =>
-        event.eventName.toLowerCase().includes(searchTermLower)
+        new Date(event.eventDate) >= currentDate
+      );
+    } else {
+      // Filter events based on search term (by name or type) and valid dates
+      this.filteredEvents = this.events.filter(event =>
+        (event.eventName?.toLowerCase().includes(searchTermLower) ||
+          event.eventType?.toLowerCase().includes(searchTermLower)) &&
+        new Date(event.eventDate) >= currentDate
       );
     }
+
+    console.log('Filtered events:', this.filteredEvents);
   }
 
   saveEvent(event: any): void {
     const eventPayload = {
-      userId: this.userId, // Assuming userId is available
-      eventId: event.eventId // Assuming event has the eventId
+      userId: this.userId,
+      eventId: event.eventId
     };
 
     this.eventService.saveEvent(eventPayload).subscribe(

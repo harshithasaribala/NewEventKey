@@ -56,7 +56,7 @@ export class TicketSalesComponent implements OnInit, AfterViewInit {
                 backgroundColor: ['#36A2EB', '#FF6384'],
                 borderColor: ['#36A2EB', '#FF6384'],
                 borderWidth: 1,
-                
+
               }]
             },
             options: {

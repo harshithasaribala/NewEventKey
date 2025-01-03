@@ -18,20 +18,21 @@ namespace EventKey_1.Server.Controllers
             _context = context;
         }
         // Update all ranks in UserInsights
-        private async Task UpdateUserRanks()
+        public async Task UpdateUserRanks()
         {
-            // Fetch all users ordered by TotalPoints descending
-            var allUsers = await _context.UserInsights
-                                          .OrderByDescending(ui => ui.TotalPoints)
-                                          .ToListAsync();
+            // Fetch all user insights ordered by TotalPoints (highest first)
+            var userInsights = await _context.UserInsights
+                                             .OrderByDescending(ui => ui.TotalPoints)
+                                             .ToListAsync();
 
-            // Update ranks
-            for (int i = 0; i < allUsers.Count; i++)
+            // Update ranks for each user
+            int rank = 1;
+            foreach (var userInsight in userInsights)
             {
-                allUsers[i].Rank = i + 1; // Rank starts from 1
+                userInsight.Rank = rank++;
+                _context.UserInsights.Update(userInsight);
             }
 
-            // Save changes
             await _context.SaveChangesAsync();
         }
 
@@ -89,12 +90,14 @@ namespace EventKey_1.Server.Controllers
 
             // Update User Insights
             var userInsights = await _context.UserInsights
-                                      .FirstOrDefaultAsync(ui => ui.UserId == booking.UserId);
+                                              .FirstOrDefaultAsync(ui => ui.UserId == booking.UserId);
 
             if (userInsights != null)
             {
                 userInsights.TotalBookings += booking.NumberOfTickets;
                 userInsights.TotalPoints += booking.NumberOfTickets * 10; // 10 points per booking
+                
+
                 _context.UserInsights.Update(userInsights);
             }
             else
@@ -104,7 +107,8 @@ namespace EventKey_1.Server.Controllers
                     UserId = booking.UserId,
                     TotalBookings = booking.NumberOfTickets,
                     TotalPoints = booking.NumberOfTickets * 10,
-                    Rank = 0 // Temporary, will be updated in UpdateUserRanks
+                    Rank = 0, // Temporary, will be updated in UpdateUserRanks
+                   
                 };
                 _context.UserInsights.Add(newUserInsights);
             }
@@ -116,6 +120,7 @@ namespace EventKey_1.Server.Controllers
 
             return Ok(booking);
         }
+
 
         // GET: api/Bookings
         [HttpGet]

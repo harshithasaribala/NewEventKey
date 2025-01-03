@@ -1,21 +1,39 @@
-<div class="manage-events-container">
-  <h2>Manage Events</h2>
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-  <!-- Grid container for events -->
-  <div class="events-grid">
-    <div *ngFor="let event of events" class="event-card">
-      <h3>{{ event.eventName }}</h3>
-      <p><strong>Event ID:</strong> {{ event.eventId }}</p>
-      <p><strong>Event Date:</strong> {{ event.eventDate | date:'fullDate' }}</p>
-      <p><strong>Event Time:</strong> {{ event.eventTime  }}</p>
-      <p><strong>Max Count:</strong> {{ event.maxAttendees }}</p>
-      <p><strong>Description:</strong> {{ event.description }}</p>
-      <p><strong>Price:</strong> {{ event.ticketPrice | currency:'INR' }}</p>
+</head>
+<div class="container py-4">
+  <h2 class="text-center mb-4"><i class="fas fa-cogs me-1"></i>Manage Events</h2>
 
-      <!-- Action buttons -->
-      <div class="event-actions">
-        <button (click)="navigateToEditEvent(event.eventId)"><i class="fas fa-edit me-1"></i>&nbsp; Edit Event</button>
-        <button (click)="deleteEvent(event.eventId)">Delete Event</button>
+  <!-- Check if events array is empty -->
+  <div *ngIf="events.length === 0" class="alert alert-info text-center">
+    <p><strong>No events available. Please create events to display here.</strong></p>
+  </div>
+
+  <div *ngIf="events.length > 0" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div *ngFor="let event of events" class="col">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ event.eventName }}</h5>
+          <p class="card-text">
+            <strong>Event ID:</strong> {{ event.eventId }}<br>
+            <strong>Event Date:</strong> {{ event.eventDate | date:'fullDate' }}<br>
+            <strong>Event Time:</strong> {{ event.eventTime }}<br>
+            <strong>Max Count:</strong> {{ event.maxAttendees }}<br>
+            <strong>Description:</strong> {{ event.description }}<br>
+            <strong>Price:</strong> {{ event.ticketPrice | currency:'INR' }}
+          </p>
+
+          <!-- Action buttons -->
+          <div class="d-flex justify-content-between">
+            <button class="btn btn-warning btn-sm" (click)="navigateToEditEvent(event.eventId)">
+              <i class="fas fa-edit me-1"></i> Edit Event
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="deleteEvent(event.eventId)">
+              <i class="fas fa-trash-alt me-1"></i> Delete Event
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

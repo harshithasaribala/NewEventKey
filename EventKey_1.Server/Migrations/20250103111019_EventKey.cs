@@ -136,15 +136,16 @@ namespace EventKey_1.Server.Migrations
                 name: "UserInsights",
                 columns: table => new
                 {
-                    Rank = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TotalBookings = table.Column<int>(type: "int", nullable: false),
-                    TotalPoints = table.Column<int>(type: "int", nullable: false)
+                    TotalPoints = table.Column<int>(type: "int", nullable: false),
+                    Rank = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserInsights", x => x.Rank);
+                    table.PrimaryKey("PK_UserInsights", x => x.Id);
                 });
         }
 

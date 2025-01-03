@@ -24,13 +24,13 @@ export interface RevenueData {
   providedIn: 'root',
 })
 export class AdminService {
-  private apiUrl = 'http://13.49.98.210:5000/api/Admin';
-  private baseUrl = 'http://13.49.98.210:5000/api/Account'; 
-  private bookingsUrl = 'http://13.49.98.210:5000/api/Bookings';
-  private feedbackUrl = 'http://13.49.98.210:5000/api/Feedback';
-  private mailUrl = 'http://13.49.98.210:5000/api/Promotion/send';
-  private insightsUrl = 'http://13.49.98.210:5000/api/UserInsights';
-  private eventsUrl = 'http://13.49.98.210:5000/api/Events';
+  private apiUrl = 'https://localhost:7172/api/Admin';
+  private baseUrl = 'https://localhost:7172/api/Account'; 
+  private bookingsUrl = 'https://localhost:7172/api/Bookings';
+  private feedbackUrl = 'https://localhost:7172/api/Feedback';
+  private mailUrl = 'https://localhost:7172/api/Promotion/send';
+  private insightsUrl = 'https://localhost:7172/api/UserInsights';
+  private eventsUrl = 'https://localhost:7172/api/Events';
   constructor(private http: HttpClient) { }
 
   // Feedback Management

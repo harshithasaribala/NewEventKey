@@ -66,3 +66,12 @@
     .back-button-container button:hover {
       background-color: #5a6268;
     }
+.no-events-message {
+  font-size: 1.2em;
+  color: #6c757d;
+  margin-top: 20px;
+}
+
+  .no-events-message p {
+    font-weight: bold;
+  }

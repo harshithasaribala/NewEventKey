@@ -6,10 +6,10 @@ import { Event } from '../home/event.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://13.49.98.210:5000/api/Account';
-  private eventsUrl = 'http://13.49.98.210:5000/api/Events';
-  private bookingsUrl = 'http://13.49.98.210:5000/api/Bookings';
-  private feedBackUrl = 'http://13.49.98.210:5000/api/Feedback';
+  private apiUrl = 'https://localhost:7172/api/Account';
+  private eventsUrl = 'https://localhost:7172/api/Events';
+  private bookingsUrl = 'https://localhost:7172/api/Bookings';
+  private feedBackUrl = 'https://localhost:7172/api/Feedback';
   constructor(private http: HttpClient) { }
 
   // Sign up method

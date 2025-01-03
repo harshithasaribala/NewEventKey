@@ -1,4 +1,52 @@
+/* Styling for the Ticket Sales Heading */
+h2 {
+  margin-top: 30px;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+  h2 i {
+    margin-right: 8px;
+    color: #007bff; /* Blue color for the icon */
+  }
+
+/* Styling for the "No Events" Message */
+.no-events-message {
+  text-align: center;
+  font-size: 1rem; /* Reduced font size */
+  color: #6c757d; /* Softer gray for better readability */
+  padding: 30px 20px; /* Reduced padding for smaller box */
+  background-color: #f7f9fc; /* Lighter background for better contrast */
+  border-radius: 10px; /* Slightly smaller border radius */
+  border: 1px solid #ddd;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+  .no-events-message:hover {
+    transform: scale(1.03); /* Slight zoom effect on hover */
+    opacity: 0.9; /* Subtle fade effect */
+  }
+
+  .no-events-message p {
+    margin: 0;
+    font-size: 1.2rem; /* Adjusted text size */
+    font-weight: bold;
+    color: #495057; /* Darker gray for the text */
+    line-height: 1.4; /* Adjusted line height for balance */
+  }
+
+  .no-events-message i {
+    font-size: 1.5rem; 
+    margin-bottom: 10px;
+    color: #dc3545; 
+  }
+
 .ticket-sales-container {
+
   padding: 20px;
   text-align: center;
   display: grid;
@@ -32,3 +80,26 @@ canvas {
   height: 250px; /* Adjust the height of the chart */
   margin-bottom: 20px;
 }
+/* No events card styling */
+.no-events-card {
+  text-align: center;
+  padding: 15px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  color: #999;
+  margin-top: 20px;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  text-align: center;
+  padding: 20px;
+}
+
+  .loading-spinner i {
+    font-size: 2rem;
+    color: #007bff;
+  }
+
